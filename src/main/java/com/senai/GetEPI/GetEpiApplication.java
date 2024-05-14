@@ -8,6 +8,8 @@ public class GetEpiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GetEpiApplication.class, args);
+
+		System.out.println("test");
 	}
 
 }
