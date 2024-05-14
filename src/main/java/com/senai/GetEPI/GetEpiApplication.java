@@ -10,6 +10,9 @@ public class GetEpiApplication {
 		SpringApplication.run(GetEpiApplication.class, args);
 
 		System.out.println("test");
+
+		System.out.println("test2");
+
 	}
 
 }
