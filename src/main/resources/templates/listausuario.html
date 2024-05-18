@@ -30,10 +30,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Id</td>
-                            <td>Nome</td>
-                            <td>Email</td>
+                        <tr th:each="usuario : ${usuarios}">
+                            <td th:text="${usuario.id}"></td>
+                            <td th:text="${usuario.nome}"></td>
+                            <td th:text="${usuario.email}"></td>
                             <td class="text-center"> <a class="btn btn-outline-info">📋 Visualizar</a></td>
                             <td class="text-center"> <a class="btn btn-outline-warning">✏️ Atualizar</a></td>
                             <td class="text-center"> <a class="btn btn-outline-danger">❌ Excluir</a></td>
@@ -41,9 +41,19 @@
                         </tbody>
 
                     </table>
+
+                    <div th:if="${nenhumUsuario == true}">
+                        <div class="card shadow mb-4">
+                            <div class="card-body">
+                                <p class="card-text pd-3 text-center">
+                                    Nenhum usuário encontrado.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
         </div>
     </div>
 
