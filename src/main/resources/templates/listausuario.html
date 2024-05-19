@@ -20,6 +20,24 @@
                 <h6 class="m-0 font-weight-bold text-secondary text-center">👥 Usuários</h6>
             </div>
             <div class="card-body">
+                <!-- MECANISMO DE BUSCA -->
+                <div class="card border-info mb-3 w-100">
+                    <div class="card-header">🗄 Pesquisar usuário</div>
+                    <div class="card-body">
+                        <div class="d-flex pb-2">
+                            <form th:method="post" th:action="@{/listausuario/buscar}" th:object="${buscaUsuarioDTO}" class="d-flex">
+                                <div class="m-auto pe-2">
+                                    <input type="submit" value="🔍 Pesquisar" class="btn btn-outline-secondary mr-2">
+                                </div>
+                                <div style="width: 450px;">
+                                    <input type="text" id="nome" th:field="*{nome}" class="form-control form-control-lg" placeholder="Nome do usuário"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- MECANISMO DE BUSCA -->
+
                 <p class="card-text pd-3">
                     <a th:href="@{~/cadastrarusuario}" class="btn btn-outline-secondary">👤 Cadastrar usuário</a>
                 </p>

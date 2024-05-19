@@ -59,6 +59,11 @@ public class UsuarioService {
 
     }
 
+    public List<UsuarioDTO> buscarUsuarioPorNome(UsuarioDTO usuario) {
+        List<UsuarioModel> usuariosEncontrados = usuarioRepository.findByNomeContaining(usuario.getNome());
+        return converterListaUsuarioDTO(usuariosEncontrados);
+    }
+
     private String mensagemErroUsuario(UsuarioDTO usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             return "Já existe cadastro com estas credenciais!";
