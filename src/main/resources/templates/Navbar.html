@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:fragment="componente-navbar" class="pb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="ps-2">
+            <div class="container">
+                <div class="navbar-collapse" id="navbarSupportedContent">
+                    <a class="navbar-brand" href="#">
+                        <img src="getEpiNavbar.png" alt="GetEPI">
+                    </a>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <button class="btn btn-outline-light me-2" style="border-color: transparent !important;" type="button">🏯 Home</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-light me-2" style="border-color: transparent !important;" type="button">👥 Usuários</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-light me-2" style="border-color: transparent !important;" type="button">👷🏻‍♂️ Colaboradores</button>
+                        </li>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-light me-2 dropdown-toggle" style="border-color: transparent !important;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ⛑ EPIs
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">🧾 Lista de EPIs</a>
+                                    <a class="dropdown-item" href="#">🦺 Tipo de equipamento</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-light me-2" style="border-color: transparent !important;" type="button">🛂 Empréstimos</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-light me-2" style="border-color: transparent !important;" type="button">💱 Movimentações</button>
+                        </li>
+                        <li class="nav-item">
+                            <div class="ml-auto">
+                                <button class="btn btn-outline-light me-2" style="border-color: transparent !important;" type="button">Sair</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+</body>
+</html>
