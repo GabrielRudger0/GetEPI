@@ -35,7 +35,7 @@ public class CadastrarUsuarioController {
         if (!mensagemErro.isEmpty()) {
             model.addAttribute("erro", true);
             model.addAttribute("mensagemErro", mensagemErro);
-            return "atualizausuario";
+            return "cadastrousuario";
         }
         return "redirect:/listausuario";
     }

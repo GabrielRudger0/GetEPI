@@ -49,6 +49,16 @@ public class UsuarioService {
         return "";
     }
 
+    public boolean excluirUsuario(Long id){
+        Optional<UsuarioModel> optionalUsuario = usuarioRepository.findById(id);
+        if (!optionalUsuario.isPresent()){
+            return false;
+        }
+        usuarioRepository.delete(optionalUsuario.get());
+        return true;
+
+    }
+
     private String mensagemErroUsuario(UsuarioDTO usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             return "Já existe cadastro com estas credenciais!";
