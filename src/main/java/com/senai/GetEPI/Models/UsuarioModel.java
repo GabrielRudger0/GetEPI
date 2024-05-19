@@ -1,5 +1,6 @@
 package com.senai.GetEPI.Models;
 
+import com.senai.GetEPI.DTOs.UsuarioDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,4 +23,13 @@ public class UsuarioModel {
     @Column(name = "usuarioSenha", nullable = false)
     private String senha;
 
+    public UsuarioModel() {
+    }
+
+    public UsuarioModel(UsuarioDTO usuarioDTO) {
+        this.id = usuarioDTO.getId();
+        this.nome = usuarioDTO.getNome();
+        this.email = usuarioDTO.getEmail();
+        this.senha = usuarioDTO.getSenha();
+    }
 }
