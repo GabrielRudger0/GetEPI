@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +28,28 @@ public class UsuarioService {
     }
 
     public String inserirUsuario(UsuarioDTO usuario) {
+        if (!mensagemErroUsuario(usuario).isEmpty()) {
+            return mensagemErroUsuario(usuario);
+        }
+        usuarioRepository.save(new UsuarioModel(usuario));
+        return "";
 
+    }
+
+    public String atualizaUsuario(UsuarioDTO usuario) {
+        Optional<UsuarioModel> usuarioBD = usuarioRepository.findById(usuario.getId());
+
+        if (!usuarioBD.get().getEmail().equals(usuario.getEmail())) {
+            if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+                return "Já existe cadastro com estas credenciais!";
+            }
+        }
+
+        usuarioRepository.save(new UsuarioModel(usuario));
+        return "";
+    }
+
+    private String mensagemErroUsuario(UsuarioDTO usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             return "Já existe cadastro com estas credenciais!";
         }
@@ -35,10 +57,7 @@ public class UsuarioService {
         if (usuario.getSenha().length() < 5) {
             return "A senha deve ter no mínimo 5 caracteres!";
         }
-
-        usuarioRepository.save(new UsuarioModel(usuario));
         return "";
-
     }
 
     private List<UsuarioDTO> converterListaUsuarioDTO(List<UsuarioModel> listaUsuarioModel) {

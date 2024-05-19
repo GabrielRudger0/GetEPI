@@ -30,17 +30,13 @@ public class CadastrarUsuarioController {
 
     @PostMapping()
     public String botaoCadastrarUsuario(@ModelAttribute("usuarioDTO") UsuarioDTO usuario, Model model) {
-        String mensagemErro = "";
-        boolean erro = false;
-        mensagemErro = usuarioService.inserirUsuario(usuario);
+        String mensagemErro = usuarioService.inserirUsuario(usuario);
 
         if (!mensagemErro.isEmpty()) {
-            erro = true;
-            model.addAttribute("erro", erro);
+            model.addAttribute("erro", true);
             model.addAttribute("mensagemErro", mensagemErro);
-            return "cadastrousuario";
+            return "atualizausuario";
         }
-
         return "redirect:/listausuario";
     }
 }
