@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +30,7 @@ public class ListarUsuarioController {
 
         model.addAttribute("usuarios", listaUsuario);
         model.addAttribute("nenhumUsuario", nenhumUsuario);
+        model.addAttribute("buscaUsuarioDTO", new UsuarioDTO());
         return "listausuario";
     }
 
@@ -44,6 +42,20 @@ public class ListarUsuarioController {
             return ResponseEntity.ok("Usuário excluído com sucesso.");
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir usuário.");
+    }
+
+    @PostMapping("/buscar")
+    public String buscarUsuario(@ModelAttribute("buscaUsuarioDTO") UsuarioDTO usuarioBuscado, Model model) {
+        List<UsuarioDTO> listaUsuariosEncontrados = usuarioService.buscarUsuarioPorNome(usuarioBuscado);
+
+        boolean nenhumUsuario = false;
+        if(listaUsuariosEncontrados.isEmpty()) {
+            nenhumUsuario = true;
+        }
+
+        model.addAttribute("usuarios", listaUsuariosEncontrados);
+        model.addAttribute("nenhumUsuario", nenhumUsuario);
+        return "listausuario";
     }
 
 }
