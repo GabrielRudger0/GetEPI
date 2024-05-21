@@ -97,6 +97,19 @@
                 <div class="card m-5">
                     <h5 class="card-header">Login</h5>
                     <div class="card-body p-4">
+
+
+                        <!-- MENSAGENS DE ERRO -->
+                        <div th:if="${erro == true}" class="card shadow mb-4">
+                            <div class="card text-white bg-danger w-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Erro!</h5>
+                                    <p class="card-text">Credenciais inválidas!</p>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <form th:method="post" th:action="@{/login}" th:object="${loginDto}">
                             <div class="mb-3 form-floating">
                                 <input type="email" class="form-control" id="email" name="email" th:field="*{email}" placeholder="E-mail">
