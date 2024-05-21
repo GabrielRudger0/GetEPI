@@ -10,24 +10,37 @@
 <body>
 
 <div th:fragment="componente-menulateral">
-    <div class="flex-shrink-0 p-3 bg-white">
+    <div class="flex-shrink-0 p-3 bg-dark">
         <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
             <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
             <span class="fs-5 fw-semibold">Collapsible</span>
         </a>
         <ul class="list-unstyled ps-0">
-            <li class="mb-1">
-                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                    Home
-                </button>
-                <div class="collapse show" id="home-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-dark rounded">Overview</a></li>
-                        <li><a href="#" class="link-dark rounded">Updates</a></li>
-                        <li><a href="#" class="link-dark rounded">Reports</a></li>
-                    </ul>
+            <li class="nav-item">
+                <a th:href="@{~/listausuario}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">👥 Usuários</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{~/listacolaboradores}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">👷🏻‍♂️ Colaboradores</a>
+            </li>
+
+            <li class="nav-item">
+                <div class="dropdown">
+                    <!--
+                    <button class="btn btn-outline-light me-2 dropdown-toggle" style="border-color: transparent !important;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    </button>
+
+                   -->
+                    <button class="btn btn-outline-light me-2 dropdown-toggle" style="border-color: transparent !important; font-size: 22px;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        ⛑ EPIs
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">🧾 Lista de EPIs</a>
+                        <a class="dropdown-item" href="#">🦺 Tipo de equipamento</a>
+                    </div>
                 </div>
             </li>
+            <!--
             <li class="mb-1">
                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
                     Dashboard
@@ -68,6 +81,7 @@
                     </ul>
                 </div>
             </li>
+            -->
         </ul>
     </div>
 
