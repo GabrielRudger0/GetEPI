@@ -19,9 +19,7 @@ public class ColaboradorModel {
 
     private String email;
 
-
     private String funcao;
-
 
     private Date dataNascimento;
 }
