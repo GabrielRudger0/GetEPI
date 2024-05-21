@@ -53,7 +53,7 @@
             color: white;
         }
         .form-floating label {
-           color: #aaa;
+           color: white;
         }
         .alert {
             color: #000;
@@ -61,8 +61,8 @@
 
         }
         .form-floating label::after {
-            background: none !important;
-            content: none !important;
+            color: white;
+            background: transparent !important;
         }
         .login-container {
             display: flex;
@@ -78,13 +78,6 @@
         }
         .login-image img {
             width: 100%;
-        }
-        .form-floating input[type="email"]::placeholder {
-            background-color: transparent;
-        }
-
-        .form-floating input[type="email"]:focus::placeholder {
-            background-color: transparent;
         }
 
     </style>
@@ -104,14 +97,27 @@
                 <div class="card m-5">
                     <h5 class="card-header">Login</h5>
                     <div class="card-body p-4">
+
+
+                        <!-- MENSAGENS DE ERRO -->
+                        <div th:if="${erro == true}" class="card shadow mb-4">
+                            <div class="card text-white bg-danger w-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Erro!</h5>
+                                    <p class="card-text">Credenciais inválidas!</p>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <form th:method="post" th:action="@{/login}" th:object="${loginDto}">
                             <div class="mb-3 form-floating">
                                 <input type="email" class="form-control" id="email" name="email" th:field="*{email}" placeholder="E-mail">
-                                <label for="email">E-mail</label>
+                                <label for="email" style="color: white !important;">E-mail</label>
                             </div>
-                            <div class="mb-3 form-floating">
+                            <div class="mb-3 form-floating ">
                                 <input type="password" class="form-control" id="senha" name="senha" th:field="*{senha}" placeholder="Senha">
-                                <label for="senha">Senha</label>
+                                <label for="senha" style="color: white !important;">Senha</label>
                             </div>
                             <div class="d-grid">
                                 <button class="btn btn-outline-light btn-lg" type="submit">Entrar</button>

@@ -1,5 +1,6 @@
 package com.senai.GetEPI.Services;
 
+import com.senai.GetEPI.DTOs.LoginDTO;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Models.UsuarioModel;
 import com.senai.GetEPI.Repositories.UsuarioRepository;
@@ -62,6 +63,18 @@ public class UsuarioService {
     public List<UsuarioDTO> buscarUsuarioPorNome(UsuarioDTO usuario) {
         List<UsuarioModel> usuariosEncontrados = usuarioRepository.findByNomeContaining(usuario.getNome());
         return converterListaUsuarioDTO(usuariosEncontrados);
+    }
+
+    public boolean loginValido(LoginDTO login) {
+        Optional<UsuarioModel> usuario = usuarioRepository.findByEmail(login.getEmail());
+
+        if (usuario.isPresent()) {
+            if (usuario.get().getSenha().equals(login.getSenha())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private String mensagemErroUsuario(UsuarioDTO usuario) {
