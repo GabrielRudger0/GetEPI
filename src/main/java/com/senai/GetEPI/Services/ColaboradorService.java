@@ -50,7 +50,24 @@ public class ColaboradorService {
         return converterListaColaboradorDTO(colaboradorRepository.findAll());
     }
 
-    private List<ColaboradorDto> converterListaColaboradorDTO(List<ColaboradorModel> listaColaboradorModel) {
+    public List<ColaboradorDto> converterListaColaboradorDTO(List<ColaboradorModel> listaColaboradorModel) {
         return listaColaboradorModel.stream().map(ColaboradorDto::new).collect(Collectors.toList());
     }
+
+    public ColaboradorDto buscaColaboradorDTO(Long id){
+        ColaboradorModel colaborador = colaboradorRepository.findById(id).get();
+
+        return new ColaboradorDto(colaborador);
+    }
+
+    public boolean excluirColaborador(Long id){
+        Optional<ColaboradorModel> optionalColaborador = colaboradorRepository.findById(id);
+        if (!optionalColaborador.isPresent()){
+            return false;
+        }
+        colaboradorRepository.delete(optionalColaborador.get());
+        return true;
+
+    }
+
 }
