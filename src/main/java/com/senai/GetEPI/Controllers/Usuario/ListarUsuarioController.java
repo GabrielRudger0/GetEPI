@@ -36,7 +36,7 @@ public class ListarUsuarioController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> excluirUsuario(@PathVariable Long id){
-        System.out.println("aaa");
+
         boolean sucesso = usuarioService.excluirUsuario(id);
         if (sucesso){
             return ResponseEntity.ok("Usuário excluído com sucesso.");
@@ -44,7 +44,7 @@ public class ListarUsuarioController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir usuário.");
     }
 
-    @PostMapping("/buscar")
+    @PostMapping
     public String buscarUsuario(@ModelAttribute("buscaUsuarioDTO") UsuarioDTO usuarioBuscado, Model model) {
         List<UsuarioDTO> listaUsuariosEncontrados = usuarioService.buscarUsuarioPorNome(usuarioBuscado);
 
