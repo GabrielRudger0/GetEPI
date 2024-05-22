@@ -1,0 +1,37 @@
+            .sidebar {
+              width: 280px;
+              background-color: #212529;
+            }
+
+            .sidebar a {
+              padding: 10px 15px;
+              text-decoration: none;
+              font-size: 20px;
+              width: 100%;
+              text-align: left;
+              display: block;
+            }
+
+            .sidebar a:hover {
+              background-color: #dcdcdc;
+              border-radius: 10px;
+            }
+
+            .content {
+              flex: 1;
+              padding: 20px;
+            }
+
+            .hover-img {
+                content: url('http://localhost:8080/getEpiNavbar.png'); /* imagem padrão */
+            }
+            a:hover .hover-img {
+                content: url('http://localhost:8080/getEPINavbarPreto.png'); /* outra imagem quando em hover */
+            }
+            .custom-shadow {
+                box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5); /* Ajuste os valores aqui para personalizar a sombra */
+            }
+
+           .dropdown-item:hover {
+                color: black !important;
+            }
