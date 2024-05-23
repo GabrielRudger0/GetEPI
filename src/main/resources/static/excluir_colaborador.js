@@ -19,7 +19,7 @@ document.querySelectorAll('.excluir').forEach(function(button) {
             const colaboradorId = this.dataset.colaboradorId;
 
             // Realize a chamada AJAX para excluir o recurso
-            fetch(`/listacolaborador/${colaboradorId}`, {
+            fetch(`/listacolaboradores/${colaboradorId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -38,8 +38,8 @@ document.querySelectorAll('.excluir').forEach(function(button) {
                         showConfirmButton: false
                     });
                     setTimeout(function() {
-                        window.location.href = "/listacolaborador";
-                    }, 2500);
+                        window.location.href = "/listacolaboradores";
+                    }, 1700);
 
                 } else {
                     // A solicitação DELETE falhou

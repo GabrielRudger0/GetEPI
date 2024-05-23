@@ -30,9 +30,12 @@ public class CadastrarColaboradorController {
     @PostMapping()
     public String enviarDadosColaborador(@ModelAttribute("colaboradorDto")ColaboradorDto colaboradorDto,Model model){
 
-        ColaboradorDto colaborador = colaboradorService.cadastrarColaborador(colaboradorDto);
-
-        model.addAttribute("colaboradordto",colaboradorDto);
+        String mensagemErro = colaboradorService.cadastrarColaborador(colaboradorDto);
+        if (!mensagemErro.isEmpty()) {
+            model.addAttribute("erro", true);
+            model.addAttribute("mensagemErro", mensagemErro);
+            return "cadastrarcolaborador";
+        }
 
         return "redirect:/listacolaboradores";
     }
