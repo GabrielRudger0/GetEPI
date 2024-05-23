@@ -74,6 +74,7 @@
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-dark text-center rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
+                                <div id="valor1" th:text="${valor1teste}"></div>
                                 <h6 class="mb-0" style="color: white;">3 EPIs mais utilizados por mês</h6>
                                 <h3 class="mt-1" style="color: white;"></h3>
                             </div>
@@ -103,7 +104,9 @@
     <script src="lib/tempusdominus/js/moment.min.js"></script>
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script th:inline="javascript" src="js/main.js"></script>
+    <script th:inline="javascript" src="js/main.js">
+
+    </script>
 </div>
 </body>
 </html>

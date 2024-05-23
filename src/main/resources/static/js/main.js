@@ -1,6 +1,8 @@
 (function ($) {
     "use strict";
 
+    var valor1 = document.getElementById('valor1').innerText;
+
     // Spinner
     var spinner = function () {
         setTimeout(function () {
@@ -72,7 +74,7 @@
             labels: ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"],
             datasets: [{
                     label: "CAPACETE",
-                    data: [120, 30, 55, 65, 60, 80, 95],
+                    data: [valor1, 30, 55, 65, 60, 80, 95],
                     backgroundColor: "rgb(255, 213, 25, .7)"
                 },
                 {
