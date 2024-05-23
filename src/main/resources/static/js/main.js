@@ -69,21 +69,21 @@
     var myChart1 = new Chart(ctx1, {
         type: "bar",
         data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+            labels: ["Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"],
             datasets: [{
-                    label: "USA",
-                    data: [15, 30, 55, 65, 60, 80, 95],
-                    backgroundColor: "rgba(235, 22, 22, .7)"
+                    label: "CAPACETE",
+                    data: [120, 30, 55, 65, 60, 80, 95],
+                    backgroundColor: "rgb(255, 213, 25, .7)"
                 },
                 {
-                    label: "UK",
+                    label: "OCULOS",
                     data: [8, 35, 40, 60, 70, 55, 75],
-                    backgroundColor: "rgba(235, 22, 22, .5)"
+                    backgroundColor: "rgb(255, 213, 25, .5)"
                 },
                 {
-                    label: "AU",
+                    label: "COLETE",
                     data: [12, 25, 45, 55, 65, 70, 60],
-                    backgroundColor: "rgba(235, 22, 22, .3)"
+                    backgroundColor: "rgb(255, 213, 25, .3)"
                 }
             ]
             },
