@@ -1,7 +1,8 @@
-package com.senai.GetEPI.Controllers.Colaborador;
+package com.senai.GetEPI.Controllers.Funcao;
 
 import com.senai.GetEPI.DTOs.ColaboradorDto;
-import com.senai.GetEPI.Services.ColaboradorService;
+import com.senai.GetEPI.DTOs.FuncaoDto;
+import com.senai.GetEPI.Services.FuncaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,32 +12,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/cadastrarcolaborador")
-public class CadastrarColaboradorController {
+@RequestMapping("/cadastrarfuncao")
+public class CadastrarFuncaoController {
 
     @Autowired
-    ColaboradorService colaboradorService;
+    FuncaoService funcaoService;
 
     @GetMapping()
     public String cadastrarColaborador(Model model){
 
-        ColaboradorDto colaboradorDto = new ColaboradorDto();
+        FuncaoDto funcaoDto = new FuncaoDto();
 
-        model.addAttribute("colaboradorDto",colaboradorDto);
+        model.addAttribute("funcaoDto",funcaoDto);
 
-        return "cadastrarcolaborador";
+        return "cadastrarfuncao";
     }
 
     @PostMapping()
-    public String enviarDadosColaborador(@ModelAttribute("colaboradorDto")ColaboradorDto colaboradorDto,Model model){
+    public String enviarDadosColaborador(@ModelAttribute("funcaoDto")FuncaoDto funcaoDto, Model model){
 
-        String mensagemErro = colaboradorService.cadastrarColaborador(colaboradorDto);
+        String mensagemErro = funcaoService.cadastrarFuncao(funcaoDto);
         if (!mensagemErro.isEmpty()) {
             model.addAttribute("erro", true);
             model.addAttribute("mensagemErro", mensagemErro);
-            return "cadastrarcolaborador";
+            return "cadastrarfuncao";
         }
 
-        return "redirect:/listacolaboradores";
+        return "redirect:/listafuncao";
     }
+
+
 }

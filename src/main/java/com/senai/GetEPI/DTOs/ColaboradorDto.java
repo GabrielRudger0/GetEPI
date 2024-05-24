@@ -1,6 +1,7 @@
 package com.senai.GetEPI.DTOs;
 
 import com.senai.GetEPI.Models.ColaboradorModel;
+import com.senai.GetEPI.Models.FuncaoModel;
 import com.senai.GetEPI.Models.UsuarioModel;
 import lombok.Data;
 
@@ -14,14 +15,14 @@ public class ColaboradorDto {
 
     private String email;
 
-    private String funcao;
+    private FuncaoModel funcao;
 
     private String dataNascimento;
 
     public ColaboradorDto(){
 
     }
-    public ColaboradorDto(Long id, String email, String funcao,String dataNascimento){
+    public ColaboradorDto(Long id, String email,String nome,FuncaoModel funcao,String dataNascimento){
         this.id = id;
         this.email = email;
         this.nome = nome;
@@ -29,11 +30,14 @@ public class ColaboradorDto {
         this.dataNascimento = dataNascimento;
     }
 
-    public ColaboradorDto(ColaboradorModel colaboradorModel) {
+    public ColaboradorDto(ColaboradorModel colaboradorModel,FuncaoModel funcao) {
         this.id = colaboradorModel.getId();
         this.email = colaboradorModel.getEmail();
         this.nome = colaboradorModel.getNome();
-        this.funcao = colaboradorModel.getFuncao();
+        this.funcao = funcao;
         this.dataNascimento = colaboradorModel.getDataNascimento().toString();
+    }
+
+    public ColaboradorDto(ColaboradorModel colaboradorModel) {
     }
 }
