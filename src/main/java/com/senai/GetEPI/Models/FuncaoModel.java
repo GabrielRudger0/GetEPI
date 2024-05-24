@@ -1,5 +1,6 @@
 package com.senai.GetEPI.Models;
 
+import com.senai.GetEPI.DTOs.FuncaoDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,6 +14,16 @@ public class FuncaoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "funcao", nullable = false, unique = true)
     private String funcao;
+
+    public FuncaoModel(){
+
+    }
+
+    public FuncaoModel(FuncaoDto funcaoDto){
+        this.id = funcaoDto.getId();
+        this.funcao = funcaoDto.getFuncao();
+    }
 
 }
