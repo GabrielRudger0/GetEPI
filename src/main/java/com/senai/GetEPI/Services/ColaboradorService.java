@@ -3,6 +3,7 @@ package com.senai.GetEPI.Services;
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Models.ColaboradorModel;
+import com.senai.GetEPI.Models.FuncaoModel;
 import com.senai.GetEPI.Models.UsuarioModel;
 import com.senai.GetEPI.Repositories.ColaboradorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,9 @@ public class ColaboradorService {
     @Autowired
     ColaboradorRepository colaboradorRepository;
 
-    public ColaboradorDto cadastrarColaborador (ColaboradorDto colaboradorDto){
+    public String cadastrarColaborador (ColaboradorDto colaboradorDto){
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-       // Optional<ColaboradorModel> colaboradorModel = colaboradorRepository.findById(colaboradorDto.getId());
+       boolean existeColaborador = colaboradorRepository.existsByEmail(colaboradorDto.getEmail());
         Date dataNascimento = new Date();
         try {
              dataNascimento = formato.parse(colaboradorDto.getDataNascimento());
@@ -34,6 +35,9 @@ public class ColaboradorService {
             e.printStackTrace();
         }
 
+        if(existeColaborador){
+            return "Colaborador já registrado!";
+        }
         ColaboradorModel colaborador = new ColaboradorModel();
         colaborador.setNome(colaboradorDto.getNome());
         colaborador.setEmail(colaboradorDto.getEmail());
@@ -42,7 +46,7 @@ public class ColaboradorService {
 
         colaboradorRepository.save(colaborador);
 
-        return colaboradorDto;
+        return "";
 
     }
 
@@ -50,7 +54,38 @@ public class ColaboradorService {
         return converterListaColaboradorDTO(colaboradorRepository.findAll());
     }
 
-    private List<ColaboradorDto> converterListaColaboradorDTO(List<ColaboradorModel> listaColaboradorModel) {
+    public List<ColaboradorDto> converterListaColaboradorDTO(List<ColaboradorModel> listaColaboradorModel) {
         return listaColaboradorModel.stream().map(ColaboradorDto::new).collect(Collectors.toList());
     }
+
+    public ColaboradorDto buscaColaboradorDTO(Long id){
+        ColaboradorModel colaborador = colaboradorRepository.findById(id).get();
+
+        return new ColaboradorDto(colaborador,new FuncaoModel());
+    }
+
+    public boolean excluirColaborador(Long id){
+        Optional<ColaboradorModel> optionalColaborador = colaboradorRepository.findById(id);
+        if (!optionalColaborador.isPresent()){
+            return false;
+        }
+        colaboradorRepository.delete(optionalColaborador.get());
+        return true;
+
+    }
+
+    public String atualizaColaborador(ColaboradorDto colaborador) {
+        Optional<ColaboradorModel> colaboradorBD = colaboradorRepository.findById(colaborador.getId());
+
+        if (!colaboradorBD.get().getEmail().equals(colaborador.getEmail())) {
+            if (colaboradorRepository.existsByEmail(colaborador.getEmail())) {
+                return "Já existe cadastro com estas credenciais!";
+            }
+        }
+
+        colaboradorRepository.save(new ColaboradorModel(colaborador,new FuncaoModel()));
+        return "";
+    }
+
+
 }
