@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!--
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
@@ -18,42 +20,64 @@
         </a>
         <ul class="list-unstyled ps-0">
             <li class="nav-item active">
-                <a th:href="@{~/listausuario}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">🏯 Home</a>
+                <a th:href="@{~/home}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">
+                    <i class="fa fa-home fa-1x text-bs-gray-700 pe-1"></i>
+                    Home</a>
             </li>
             <li class="nav-item">
-                <a th:href="@{~/listausuario}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">👥 Usuários</a>
+                <a th:href="@{~/listausuario}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">
+                    <i class="fa fa-users fa-1x text-bs-gray-700 pe-1"></i>
+                    Usuários</a>
             </li>
             <li class="nav-item">
                 <div class="dropdown">
-                    <button class="btn btn-outline-light me-2 dropdown-toggle" style="border-color: transparent !important; font-size: 22px;" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        👷🏻‍♂️ Colaboradores
+                    <button class="btn btn-outline-light me-2 dropdown-toggle" style="border-color: transparent !important; font-size: 22px;" type="button" id="dropdownMenuButtonColaborador" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-address-card fa-1x text-bs-gray-700 pe-1"></i>
+                         Colaboradores
                     </button>
-                    <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                        <a class="dropdown-item" th:href="@{~/listacolaboradores}">🧾 Lista de colaboradores</a>
-                        <a class="dropdown-item" th:href="@{~/listafuncao}">💼 Lista de funções</a>
+                    <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButtonColaborador">
+                        <a class="dropdown-item" th:href="@{~/listacolaboradores}">
+                            <i class="fa fa-list fa-1x text-bs-gray-700 pe-1"></i>
+                            Lista de colaboradores</a>
+
+                        <a class="dropdown-item" th:href="@{~/listafuncao}">
+                            <i class="fa fa-briefcase fa-1x text-bs-gray-700 pe-1"></i>
+                            Lista de funções</a>
                     </div>
                 </div>
             </li>
             <li class="nav-item">
                 <div class="dropdown">
-                    <button class="btn btn-outline-light me-2 dropdown-toggle" style="border-color: transparent !important; font-size: 22px;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        ⛑ EPIs
+                    <button class="btn btn-outline-light me-2 dropdown-toggle" style="border-color: transparent !important; font-size: 22px;" type="button" id="dropdownMenuButtonEPIs" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-headphones fa-1x text-bs-gray-700 pe-1"></i>
+                         EPIs
                     </button>
-                    <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">🧾 Lista de EPIs</a>
-                        <a class="dropdown-item" href="#">🦺 Tipo de equipamento</a>
+                    <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButtonEPIs">
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-list fa-1x text-bs-gray-700 pe-1"></i>
+                            Lista de EPIs</a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-fire-extinguisher fa-1x text-bs-gray-700 pe-1"></i>
+                            Tipo de equipamento</a>
                     </div>
                 </div>
             </li>
             <li class="nav-item">
-                <a th:href="@{~/listausuario}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">🛂 Empréstimos</a>
+                <a th:href="@{~/listausuario}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">
+                    <i class="fa fa-handshake-o fa-1x text-bs-gray-700 pe-1"></i>
+                    Empréstimos</a>
             </li>
             <li class="nav-item">
-                <a th:href="@{~/listausuario}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">💱 Movimentações</a>
+                <a th:href="@{~/listausuario}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">
+                    <i class="fa fa-exchange fa-1x text-bs-gray-700 pe-1"></i>
+                    Movimentações</a>
             </li>
             <li class="nav-item">
                 <div class="ml-auto">
-                    <a th:href="@{~/login}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">🚪 Sair</a>
+
+                    <a th:href="@{~/login}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">
+                        <i class="fa fa-sign-out fa-1x text-bs-gray-700 pe-1"></i>
+                        Sair</a>
                 </div>
             </li>
         </ul>
