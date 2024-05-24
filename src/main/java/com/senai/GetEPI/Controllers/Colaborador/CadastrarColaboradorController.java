@@ -2,6 +2,7 @@ package com.senai.GetEPI.Controllers.Colaborador;
 
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.Services.ColaboradorService;
+import com.senai.GetEPI.Services.FuncaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,8 @@ public class CadastrarColaboradorController {
 
     @Autowired
     ColaboradorService colaboradorService;
+    @Autowired
+    private FuncaoService funcaoService;
 
     @GetMapping()
     public String cadastrarColaborador(Model model){
@@ -23,6 +26,7 @@ public class CadastrarColaboradorController {
         ColaboradorDto colaboradorDto = new ColaboradorDto();
 
         model.addAttribute("colaboradorDto",colaboradorDto);
+        model.addAttribute("funcoes", funcaoService.obterListaFuncao());
 
         return "cadastrarcolaborador";
     }
@@ -34,6 +38,7 @@ public class CadastrarColaboradorController {
         if (!mensagemErro.isEmpty()) {
             model.addAttribute("erro", true);
             model.addAttribute("mensagemErro", mensagemErro);
+
             return "cadastrarcolaborador";
         }
 

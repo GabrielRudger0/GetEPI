@@ -79,7 +79,7 @@
                             </script>
             </div>
 
-            <form th:method="post" th:action="@{/cadastrarfuncao}" th:object="${funcaoDTO}">
+            <form th:method="post" th:action="@{/cadastrarfuncao}" th:object="${funcaoDto}">
               <div class="form-group">
                 <label for="funcao">Função</label>
                 <input type="text" id="funcao" th:field="*{funcao}" class="form-control form-control-lg" required/>
