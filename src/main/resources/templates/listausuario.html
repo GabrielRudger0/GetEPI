@@ -52,8 +52,8 @@
            .dropdown-item:hover {
                 color: black !important;
             }
-           .btn:hover{
-                color: #ffc107;
+           .btnHover:hover{
+                color: white;
             }
 
         </style>
@@ -129,19 +129,19 @@
                                         <td th:text="${usuario.nome}"></td>
                                         <td th:text="${usuario.email}"></td>
                                         <td class="text-center">
-                                            <a th:href="@{'/visualizarusuario/' + ${usuario.id}}" class="btn btn-outline-info">
-                                                <i class='fa fa-eye text-info pe-1'></i>
+                                            <a th:href="@{'/visualizarusuario/' + ${usuario.id}}" class="btn btn-outline-info btnHover">
+                                                <i class='fa fa-eye pe-1'></i>
                                                 Visualizar
                                             </a>
                                         </td>
                                         <td class="text-center">
-                                            <a th:href="@{'/atualizausuario/' + ${usuario.id}}" class="btn btn-outline-warning text-white">
-                                                <i class='fa fa-pencil text-white pe-1'></i>
+                                            <a th:href="@{'/atualizausuario/' + ${usuario.id}}" class="btn btn-outline-warning btnHover">
+                                                <i class='fa fa-pencil pe-1'></i>
                                                 Atualizar
                                             </a>
                                         </td>
                                         <td class="text-center">
-                                            <button th:data-usuario-id="${usuario.id}" class="excluir btn btn-outline-danger">
+                                            <button th:data-usuario-id="${usuario.id}" class="excluir btnHover btn btn-outline-danger">
                                                 <i class='fa fa-user-times text-alert pe-1'></i>
                                                 Excluir
                                             </button>
