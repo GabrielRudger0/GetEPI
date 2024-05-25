@@ -6,6 +6,7 @@ import com.senai.GetEPI.DTOs.FuncaoDto;
 import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.EpiModel;
 import com.senai.GetEPI.Models.FuncaoModel;
+import com.senai.GetEPI.Models.TipoEquipamentoModel;
 import com.senai.GetEPI.Repositories.EpiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,8 @@ public class EpiService {
     EpiRepository epiRepository;
 
     public String cadastrarEpi(EpiDto epi) {
-
-
-        epiRepository.save(new EpiModel(epi));
-        return "";
-
+            epiRepository.save(new EpiModel(epi, epi.getTipoEquipamento()));
+            return "";
     }
 
     public List<EpiDto> retornaListaEpiDTO() {

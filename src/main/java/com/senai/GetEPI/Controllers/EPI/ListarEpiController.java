@@ -3,6 +3,7 @@ package com.senai.GetEPI.Controllers.EPI;
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.Services.EpiService;
+import com.senai.GetEPI.Services.TipoEquipamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ public class ListarEpiController {
 
     @Autowired
     EpiService epiService;
+    @Autowired
+    private TipoEquipamentoService tipoEquipamentoService;
 
     @GetMapping()
     public String exibirListaEpi(Model model,EpiDto epiDto) {
@@ -28,6 +31,7 @@ public class ListarEpiController {
         List<EpiDto> listaEpi = epiService.retornaListaEpiDTO();
 
         model.addAttribute("epis",epiService.obterListaEpi());
+        model.addAttribute("tipoepi", tipoEquipamentoService.obterListaTipoEquipamento());
         model.addAttribute("buscaEPIDto", new EpiDto());
 
         return "listaEPI";

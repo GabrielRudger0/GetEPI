@@ -82,28 +82,27 @@
                     </div>
                     <div class="card-body">
 
-                        <!-- MECANISMO DE BUSCA
                         <div class="card border-info mb-3 w-100">
                             <div class="card-header">
-                                <i class='fa fa-users fa-1x text-dark pe-1'></i>
-                                Pesquisar colaboradores
+                                <i class='fa fa-fire-extinguisher fa-1x text-dark pe-1'></i>
+                                Pesquisar tipos de equipamento
                             </div>
                             <div class="card-body">
                                 <div class="d-flex pb-2">
-                                    <form th:method="post" th:action="@{/listacolaborador/buscar}" th:object="${buscaColaboradorDTO}" class="d-flex">
+                                    <form th:method="post" th:action="@{/listatipoequipamento}" th:object="${buscaTipoEquipamentoDTO}" class="d-flex">
                                         <div class="m-auto pe-2">
                                             <button type="submit" class="btn btn-outline-secondary mr-2">
                                                 <span><i class='fa fa-search fa-1x text-bs-gray-700'></i> Pesquisar</span>
                                             </button>
                                         </div>
                                         <div style="width: 450px;">
-                                            <input type="text" id="nome" th:field="*{nome}" class="form-control form-control-lg" placeholder="Nome do colaborador"/>
+                                            <input type="text" id="nome" th:field="*{descricao}" class="form-control form-control-lg" placeholder="Descrição do tipo de equipamento"/>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                        -->
+
 
                         <!-- BOTAO CADASTRAR -->
                         <p class="card-text pd-3">

@@ -1,6 +1,7 @@
 package com.senai.GetEPI.DTOs;
 
 import com.senai.GetEPI.Models.EpiModel;
+import com.senai.GetEPI.Models.TipoEquipamentoModel;
 import lombok.Data;
 
 @Data
@@ -10,15 +11,22 @@ public class EpiDto {
 
   private String nomeEpi;
 
-  private String tipoEpi;
+  private TipoEquipamentoModel tipoEquipamento;
 
   public EpiDto(){
 
   }
 
   public EpiDto(EpiModel epi){
-    this.id           = epi.getId();
-    this.nomeEpi      = epi.getNomeEpi();
-    this.tipoEpi      = epi.getTipoEquipamentoEpi();
+    this.id               = epi.getId();
+    this.nomeEpi          = epi.getNomeEpi();
+    this.tipoEquipamento  = epi.getTipoEquipamento();
   }
+
+  public EpiDto(EpiModel epi, TipoEquipamentoModel tipoEquipamento){
+    this.id               = epi.getId();
+    this.nomeEpi          = epi.getNomeEpi();
+    this.tipoEquipamento = tipoEquipamento;
+  }
+
 }
