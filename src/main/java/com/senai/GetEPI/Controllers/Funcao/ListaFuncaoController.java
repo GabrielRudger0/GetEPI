@@ -25,7 +25,7 @@ public class ListaFuncaoController {
     FuncaoService funcaoService;
 
     @GetMapping()
-    public String exibirListaColaboradores(Model model, HttpServletRequest request, FuncaoDto funcaoDto) {
+    public String exibirListaFuncao(Model model, HttpServletRequest request, FuncaoDto funcaoDto) {
 
         List<FuncaoDto> listaFuncaoDto = funcaoService.retornaListaFuncaoDTO();
 
@@ -39,11 +39,11 @@ public class ListaFuncaoController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> excluirColaborador(@PathVariable Long id){
+    public ResponseEntity<String> excluirFuncao(@PathVariable Long id){
 
         boolean sucesso = funcaoService.excluirFuncao(id);
         if (sucesso){
-            return ResponseEntity.ok("Função excluído com sucesso.");
+            return ResponseEntity.ok("Função excluída com sucesso.");
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir função.");
     }

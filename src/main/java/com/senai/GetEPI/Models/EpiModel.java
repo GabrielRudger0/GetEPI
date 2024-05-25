@@ -26,7 +26,7 @@ public class EpiModel {
     public EpiModel(EpiDto epi){
         this.id                 = epi.getId();
         this.nomeEpi            = epi.getNomeEpi();
-        this.tipoEquipamentoEpi = epi.getDescricaoEpi();
+        this.tipoEquipamentoEpi = epi.getTipoEpi();
     }
 
 }

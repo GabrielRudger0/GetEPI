@@ -10,7 +10,7 @@ public class EpiDto {
 
   private String nomeEpi;
 
-  private String descricaoEpi;
+  private String tipoEpi;
 
   public EpiDto(){
 
@@ -19,6 +19,6 @@ public class EpiDto {
   public EpiDto(EpiModel epi){
     this.id           = epi.getId();
     this.nomeEpi      = epi.getNomeEpi();
-    this.descricaoEpi = epi.getTipoEquipamentoEpi();
+    this.tipoEpi      = epi.getTipoEquipamentoEpi();
   }
 }

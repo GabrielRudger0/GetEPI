@@ -19,7 +19,7 @@ public class CadastrarFuncaoController {
     FuncaoService funcaoService;
 
     @GetMapping()
-    public String cadastrarColaborador(Model model){
+    public String cadastrarFucao(Model model){
 
         FuncaoDto funcaoDto = new FuncaoDto();
 
@@ -29,7 +29,7 @@ public class CadastrarFuncaoController {
     }
 
     @PostMapping()
-    public String enviarDadosColaborador(@ModelAttribute("funcaoDto")FuncaoDto funcaoDto, Model model){
+    public String enviarDadosFuncao(@ModelAttribute("funcaoDto")FuncaoDto funcaoDto, Model model){
 
         String mensagemErro = funcaoService.cadastrarFuncao(funcaoDto);
         if (!mensagemErro.isEmpty()) {
