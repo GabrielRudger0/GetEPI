@@ -50,6 +50,10 @@ public class ColaboradorService {
 
     }
 
+    public List<ColaboradorModel> obterListaColaboradores(){
+        return colaboradorRepository.findAll();
+    }
+
     public List<ColaboradorDto> retornaListaColaboradorDTO() {
         return converterListaColaboradorDTO(colaboradorRepository.findAll());
     }

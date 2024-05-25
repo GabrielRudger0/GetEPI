@@ -124,7 +124,7 @@
                   <td th:text="${colaborador.id}"></td>
                   <td th:text="${colaborador.nome}"></td>
                   <td th:text="${colaborador.email}"></td>
-                  <td th:text="${colaborador.funcao}"></td>
+                  <td th:text="${colaborador.funcao.funcao}"></td>
                   <td th:text="${colaborador.dataNascimento}"></td>
                   <td class="text-center">
                     <a th:href="@{'/visualizarcolaborador/' + ${colaborador.id}}" class="btn btn-outline-info btnHover">

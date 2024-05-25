@@ -3,6 +3,7 @@ package com.senai.GetEPI.Controllers.Colaborador;
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Services.ColaboradorService;
+import com.senai.GetEPI.Services.FuncaoService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,19 +26,23 @@ public class ListarColaboradorController {
     @Autowired
     ColaboradorService colaboradorService;
 
+    @Autowired
+    FuncaoService funcaoService;
+
     @GetMapping()
     public String exibirListaColaboradores(Model model, HttpServletRequest request, ColaboradorDto colaboladorDto) {
 
         List<ColaboradorDto> listaColaborador = colaboradorService.retornaListaColaboradorDTO();
 
-        model.addAttribute("colaboradores", colaboradorService.retornaListaColaboradorDTO());
+        model.addAttribute("colaboradores", colaboradorService.obterListaColaboradores());
+        model.addAttribute("funcao", funcaoService.obterListaFuncao());
         model.addAttribute("buscaColaboradorDTO", new ColaboradorDto());
 
         return "listacolaborador";
 
     }
         @DeleteMapping("/{id}")
-        public ResponseEntity<String> excluirUsuario(@PathVariable Long id){
+        public ResponseEntity<String> excluirColaborador(@PathVariable Long id){
 
             boolean sucesso = colaboradorService.excluirColaborador(id);
             if (sucesso){
