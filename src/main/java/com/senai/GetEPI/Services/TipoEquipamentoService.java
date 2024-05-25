@@ -1,14 +1,17 @@
 package com.senai.GetEPI.Services;
 
+import com.senai.GetEPI.DTOs.FuncaoDto;
 import com.senai.GetEPI.DTOs.TipoEquipamentoDTO;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Models.ColaboradorModel;
+import com.senai.GetEPI.Models.FuncaoModel;
 import com.senai.GetEPI.Models.TipoEquipamentoModel;
 import com.senai.GetEPI.Models.UsuarioModel;
 import com.senai.GetEPI.Repositories.TipoEquipamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +29,25 @@ public class TipoEquipamentoService {
 
     private List<TipoEquipamentoDTO> converterListaEquipamentoDTO(List<TipoEquipamentoModel> listaModel) {
         return listaModel.stream().map(TipoEquipamentoDTO::new).collect(Collectors.toList());
+    }
+
+    public List<TipoEquipamentoDTO> obterListaTipoEquipamento() {
+
+        List<TipoEquipamentoModel> listaTipoEquipamentoModel = tipoEquipamentoRepository.findAll();
+
+        List<TipoEquipamentoDTO> listaTipoEquipamento = new ArrayList<>();
+
+        for (TipoEquipamentoModel tpEquipamento : listaTipoEquipamentoModel) {
+
+            TipoEquipamentoDTO tipoEquipamentoDTO = new TipoEquipamentoDTO();
+            tipoEquipamentoDTO.setId(tpEquipamento.getId());
+            tipoEquipamentoDTO.setDescricao(tpEquipamento.getDescricao());
+
+            listaTipoEquipamento.add(tipoEquipamentoDTO);
+        }
+
+        return listaTipoEquipamento;
+
     }
 
     public String cadastraTipoEquipamento(TipoEquipamentoDTO tipoEquipamento) {
