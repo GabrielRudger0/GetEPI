@@ -13,7 +13,7 @@
 
 <div th:fragment="componente-menulateral">
     <div class="flex-shrink-0 p-3 bg-dark">
-        <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+        <a th:href="@{~/home}" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
             <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
             <span class="fs-5 fw-semibold"></span>
             <img src="http://localhost:8080/getEpiNavbar.png" alt="GetEPI" class="hover-img">
