@@ -102,10 +102,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="tipoepi">Tipo do EPI</label>
-                                <select id="tipoepi" name="tipoepi" class="form-control form-control-lg" required>
-                                    <option value="">Selecione o EPI</option>
-                                    <option th:each="tipoepi : ${tipoepis}" th:value="${tipoepi.id}" th:text="${tipoepi.descricao}">Função 1</option>
+                                <label for="tipoEquipamento">Tipo de equipamento</label>
+                                <select id="tipoEquipamento" name="tipoEquipamento" class="form-control form-control-lg" required>
+                                    <option th:each="tipoEquipamento : ${tiposEquipamento}" th:value="${tipoEquipamento.id}" th:text="${tipoEquipamento.descricao}"></option>
                                 </select>
                             </div>
 

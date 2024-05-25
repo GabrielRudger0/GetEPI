@@ -23,16 +23,8 @@ public class EpiService {
     EpiRepository epiRepository;
 
     public String cadastrarEpi(EpiDto epi) {
-
-
-            EpiModel epiModel = new EpiModel();
-            epiModel.setNomeEpi(epi.getNomeEpi());
-            epiModel.setDescricao(epi.getTipoEpi());
-            System.out.println("Tpo epi: " + epi.getNomeEpi());
-            epiRepository.save(epiModel);
-
+            epiRepository.save(new EpiModel(epi, epi.getTipoEquipamento()));
             return "";
-
     }
 
     public List<EpiDto> retornaListaEpiDTO() {

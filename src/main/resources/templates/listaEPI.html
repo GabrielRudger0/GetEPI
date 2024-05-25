@@ -126,7 +126,7 @@
                                 <tr th:each="epi : ${epis}">
                                     <td th:text="${epi.id}"></td>
                                     <td th:text="${epi.nomeEpi}"></td>
-                                    <td th:text="${epi.descricao.descricao}"></td>
+                                    <td th:text="${epi.tipoEquipamento.descricao}"></td>
                                     <td class="text-center">
                                         <a th:href="@{'/visualizarepi/' + ${epi.id}}" class="btn btn-outline-info btnHover">
                                             <i class='fa fa-eye pe-1'></i>
