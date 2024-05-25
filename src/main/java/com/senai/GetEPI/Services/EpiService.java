@@ -42,4 +42,14 @@ public class EpiService {
         return epiRepository.findAll();
     }
 
+    public boolean excluirEpi(Long id){
+        Optional<EpiModel> optionalEpi = epiRepository.findById(id);
+        if (!optionalEpi.isPresent()){
+            return false;
+        }
+        epiRepository.delete(optionalEpi.get());
+        return true;
+
+    }
+
 }
