@@ -14,4 +14,6 @@ public interface TipoEquipamentoRepository extends JpaRepository<TipoEquipamento
     public Optional<TipoEquipamentoModel> findByDescricao(String descricao);
 
 
+
+
 }
