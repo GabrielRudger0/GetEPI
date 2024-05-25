@@ -27,6 +27,7 @@ public class CadastrarColaboradorController {
 
         model.addAttribute("colaboradorDto",colaboradorDto);
         model.addAttribute("funcoes", funcaoService.obterListaFuncao());
+        System.out.println("aoba");
 
         return "cadastrarcolaborador";
     }
@@ -38,6 +39,7 @@ public class CadastrarColaboradorController {
         if (!mensagemErro.isEmpty()) {
             model.addAttribute("erro", true);
             model.addAttribute("mensagemErro", mensagemErro);
+            model.addAttribute("funcoes", funcaoService.obterListaFuncao());
 
             return "cadastrarcolaborador";
         }

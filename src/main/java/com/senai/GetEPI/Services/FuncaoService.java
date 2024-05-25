@@ -33,10 +33,28 @@ public class FuncaoService {
 
     public String cadastrarFuncao(FuncaoDto funcao) {
 
+        if (!mensagemErroFuncao(funcao).isEmpty()) {
+            return mensagemErroFuncao(funcao);
+        }
         funcaoRepository.save(new FuncaoModel(funcao));
         return "";
 
     }
+
+    public String atualizarFuncao(FuncaoDto funcao) {
+        Optional<FuncaoModel> funcaoBD = funcaoRepository.findById(funcao.getId());
+
+        /*
+        if (!funcaoBD.get().getFuncao().equals(funcao.getFuncao())) {
+            if (funcaoBD.isPresent()) {
+                return "Já existe cadastro com estas credenciais!";
+            }
+        }
+*/
+        funcaoRepository.save(new FuncaoModel(funcao));
+        return "";
+    }
+
 
     public List<FuncaoDto> obterListaFuncao() {
 
@@ -57,6 +75,12 @@ public class FuncaoService {
 
     }
 
+    public FuncaoDto buscaFuncaoDTO(Long id){
+        FuncaoModel funcao = funcaoRepository.findById(id).get();
+
+        return new FuncaoDto(funcao);
+    }
+
     public boolean excluirFuncao(Long id){
         Optional<FuncaoModel> optionalFuncao = funcaoRepository.findById(id);
         if (!optionalFuncao.isPresent()){
@@ -67,6 +91,13 @@ public class FuncaoService {
 
     }
 
+    private String mensagemErroFuncao(FuncaoDto funcao) {
+        Optional<FuncaoModel> funcaoExistente = funcaoRepository.findByFuncao(funcao.getFuncao());
+        if (funcaoExistente.isPresent()) {
+            return "Já existe cadastro com estas credenciais!";
+        }
+        return "";
+    }
 
 
 }
