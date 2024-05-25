@@ -1,8 +1,10 @@
 package com.senai.GetEPI.Services;
 
 import com.senai.GetEPI.DTOs.TipoEquipamentoDTO;
+import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.TipoEquipamentoModel;
+import com.senai.GetEPI.Models.UsuarioModel;
 import com.senai.GetEPI.Repositories.TipoEquipamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,4 +67,11 @@ public class TipoEquipamentoService {
         tipoEquipamentoRepository.delete(tipoEquipamentoModel.get());
         return true;
     }
+
+    public List<TipoEquipamentoDTO> buscarTipoEquipamentoPorDescricao(TipoEquipamentoDTO tipoEquipamento) {
+        List<TipoEquipamentoModel> tiposEquipamentoEncontrados = tipoEquipamentoRepository.findByDescricaoContaining(tipoEquipamento.getDescricao());
+        return converterListaEquipamentoDTO(tiposEquipamentoEncontrados);
+    }
+
+
 }
