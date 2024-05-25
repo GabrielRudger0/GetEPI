@@ -12,7 +12,7 @@
 <body>
 
 <div th:fragment="componente-menulateral">
-    <div class="flex-shrink-0 p-3 bg-dark">
+    <div class="flex-shrink-0 p-3 bg-dark position-fixed mt-5 start-0">
         <a th:href="@{~/home}" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
             <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
             <span class="fs-5 fw-semibold"></span>
@@ -63,7 +63,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a th:href="@{~/listausuario}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">
+                <a th:href="@{~/listaemprestimo}" class="btn btn-outline-light me-2" style="border-color: transparent !important;">
                     <i class="fa fa-handshake-o fa-1x text-bs-gray-700 pe-1"></i>
                     Empréstimos</a>
             </li>
