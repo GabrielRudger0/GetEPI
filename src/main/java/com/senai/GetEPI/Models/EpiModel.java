@@ -1,6 +1,7 @@
 package com.senai.GetEPI.Models;
 
 import com.senai.GetEPI.DTOs.EpiDto;
+import com.senai.GetEPI.DTOs.TipoEquipamentoDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,16 +18,23 @@ public class EpiModel {
 
     private String nomeEpi;
 
-    private String tipoEquipamentoEpi;
+    @ManyToOne
+    private TipoEquipamentoModel descricao;
 
     public EpiModel(){
 
     }
 
-    public EpiModel(EpiDto epi){
+    public EpiModel(Long id, String nomeEpi, TipoEquipamentoModel descricao){
+        this.id = id;
+        this.nomeEpi = nomeEpi;
+        this.descricao = descricao;
+    }
+
+    public EpiModel(EpiDto epi, TipoEquipamentoModel descricao){
         this.id                 = epi.getId();
         this.nomeEpi            = epi.getNomeEpi();
-        this.tipoEquipamentoEpi = epi.getTipoEpi();
+        this.descricao          = descricao;
     }
 
 }

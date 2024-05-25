@@ -17,4 +17,6 @@ public interface TipoEquipamentoRepository extends JpaRepository<TipoEquipamento
     public List<TipoEquipamentoModel> findByDescricaoContaining(String descricao);
 
 
+
+
 }

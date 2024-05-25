@@ -100,20 +100,15 @@
                                 <label for="epi">Nome do EPI</label>
                                 <input type="text" id="epi" th:field="*{nomeEpi}" class="form-control form-control-lg" required/>
                             </div>
-                            <div class="form-group">
-                                <label for="descricaoEpi">Tipo do EPI</label>
-                                <input type="text" id="descricaoEpi" th:field="*{tipoEpi}" class="form-control form-control-lg" required/>
-                            </div>
-                            <!-- aqui futuramente quando tiver o cadastro de tipo de epi já esta aqui o combo box para cadastrar
 
                             <div class="form-group">
-                                <label for="funcao">Função</label>
-                                <select id="funcao" name="funcao" class="form-control form-control-lg" required>
-                                    <option value="">Selecione a função</option>
-                                    <option th:each="funcao : ${funcoes}" th:value="${funcao.id}" th:text="${funcao.funcao}">Função 1</option>
+                                <label for="tipoepi">Tipo do EPI</label>
+                                <select id="tipoepi" name="tipoepi" class="form-control form-control-lg" required>
+                                    <option value="">Selecione o EPI</option>
+                                    <option th:each="tipoepi : ${tipoepis}" th:value="${tipoepi.id}" th:text="${tipoepi.descricao}">Função 1</option>
                                 </select>
                             </div>
-                            -->
+
                             <div class="pt-2 mb-4">
                                 <button type="submit" class="btn btn-outline-success mr-2">
                                     <span class="btnHover"><i class='fa fa-check fa-1x'></i> Cadastrar</span>
