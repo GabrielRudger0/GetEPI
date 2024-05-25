@@ -27,8 +27,6 @@ public class CadastrarColaboradorController {
 
         model.addAttribute("colaboradorDto",colaboradorDto);
         model.addAttribute("funcoes", funcaoService.obterListaFuncao());
-        System.out.println("aoba");
-
         return "cadastrarcolaborador";
     }
 
