@@ -1,5 +1,6 @@
 package com.senai.GetEPI.DTOs;
 
+import com.senai.GetEPI.Dominios.EmprestimoStatus;
 import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.EmprestimoModel;
 import com.senai.GetEPI.Models.EpiModel;
@@ -34,6 +35,10 @@ public class ViewEmprestimoDTO {
 
 
     private String formatarData(Date data) {
+        if(data == null) {
+            return EmprestimoStatus.NAO_DEVOLVIDO.getDescricao();
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(data);
     }

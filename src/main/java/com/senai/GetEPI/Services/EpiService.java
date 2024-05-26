@@ -22,6 +22,10 @@ public class EpiService {
     @Autowired
     EpiRepository epiRepository;
 
+    public List<EpiModel> retornaEPIModel() {
+        return epiRepository.findAll();
+    }
+
     public String cadastrarEpi(EpiDto epi) {
             epiRepository.save(new EpiModel(epi, epi.getTipoEquipamento()));
             return "";

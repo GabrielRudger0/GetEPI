@@ -1,5 +1,6 @@
 package com.senai.GetEPI.Models;
 
+import com.senai.GetEPI.DTOs.EmprestimoDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -28,5 +29,13 @@ public class EmprestimoModel {
     private Date devolucaoData;
 
     public EmprestimoModel() {
+    }
+
+    public EmprestimoModel(EmprestimoDTO emprestimo) {
+        this.id = emprestimo.getId();
+        this.colaborador = emprestimo.getColaborador();
+        this.epi = emprestimo.getEpi();
+        this.emissaoData = emprestimo.getEmissaoData();
+        this.devolucaoData = emprestimo.getDevolucaoData();
     }
 }
