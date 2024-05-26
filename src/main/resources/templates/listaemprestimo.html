@@ -78,7 +78,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-secondary text-center">
                                 <i class='fa fa-handshake-o fa-1x text-dark pe-1'></i>
-                                Emprestimos
+                                Empréstimos
                             </h6>
                         </div>
                         <div class="card-body">
@@ -106,14 +106,22 @@
                             </div>
                             <!-- MECANISMO DE BUSCA -->
 
-                            <!-- BOTAO CADASTRAR -->
+                            <!-- BOTÕES SUPERIORES -->
                             <p class="card-text pd-3">
+                                <!-- BOTAO CADASTRAR -->
                                 <a th:href="@{~/cadastraremprestimo}" class="btn btn-outline-secondary">
                                     <i class='fa fa-plus text-bs-gray-700 pe-1'></i>
                                     Cadastrar empréstimo
                                 </a>
+                                <!-- BOTAO CADASTRAR -->
+                                <!-- BOTAO PENDENTES -->
+                                <a th:href="@{~/listadevolucao}" class="btn btn-outline-secondary">
+                                    <i class='fa fa-history text-bs-gray-700 pe-1'></i>
+                                    Pendentes de devolução
+                                </a>
+                                <!-- BOTAO PENDENTES -->
                             </p>
-                            <!-- BOTAO CADASTRAR -->
+                            <!-- BOTÕES SUPERIORES -->
 
                             <!-- GRID -->
                             <div class="table-responsive">
@@ -127,7 +135,6 @@
                                         <th>Data de devolução</th>
                                         <th style="width: 200px;"></th>
                                         <th style="width: 200px;"></th>
-                                        <th style="width: 200px;"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -138,19 +145,13 @@
                                         <td th:text="${emprestimo.emissaoData}">Data de empréstimo</td>
                                         <td th:text="${emprestimo.devolucaoData}">Data de devolução</td>
                                         <td class="text-center">
-                                            <a class="btn btn-outline-info btnHover">
+                                            <a th:href="@{'/visualizaremprestimo/' + ${emprestimo.id}}" class="btn btn-outline-info btnHover">
                                                 <i class='fa fa-eye pe-1'></i>
                                                 Visualizar
                                             </a>
                                         </td>
                                         <td class="text-center">
-                                            <a class="btn btn-outline-warning btnHover">
-                                                <i class='fa fa-pencil pe-1'></i>
-                                                Atualizar
-                                            </a>
-                                        </td>
-                                        <td class="text-center">
-                                            <button class="excluir btnHover btn btn-outline-danger">
+                                            <button th:data-emprestimo-id="${emprestimo.id}" class="excluir btnHover btn btn-outline-danger">
                                                 <i class='fa fa-user-times text-alert pe-1'></i>
                                                 Excluir
                                             </button>
@@ -193,9 +194,10 @@
     </div>
     Mensagem de erro -->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="/excluir_emprestimo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

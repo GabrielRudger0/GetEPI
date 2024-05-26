@@ -4,7 +4,7 @@ document.querySelectorAll('.excluir').forEach(function(button) {
     button.addEventListener('click',
     function() {
         Swal.fire({
-          title: "Continuar com a exclusão do usuário?",
+          title: "Continuar com a exclusão do empréstimo?",
           text: "",
           icon: "question",
           showCancelButton: true,
@@ -16,10 +16,10 @@ document.querySelectorAll('.excluir').forEach(function(button) {
           if (result.isConfirmed) {
             const row = this.closest('tr'); // Obtém a linha atual da tabela
 
-            const usuarioId = this.dataset.usuarioId;
+            const emprestimoId = this.dataset.emprestimoId;
 
             // Realize a chamada AJAX para excluir o recurso
-            fetch(`/listausuario/${usuarioId}`, {
+            fetch(`/listaemprestimo/${emprestimoId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -28,23 +28,23 @@ document.querySelectorAll('.excluir').forEach(function(button) {
             .then(response => {
                 if (response.ok) {
                     // A exclusão foi bem-sucedida
-                    console.log('Usuário excluído com sucesso.');
+                    console.log('Empréstimo excluído com sucesso.');
 
                     // Remove a linha da tabela após a exclusão
                     //row.remove();
                     Swal.fire({
-                        title: "Usuário excluído com sucesso!",
+                        title: "Empréstimo excluído com sucesso!",
                         icon: "success",
                         showConfirmButton: false
                     });
                     setTimeout(function() {
-                        window.location.href = "/listausuario";
+                        window.location.href = "/listaemprestimo";
                     }, 1700);
 
                 } else {
                     // A solicitação DELETE falhou
-                    console.error('Erro ao excluir usuário.');
-                    alert('Erro ao excluir usuário');
+                    console.error('Erro ao excluir empréstimo.');
+                    alert('Erro ao excluir empréstimo');
                 }
             })
             .catch(error => {
