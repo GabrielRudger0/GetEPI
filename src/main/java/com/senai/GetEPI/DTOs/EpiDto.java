@@ -11,27 +11,22 @@ public class EpiDto {
 
   private String nomeEpi;
 
-  private TipoEquipamentoModel tipoEpi;
+  private TipoEquipamentoModel tipoEquipamento;
 
   public EpiDto(){
 
   }
 
-  public EpiDto(Long id, String nome, TipoEquipamentoModel tipoEpi){
-    this.id = id;
-    this.nomeEpi = nome;
-    this.tipoEpi = tipoEpi;
-  }
-
-  public EpiDto(EpiModel epi,TipoEquipamentoModel tpEquipamento){
-    this.id           = epi.getId();
-    this.nomeEpi      = epi.getNomeEpi();
-    this.tipoEpi      = tpEquipamento;
-  }
-
   public EpiDto(EpiModel epi){
-    this.id           = epi.getId();
-    this.nomeEpi      = epi.getNomeEpi();
-    this.tipoEpi      = epi.getDescricao();
+    this.id               = epi.getId();
+    this.nomeEpi          = epi.getNomeEpi();
+    this.tipoEquipamento  = epi.getTipoEquipamento();
   }
+
+  public EpiDto(EpiModel epi, TipoEquipamentoModel tipoEquipamento){
+    this.id               = epi.getId();
+    this.nomeEpi          = epi.getNomeEpi();
+    this.tipoEquipamento = tipoEquipamento;
+  }
+
 }

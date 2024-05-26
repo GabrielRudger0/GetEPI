@@ -17,6 +17,7 @@ public class CadastrarEpiController {
 
     @Autowired
     EpiService epiService;
+
     @Autowired
     private TipoEquipamentoService tipoEquipamentoService;
 
@@ -26,7 +27,7 @@ public class CadastrarEpiController {
         EpiDto epiDto = new EpiDto();
 
         model.addAttribute("epiDto", epiDto);
-        model.addAttribute("tipoepis", tipoEquipamentoService.obterListaTipoEquipamento());
+        model.addAttribute("tiposEquipamento", tipoEquipamentoService.obterListaTipoEquipamento());
 
         return "cadastrarepi";
 
@@ -35,12 +36,13 @@ public class CadastrarEpiController {
     @PostMapping
     public String enviarDadosCadastro(@ModelAttribute("epiDto") EpiDto epiDto, Model model){
 
+        System.out.println("epiDto: " + epiDto.getTipoEquipamento().getId());
 
         String mensagemErro = epiService.cadastrarEpi(epiDto);
         if (!mensagemErro.isEmpty()) {
             model.addAttribute("erro", true);
             model.addAttribute("mensagemErro", mensagemErro);
-            model.addAttribute("tipoepis", tipoEquipamentoService.obterListaTipoEquipamento());
+            model.addAttribute("tiposEquipamento", tipoEquipamentoService.obterListaTipoEquipamento());
             return "cadastrarepi";
         }
 

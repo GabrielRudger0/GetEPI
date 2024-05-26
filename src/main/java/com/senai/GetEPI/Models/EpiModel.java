@@ -19,22 +19,22 @@ public class EpiModel {
     private String nomeEpi;
 
     @ManyToOne
-    private TipoEquipamentoModel descricao;
+    private TipoEquipamentoModel tipoEquipamento;
 
     public EpiModel(){
 
     }
 
-    public EpiModel(Long id, String nomeEpi, TipoEquipamentoModel descricao){
+    public EpiModel(Long id, String nomeEpi, TipoEquipamentoModel tipoEquipamento){
         this.id = id;
         this.nomeEpi = nomeEpi;
-        this.descricao = descricao;
+        this.tipoEquipamento = tipoEquipamento;
     }
 
-    public EpiModel(EpiDto epi, TipoEquipamentoModel descricao){
-        this.id                 = epi.getId();
-        this.nomeEpi            = epi.getNomeEpi();
-        this.descricao          = descricao;
+    public EpiModel(EpiDto epi, TipoEquipamentoModel tipoEquipamento){
+        this.id              = epi.getId();
+        this.nomeEpi         = epi.getNomeEpi();
+        this.tipoEquipamento = tipoEquipamento;
     }
 
 }
