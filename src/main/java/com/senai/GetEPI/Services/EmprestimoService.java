@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.View;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -79,6 +80,20 @@ public class EmprestimoService {
         emprestimoBD.setDevolucaoData(new Date());
         emprestimoRepository.save(emprestimoBD);
 
+    }
+
+    public Integer retornaQuantidadeEmprestimoEPI(Long epiId) {
+        return emprestimoRepository.quantidadeEmprestimoEPI(epiId);
+    }
+
+    public Integer retornaQuantidadeEmprestimoEPIPorMes(Long epiId, Date dataInicio, Date dataFim) {
+        System.out.println(formatarData(dataInicio));
+        return emprestimoRepository.quantidadeEmprestimoEPIPorMes(epiId, formatarData(dataInicio), formatarData(dataFim));
+    }
+
+    private String formatarData(Date data) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(data);
     }
 
 }

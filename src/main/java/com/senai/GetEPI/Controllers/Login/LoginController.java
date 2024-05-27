@@ -30,7 +30,7 @@ public class LoginController {
 
         if (usuarioService.loginValido(login)) {
 
-            return "redirect:/listausuario";
+            return "redirect:/home";
         }
         model.addAttribute("erro", true);
         return "login";
