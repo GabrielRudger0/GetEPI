@@ -84,47 +84,47 @@ public class DashboardService {
         List<DashboardMesEpis> listaRelacaoMesEpi = new ArrayList<>();
         List<DashboardEpis> dashboardEpis = retornarRankEPIs();
 
-        if (dashboardEpis.isEmpty()) {
-            DashboardMesEpis informacoesDoMes = new DashboardMesEpis();
-            informacoesDoMes.setMes("Mes");
-
-            List<DashboardEpis> epiDadosMes = new ArrayList<>();
-            DashboardEpis newEPI = new DashboardEpis();
-            newEPI.setEpiId(1l);
-            newEPI.setEpiDescricao("SEM EPI");
-            newEPI.setQuantidadeEmprestimos(0);
-            epiDadosMes.add(newEPI);
-            epiDadosMes.add(newEPI);
-            epiDadosMes.add(newEPI);
-
-            informacoesDoMes.setEpis(epiDadosMes);
-
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-            listaRelacaoMesEpi.add(informacoesDoMes);
-
-            return listaRelacaoMesEpi;
-        }
+//        if (dashboardEpis.isEmpty()) {
+//            DashboardMesEpis informacoesDoMes = new DashboardMesEpis();
+//            informacoesDoMes.setMes("Mes");
+//
+//            List<DashboardEpis> epiDadosMes = new ArrayList<>();
+//            DashboardEpis newEPI = new DashboardEpis();
+//            newEPI.setEpiId(1l);
+//            newEPI.setEpiDescricao("SEM EPI");
+//            newEPI.setQuantidadeEmprestimos(0);
+//            epiDadosMes.add(newEPI);
+//            epiDadosMes.add(newEPI);
+//            epiDadosMes.add(newEPI);
+//
+//            informacoesDoMes.setEpis(epiDadosMes);
+//
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//            listaRelacaoMesEpi.add(informacoesDoMes);
+//
+//            return listaRelacaoMesEpi;
+//        }
 
         List<DashboardMeses> meses = retornaSeisMesesAnteriores();
 
