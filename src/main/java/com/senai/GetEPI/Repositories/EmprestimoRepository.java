@@ -21,4 +21,10 @@ public interface EmprestimoRepository extends JpaRepository<EmprestimoModel, Lon
     @Query(value = "SELECT COUNT(*) FROM emprestimo WHERE epi_id_epi = ? AND emprestimo_emissao_data > ? AND emprestimo_emissao_data < ?", nativeQuery = true)
     public Integer quantidadeEmprestimoEPIPorMes(Long id, String dataInicio, String dataFim);
 
+    @Query(value = "SELECT COUNT(*) FROM emprestimo WHERE emprestimo_emissao_data > ? AND emprestimo_emissao_data < ?", nativeQuery = true)
+    public Integer quantidadeEmprestimoPorDia(String dataInicio, String dataFim);
+
+    @Query(value = "SELECT COUNT(*) FROM emprestimo WHERE emprestimo_devolucao > ? AND emprestimo_devolucao < ?", nativeQuery = true)
+    public Integer quantidadeDevolucaoPorDia(String dataInicio, String dataFim);
+
 }

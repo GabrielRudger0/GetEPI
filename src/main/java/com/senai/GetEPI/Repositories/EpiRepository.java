@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EpiRepository extends JpaRepository<EpiModel, Long> {
 
+    public boolean existsByNomeEpi(String nomeEpi);
+
 }

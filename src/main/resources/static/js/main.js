@@ -42,6 +42,32 @@
     var worldwide_mes6_epi3 = document.getElementById('worldwide_mes6_epi3').innerText;
     var worldwide_mes7_epi3 = document.getElementById('worldwide_mes7_epi3').innerText;
 
+    // ------ grafico 2 ----------- //
+    var grafico2_diaSemana1 = document.getElementById('grafico2_diaSemana1').innerText;
+    var grafico2_diaSemana2 = document.getElementById('grafico2_diaSemana2').innerText;
+    var grafico2_diaSemana3 = document.getElementById('grafico2_diaSemana3').innerText;
+    var grafico2_diaSemana4 = document.getElementById('grafico2_diaSemana4').innerText;
+    var grafico2_diaSemana5 = document.getElementById('grafico2_diaSemana5').innerText;
+    var grafico2_diaSemana6 = document.getElementById('grafico2_diaSemana6').innerText;
+    var grafico2_diaSemana7 = document.getElementById('grafico2_diaSemana7').innerText;
+
+    var grafico2_diaSemana1_devolucoes = document.getElementById('grafico2_diaSemana1_devolucoes').innerText;
+    var grafico2_diaSemana2_devolucoes = document.getElementById('grafico2_diaSemana2_devolucoes').innerText;
+    var grafico2_diaSemana3_devolucoes = document.getElementById('grafico2_diaSemana3_devolucoes').innerText;
+    var grafico2_diaSemana4_devolucoes = document.getElementById('grafico2_diaSemana4_devolucoes').innerText;
+    var grafico2_diaSemana5_devolucoes = document.getElementById('grafico2_diaSemana5_devolucoes').innerText;
+    var grafico2_diaSemana6_devolucoes = document.getElementById('grafico2_diaSemana6_devolucoes').innerText;
+    var grafico2_diaSemana7_devolucoes = document.getElementById('grafico2_diaSemana7_devolucoes').innerText;
+
+    var grafico2_diaSemana1_emprestimo = document.getElementById('grafico2_diaSemana1_emprestimo').innerText;
+    var grafico2_diaSemana2_emprestimo = document.getElementById('grafico2_diaSemana2_emprestimo').innerText;
+    var grafico2_diaSemana3_emprestimo = document.getElementById('grafico2_diaSemana3_emprestimo').innerText;
+    var grafico2_diaSemana4_emprestimo = document.getElementById('grafico2_diaSemana4_emprestimo').innerText;
+    var grafico2_diaSemana5_emprestimo = document.getElementById('grafico2_diaSemana5_emprestimo').innerText;
+    var grafico2_diaSemana6_emprestimo = document.getElementById('grafico2_diaSemana6_emprestimo').innerText;
+    var grafico2_diaSemana7_emprestimo = document.getElementById('grafico2_diaSemana7_emprestimo').innerText;
+
+
 
     // Spinner
     var spinner = function () {
@@ -124,17 +150,17 @@
     var myChart2 = new Chart(ctx2, {
         type: "line",
         data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+            labels: [grafico2_diaSemana1, grafico2_diaSemana2, grafico2_diaSemana3, grafico2_diaSemana4, grafico2_diaSemana5, grafico2_diaSemana6, grafico2_diaSemana7],
             datasets: [{
                     label: "Devoluções",
-                    data: [15, 30, 55, 45, 70, 65, 85],
+                    data: [grafico2_diaSemana1_devolucoes, grafico2_diaSemana2_devolucoes, grafico2_diaSemana3_devolucoes, grafico2_diaSemana4_devolucoes, grafico2_diaSemana5_devolucoes, grafico2_diaSemana6_devolucoes, grafico2_diaSemana7_devolucoes],
                     backgroundColor: "rgb(255, 213, 25, .5)",
                     fill: true
                 },
                 {
                     label: "Empréstimos",
-                    data: [99, 135, 170, 130, 190, 180, 270],
-                    backgroundColor: "rgb(255, 154, 0, .5)",
+                    data: [grafico2_diaSemana1_emprestimo, grafico2_diaSemana2_emprestimo, grafico2_diaSemana3_emprestimo, grafico2_diaSemana4_emprestimo, grafico2_diaSemana5_emprestimo, grafico2_diaSemana6_emprestimo, grafico2_diaSemana7_emprestimo],
+                    backgroundColor: "rgb(253, 126, 20, .5)",
                     fill: true
                 }
             ]

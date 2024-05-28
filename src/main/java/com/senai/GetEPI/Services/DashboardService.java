@@ -6,6 +6,7 @@ import com.senai.GetEPI.Models.EmprestimoModel;
 import com.senai.GetEPI.OutrosObjetos.DashboardEpis;
 import com.senai.GetEPI.OutrosObjetos.DashboardMesEpis;
 import com.senai.GetEPI.OutrosObjetos.DashboardMeses;
+import com.senai.GetEPI.OutrosObjetos.DashboardSemana;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class DashboardService {
 
     @Autowired
     EmprestimoService emprestimoService;
+
+    @Autowired
+    ColaboradorService colaboradorService;
 
     @Autowired
     EpiService epiService;
@@ -80,51 +84,45 @@ public class DashboardService {
         return listaMeses;
     }
 
+    public List<DashboardSemana> retornaSemanaEmprestimoDevolucao() {
+        List<DashboardSemana> listaInformacoesSemana = new ArrayList<>();
+
+        Calendar periodoSemana = Calendar.getInstance();
+        periodoSemana.add(Calendar.WEEK_OF_YEAR, -1);
+
+        for (int i = 0; i <= 7; i++) {
+
+            Calendar dataInicio = Calendar.getInstance();
+            Calendar dataFim = Calendar.getInstance();
+
+            dataInicio.set(periodoSemana.get(Calendar.YEAR),
+                    periodoSemana.get(Calendar.MONTH),
+                    periodoSemana.get(Calendar.DATE), 0, 0,0);
+
+            dataFim.set(periodoSemana.get(Calendar.YEAR),
+                    periodoSemana.get(Calendar.MONTH),
+                    periodoSemana.get(Calendar.DATE) + 1, 0, 0,0);
+
+            Integer qtdEmprestimos = emprestimoService.retornaQuantidadeEmprestimoPorDia(dataInicio.getTime(), dataFim.getTime());
+            Integer qtdDevolucao   = emprestimoService.retornaQuantidadeDevolucaoPorDia(dataInicio.getTime(), dataFim.getTime());
+
+            DashboardSemana informacoesDia = new DashboardSemana();
+            informacoesDia.setDiaSemana(retornaStringDia(periodoSemana.get(Calendar.DAY_OF_WEEK)));
+            informacoesDia.setQuantidadeEmprestimo(qtdEmprestimos);
+            informacoesDia.setQuantidadeDevolucao(qtdDevolucao);
+
+            listaInformacoesSemana.add(informacoesDia);
+
+            periodoSemana.add(Calendar.DAY_OF_YEAR, 1);
+        }
+
+        return listaInformacoesSemana;
+    }
+
     public List<DashboardMesEpis> retornarRelacaoEpiEmprestimoMes() {
         List<DashboardMesEpis> listaRelacaoMesEpi = new ArrayList<>();
         List<DashboardEpis> dashboardEpis = retornarRankEPIs();
 
-//        if (dashboardEpis.isEmpty()) {
-//            DashboardMesEpis informacoesDoMes = new DashboardMesEpis();
-//            informacoesDoMes.setMes("Mes");
-//
-//            List<DashboardEpis> epiDadosMes = new ArrayList<>();
-//            DashboardEpis newEPI = new DashboardEpis();
-//            newEPI.setEpiId(1l);
-//            newEPI.setEpiDescricao("SEM EPI");
-//            newEPI.setQuantidadeEmprestimos(0);
-//            epiDadosMes.add(newEPI);
-//            epiDadosMes.add(newEPI);
-//            epiDadosMes.add(newEPI);
-//
-//            informacoesDoMes.setEpis(epiDadosMes);
-//
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//            listaRelacaoMesEpi.add(informacoesDoMes);
-//
-//            return listaRelacaoMesEpi;
-//        }
 
         List<DashboardMeses> meses = retornaSeisMesesAnteriores();
 
@@ -148,16 +146,19 @@ public class DashboardService {
             listaRelacaoMesEpi.add(informacoesDoMes);
         }
 
-        for (DashboardMesEpis informacoes : listaRelacaoMesEpi) {
-            System.out.println("-----------------------------------------");
-            System.out.println("Informações do mês de " + informacoes.getMes());
-            for (DashboardEpis epi : informacoes.getEpis()) {
-                System.out.println("EPI " + epi.getEpiDescricao() + ": " + epi.getQuantidadeEmprestimos());
-            }
-            System.out.println("-----------------------------------------");
-        }
-
         return listaRelacaoMesEpi;
+    }
+
+    public Integer retornaQuantidadeEmprestimosPendentes() {
+        return emprestimoService.retornaListaEmprestimosNaoDevolvidos().size();
+    }
+
+    public Integer retornaQuantidadeColaboradores() {
+        return colaboradorService.retornaListaColaboradorDTO().size();
+    }
+
+    public Integer retornaQuantidadeEPIs() {
+        return epiService.retornaEPIModel().size();
     }
 
     private String retonarNomeMes(Calendar mes) {
@@ -166,6 +167,37 @@ public class DashboardService {
 
         mesFormatado = mesFormatado.substring(0, 1).toUpperCase() + mesFormatado.substring(1);
         return mesFormatado;
+    }
+
+    private String retornaStringDia(Integer diaInteiro) {
+        String dia;
+        switch (diaInteiro) {
+            case 1:
+                dia = "Domingo";
+                break;
+            case 2:
+                dia = "Segunda";
+                break;
+            case 3:
+                dia = "Terça";
+                break;
+            case 4:
+                dia = "Quarta";
+                break;
+            case 5:
+                dia = "Quinta";
+                break;
+            case 6:
+                dia = "Sexta";
+                break;
+            case 7:
+                dia = "Sábado";
+                break;
+            default:
+                dia = "Número inválido";
+                break;
+        }
+        return dia;
     }
 
 
