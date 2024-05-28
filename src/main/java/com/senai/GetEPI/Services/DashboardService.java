@@ -91,7 +91,26 @@ public class DashboardService {
         periodoSemana.add(Calendar.WEEK_OF_YEAR, -1);
 
         for (int i = 0; i <= 7; i++) {
-            DashboardSemana informacoesDia = new DashboardSemana(periodoSemana.get(Calendar.DAY_OF_WEEK), 1, 1);
+
+            Calendar dataInicio = Calendar.getInstance();
+            Calendar dataFim = Calendar.getInstance();
+
+            dataInicio.set(periodoSemana.get(Calendar.YEAR),
+                    periodoSemana.get(Calendar.MONTH),
+                    periodoSemana.get(Calendar.DATE), 0, 0,0);
+
+            dataFim.set(periodoSemana.get(Calendar.YEAR),
+                    periodoSemana.get(Calendar.MONTH),
+                    periodoSemana.get(Calendar.DATE) + 1, 0, 0,0);
+
+            Integer qtdEmprestimos = emprestimoService.retornaQuantidadeEmprestimoPorDia(dataInicio.getTime(), dataFim.getTime());
+            Integer qtdDevolucao   = emprestimoService.retornaQuantidadeDevolucaoPorDia(dataInicio.getTime(), dataFim.getTime());
+
+            DashboardSemana informacoesDia = new DashboardSemana();
+            informacoesDia.setDiaSemana(retornaStringDia(periodoSemana.get(Calendar.DAY_OF_WEEK)));
+            informacoesDia.setQuantidadeEmprestimo(qtdEmprestimos);
+            informacoesDia.setQuantidadeDevolucao(qtdDevolucao);
+
             listaInformacoesSemana.add(informacoesDia);
 
             periodoSemana.add(Calendar.DAY_OF_YEAR, 1);
@@ -148,6 +167,37 @@ public class DashboardService {
 
         mesFormatado = mesFormatado.substring(0, 1).toUpperCase() + mesFormatado.substring(1);
         return mesFormatado;
+    }
+
+    private String retornaStringDia(Integer diaInteiro) {
+        String dia;
+        switch (diaInteiro) {
+            case 1:
+                dia = "Domingo";
+                break;
+            case 2:
+                dia = "Segunda";
+                break;
+            case 3:
+                dia = "Terça";
+                break;
+            case 4:
+                dia = "Quarta";
+                break;
+            case 5:
+                dia = "Quinta";
+                break;
+            case 6:
+                dia = "Sexta";
+                break;
+            case 7:
+                dia = "Sábado";
+                break;
+            default:
+                dia = "Número inválido";
+                break;
+        }
+        return dia;
     }
 
 

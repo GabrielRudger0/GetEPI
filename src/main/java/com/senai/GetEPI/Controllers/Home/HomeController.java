@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -32,10 +33,36 @@ public class HomeController {
         Integer quantidadeColaboradores = dashboardService.retornaQuantidadeColaboradores();
         Integer quantidadeEPIs = dashboardService.retornaQuantidadeEPIs();
 
-        List<DashboardSemana> lista = dashboardService.retornaSemanaEmprestimoDevolucao();
-        for (DashboardSemana informacoes : lista) {
-            System.out.println(informacoes.getDiaSemana() + "    " + informacoes.getQuantidadeEmprestimo());
+        List<DashboardSemana> dashboardMovimentacoesSemana = dashboardService.retornaSemanaEmprestimoDevolucao();
+        for (DashboardSemana informacoes : dashboardMovimentacoesSemana) {
+            System.out.println(informacoes.getDiaSemana() + " Emprestimos: " + informacoes.getQuantidadeEmprestimo() + " Devoluções: " + informacoes.getQuantidadeDevolucao());
         }
+
+        model.addAttribute("grafico2_diaSemana1", dashboardMovimentacoesSemana.get(1).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana2", dashboardMovimentacoesSemana.get(2).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana3", dashboardMovimentacoesSemana.get(3).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana4", dashboardMovimentacoesSemana.get(4).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana5", dashboardMovimentacoesSemana.get(5).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana6", dashboardMovimentacoesSemana.get(6).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana7", "Hoje");
+
+        model.addAttribute("grafico2_diaSemana1_devolucoes", dashboardMovimentacoesSemana.get(1).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana2_devolucoes", dashboardMovimentacoesSemana.get(2).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana3_devolucoes", dashboardMovimentacoesSemana.get(3).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana4_devolucoes", dashboardMovimentacoesSemana.get(4).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana5_devolucoes", dashboardMovimentacoesSemana.get(5).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana6_devolucoes", dashboardMovimentacoesSemana.get(6).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana7_devolucoes", dashboardMovimentacoesSemana.get(7).getQuantidadeDevolucao());
+
+        model.addAttribute("grafico2_diaSemana1_emprestimo", dashboardMovimentacoesSemana.get(1).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana2_emprestimo", dashboardMovimentacoesSemana.get(2).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana3_emprestimo", dashboardMovimentacoesSemana.get(3).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana4_emprestimo", dashboardMovimentacoesSemana.get(4).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana5_emprestimo", dashboardMovimentacoesSemana.get(5).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana6_emprestimo", dashboardMovimentacoesSemana.get(6).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana7_emprestimo", dashboardMovimentacoesSemana.get(7).getQuantidadeEmprestimo());
+
+
 
         model.addAttribute("card_superior_1", quantidadeDevolucoesPendentes);
         model.addAttribute("card_superior_2", quantidadeColaboradores);
