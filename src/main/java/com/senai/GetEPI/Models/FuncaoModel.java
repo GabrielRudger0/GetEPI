@@ -23,11 +23,11 @@ public class FuncaoModel {
 
     public FuncaoModel(FuncaoDto funcaoDto){
         this.id = funcaoDto.getId();
-        this.funcao = funcaoDto.getFuncao() != null ? funcaoDto.getFuncao().toUpperCase() : null;;
+        this.funcao = funcaoDto.getFuncao() != null ? funcaoDto.getFuncao().toUpperCase().trim() : null;;
     }
 
     public void setFuncao(String funcao) {
-        this.funcao = funcao != null ? funcao.toUpperCase() : null;
+        this.funcao = funcao != null ? funcao.toUpperCase().trim() : null;
     }
 
 }

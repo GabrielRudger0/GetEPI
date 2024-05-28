@@ -13,6 +13,8 @@ public class EpiDto {
 
   private TipoEquipamentoModel tipoEquipamento;
 
+  private Long QuatidadeEpi;
+
   public EpiDto(){
 
   }
@@ -21,6 +23,7 @@ public class EpiDto {
     this.id               = epi.getId();
     this.nomeEpi          = epi.getNomeEpi();
     this.tipoEquipamento  = epi.getTipoEquipamento();
+    this.QuatidadeEpi     = epi.getQuatidadeEpi();
   }
 
   public EpiDto(EpiModel epi, TipoEquipamentoModel tipoEquipamento){
