@@ -87,8 +87,14 @@ public class EmprestimoService {
     }
 
     public Integer retornaQuantidadeEmprestimoEPIPorMes(Long epiId, Date dataInicio, Date dataFim) {
-        System.out.println(formatarData(dataInicio));
         return emprestimoRepository.quantidadeEmprestimoEPIPorMes(epiId, formatarData(dataInicio), formatarData(dataFim));
+    }
+
+    public Integer retornaQuantidadeEmprestimoPorDia(Date dataInicio, Date dataFim) {
+        return emprestimoRepository.quantidadeEmprestimoPorDia(formatarData(dataInicio), formatarData(dataFim));
+    }
+    public Integer retornaQuantidadeDevolucaoPorDia(Date dataInicio, Date dataFim) {
+        return emprestimoRepository.quantidadeDevolucaoPorDia(formatarData(dataInicio), formatarData(dataFim));
     }
 
     private String formatarData(Date data) {

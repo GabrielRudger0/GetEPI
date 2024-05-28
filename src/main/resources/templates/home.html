@@ -78,37 +78,47 @@
                 <div class="row g-4">
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-dark rounded d-flex align-items-center justify-content-between p-4 shadow">
-                            <i class="fa fa-chart-line fa-3x text-warning"></i>
+                            <i class="fa fa-history fa-3x text-warning"></i>
                             <div class="ms-3 text-white">
-                                <p class="mb-2">Today Sale</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Pendentes de devolução</p>
+                                <h6 class="mb-0" th:text="${card_superior_1}"></h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-dark rounded d-flex align-items-center justify-content-between p-4 shadow">
-                            <i class="fa fa-chart-bar fa-3x text-warning"></i>
+                            <i class="fa fa-users fa-3x text-warning"></i>
                             <div class="ms-3 text-white">
-                                <p class="mb-2">Total Sale</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Total de colaboradores</p>
+                                <h6 class="mb-0" th:text="${card_superior_2}"></h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-dark rounded d-flex align-items-center justify-content-between p-4 shadow">
-                            <i class="fa fa-chart-area fa-3x text-warning"></i>
+                            <i class="fa fa-fire-extinguisher fa-3x text-warning"></i>
                             <div class="ms-3 text-white">
-                                <p class="mb-2">Today Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Total de EPIs </p>
+                                <h6 class="mb-0" th:text="${card_superior_3}"></h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-dark rounded d-flex align-items-center justify-content-between p-4 shadow">
+                        <div th:if="${semEpi == true}" class="bg-dark rounded d-flex align-items-center justify-content-between p-4 shadow">
+                            <i class="fa fa-question fa-4x text-warning"></i>
+                            <div class="ms-3 text-white" >
+                                <p class="mb-2">SEM EPI CADASTRADO</p>
+                                <h6 class="mb-0">$1234</h6>
+                            </div>
+                        </div>
+                        <div th:if="${semEpi == false}" class="bg-dark rounded d-flex align-items-center justify-content-between p-4 shadow">
                             <i class="fa fa-headphones fa-3x text-warning"></i>
                             <div class="ms-3 text-white">
-                                <p class="mb-2">Total Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <div class="d-flex justify-content-center align-content-start align-items-baseline">
+                                    <i class="pe-2 fa fa-bolt fa-1x text-warning"></i>
+                                    <p class="mb-2" th:text="${card_superior_4_descricao}"></p>
+                                </div>
+                                <h6 class="mb-0" th:text="${card_superior_4}">$1234</h6>
                             </div>
                         </div>
                     </div>
@@ -126,7 +136,7 @@
                                 <div id="worldwide_epi_1" th:text="${worldwide_epi_1}" class="d-none"></div>
                                 <div id="worldwide_epi_2" th:text="${worldwide_epi_2}" class="d-none"></div>
                                 <div id="worldwide_epi_3" th:text="${worldwide_epi_3}" class="d-none"></div>
-                                <h6 class="mb-0" style="color: white;">Rank de EPIs mais utilizados</h6>
+                                <h6 class="mb-0" style="color: white;">Empréstimos por mês</h6>
                                 <h3 class="mt-1" style="color: white;"></h3>
                             </div>
                             <canvas id="worldwide-sales" width="829" height="414" style="display: block; box-sizing: border-box; height: 414px; width: 829px;"></canvas>
@@ -135,7 +145,7 @@
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-dark text-center rounded p-4 shadow">
                             <div class="align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0" style="color: white;">Movimentações</h6>
+                                <h6 class="mb-0" style="color: white;">Movimentações da semana</h6>
                             </div>
                             <canvas id="salse-revenue" width="829" height="414" style="display: block; box-sizing: border-box; height: 414px; width: 829px;"></canvas>
                         </div>
@@ -176,6 +186,8 @@
         <!-- Conteúdo da página -->
     </div>
 
+
+    <!-- Gráfico 1 -->
     <div id="worldwide_mes_1" th:text="${worldwide_mes_1}" class="d-none"></div>
     <div id="worldwide_mes_2" th:text="${worldwide_mes_2}" class="d-none"></div>
     <div id="worldwide_mes_3" th:text="${worldwide_mes_3}" class="d-none"></div>
@@ -207,6 +219,34 @@
     <div id="worldwide_mes5_epi3" th:text="${worldwide_mes5_epi3}" class="d-none"></div>
     <div id="worldwide_mes6_epi3" th:text="${worldwide_mes6_epi3}" class="d-none"></div>
     <div id="worldwide_mes7_epi3" th:text="${worldwide_mes7_epi3}" class="d-none"></div>
+    <!-- Gráfico 1 -->
+
+    <!-- Gráfico 2 -->
+    <div id="grafico2_diaSemana1" th:text="${grafico2_diaSemana1}" class="d-none"></div>
+    <div id="grafico2_diaSemana2" th:text="${grafico2_diaSemana2}" class="d-none"></div>
+    <div id="grafico2_diaSemana3" th:text="${grafico2_diaSemana3}" class="d-none"></div>
+    <div id="grafico2_diaSemana4" th:text="${grafico2_diaSemana4}" class="d-none"></div>
+    <div id="grafico2_diaSemana5" th:text="${grafico2_diaSemana5}" class="d-none"></div>
+    <div id="grafico2_diaSemana6" th:text="${grafico2_diaSemana6}" class="d-none"></div>
+    <div id="grafico2_diaSemana7" th:text="${grafico2_diaSemana7}" class="d-none"></div>
+
+    <div id="grafico2_diaSemana1_devolucoes" th:text="${grafico2_diaSemana1_devolucoes}" class="d-none"></div>
+    <div id="grafico2_diaSemana2_devolucoes" th:text="${grafico2_diaSemana2_devolucoes}" class="d-none"></div>
+    <div id="grafico2_diaSemana3_devolucoes" th:text="${grafico2_diaSemana3_devolucoes}" class="d-none"></div>
+    <div id="grafico2_diaSemana4_devolucoes" th:text="${grafico2_diaSemana4_devolucoes}" class="d-none"></div>
+    <div id="grafico2_diaSemana5_devolucoes" th:text="${grafico2_diaSemana5_devolucoes}" class="d-none"></div>
+    <div id="grafico2_diaSemana6_devolucoes" th:text="${grafico2_diaSemana6_devolucoes}" class="d-none"></div>
+    <div id="grafico2_diaSemana7_devolucoes" th:text="${grafico2_diaSemana7_devolucoes}" class="d-none"></div>
+
+    <div id="grafico2_diaSemana1_emprestimo" th:text="${grafico2_diaSemana1_emprestimo}" class="d-none"></div>
+    <div id="grafico2_diaSemana2_emprestimo" th:text="${grafico2_diaSemana2_emprestimo}" class="d-none"></div>
+    <div id="grafico2_diaSemana3_emprestimo" th:text="${grafico2_diaSemana3_emprestimo}" class="d-none"></div>
+    <div id="grafico2_diaSemana4_emprestimo" th:text="${grafico2_diaSemana4_emprestimo}" class="d-none"></div>
+    <div id="grafico2_diaSemana5_emprestimo" th:text="${grafico2_diaSemana5_emprestimo}" class="d-none"></div>
+    <div id="grafico2_diaSemana6_emprestimo" th:text="${grafico2_diaSemana6_emprestimo}" class="d-none"></div>
+    <div id="grafico2_diaSemana7_emprestimo" th:text="${grafico2_diaSemana7_emprestimo}" class="d-none"></div>
+
+    <!-- Gráfico 2 -->
 
 
 

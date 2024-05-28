@@ -3,6 +3,7 @@ package com.senai.GetEPI.Controllers.Home;
 import com.senai.GetEPI.OutrosObjetos.DashboardEpis;
 import com.senai.GetEPI.OutrosObjetos.DashboardMesEpis;
 import com.senai.GetEPI.OutrosObjetos.DashboardMeses;
+import com.senai.GetEPI.OutrosObjetos.DashboardSemana;
 import com.senai.GetEPI.Services.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -27,21 +29,55 @@ public class HomeController {
         List<DashboardEpis> dashboardEpis = dashboardService.retornarRankEPIs();
         List<DashboardMeses> dashboardMeses = dashboardService.retornaSeisMesesAnteriores();
         List<DashboardMesEpis> dashboardMesEpis = dashboardService.retornarRelacaoEpiEmprestimoMes();
+        Integer quantidadeDevolucoesPendentes = dashboardService.retornaQuantidadeEmprestimosPendentes();
+        Integer quantidadeColaboradores = dashboardService.retornaQuantidadeColaboradores();
+        Integer quantidadeEPIs = dashboardService.retornaQuantidadeEPIs();
 
-//        if (dashboardEpis.isEmpty()) {
-//            dashboardEpis.add(new DashboardEpis(999l, "SEM EPI", 0));
-//            dashboardEpis.add(new DashboardEpis(9999l, "SEM EPI", 0));
-//            dashboardEpis.add(new DashboardEpis(99999l, "SEM EPI", 0));
-//        }
+        List<DashboardSemana> dashboardMovimentacoesSemana = dashboardService.retornaSemanaEmprestimoDevolucao();
+        for (DashboardSemana informacoes : dashboardMovimentacoesSemana) {
+            System.out.println(informacoes.getDiaSemana() + " Emprestimos: " + informacoes.getQuantidadeEmprestimo() + " Devoluções: " + informacoes.getQuantidadeDevolucao());
+        }
+
+        model.addAttribute("grafico2_diaSemana1", dashboardMovimentacoesSemana.get(1).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana2", dashboardMovimentacoesSemana.get(2).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana3", dashboardMovimentacoesSemana.get(3).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana4", dashboardMovimentacoesSemana.get(4).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana5", dashboardMovimentacoesSemana.get(5).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana6", dashboardMovimentacoesSemana.get(6).getDiaSemana());
+        model.addAttribute("grafico2_diaSemana7", "Hoje");
+
+        model.addAttribute("grafico2_diaSemana1_devolucoes", dashboardMovimentacoesSemana.get(1).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana2_devolucoes", dashboardMovimentacoesSemana.get(2).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana3_devolucoes", dashboardMovimentacoesSemana.get(3).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana4_devolucoes", dashboardMovimentacoesSemana.get(4).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana5_devolucoes", dashboardMovimentacoesSemana.get(5).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana6_devolucoes", dashboardMovimentacoesSemana.get(6).getQuantidadeDevolucao());
+        model.addAttribute("grafico2_diaSemana7_devolucoes", dashboardMovimentacoesSemana.get(7).getQuantidadeDevolucao());
+
+        model.addAttribute("grafico2_diaSemana1_emprestimo", dashboardMovimentacoesSemana.get(1).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana2_emprestimo", dashboardMovimentacoesSemana.get(2).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana3_emprestimo", dashboardMovimentacoesSemana.get(3).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana4_emprestimo", dashboardMovimentacoesSemana.get(4).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana5_emprestimo", dashboardMovimentacoesSemana.get(5).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana6_emprestimo", dashboardMovimentacoesSemana.get(6).getQuantidadeEmprestimo());
+        model.addAttribute("grafico2_diaSemana7_emprestimo", dashboardMovimentacoesSemana.get(7).getQuantidadeEmprestimo());
+
+
+
+        model.addAttribute("card_superior_1", quantidadeDevolucoesPendentes);
+        model.addAttribute("card_superior_2", quantidadeColaboradores);
+        model.addAttribute("card_superior_3", quantidadeEPIs);
+
+
         if (!dashboardEpis.isEmpty()) {
             model.addAttribute("worldwide_epi_1", dashboardEpis.get(0).getEpiDescricao());
+
             if (dashboardEpis.size() == 2) {
                 model.addAttribute("worldwide_epi_2", dashboardEpis.get(1).getEpiDescricao());
                 if (dashboardEpis.size() == 3) {
                     model.addAttribute("worldwide_epi_3", dashboardEpis.get(2).getEpiDescricao());
                 }
             }
-
         }
 
         model.addAttribute("worldwide_mes_1", dashboardMeses.get(0).getMesReferente());
@@ -60,6 +96,11 @@ public class HomeController {
             model.addAttribute("worldwide_mes5_epi1", dashboardMesEpis.get(4).getEpis().get(0).getQuantidadeEmprestimos());
             model.addAttribute("worldwide_mes6_epi1", dashboardMesEpis.get(5).getEpis().get(0).getQuantidadeEmprestimos());
             model.addAttribute("worldwide_mes7_epi1", dashboardMesEpis.get(6).getEpis().get(0).getQuantidadeEmprestimos());
+
+            model.addAttribute("card_superior_4_descricao", dashboardMesEpis.get(6).getEpis().get(0).getEpiDescricao());
+            model.addAttribute("card_superior_4", "Estoque: " + 10);
+            model.addAttribute("semEpi", false);
+
 
             if (dashboardMesEpis.get(0).getEpis().size() == 2) {
                 model.addAttribute("worldwide_mes1_epi2", dashboardMesEpis.get(0).getEpis().get(1).getQuantidadeEmprestimos());
@@ -81,6 +122,8 @@ public class HomeController {
                 }
             }
 
+        } else {
+            model.addAttribute("semEpi", true);
         }
 
         return "home";
