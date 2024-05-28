@@ -54,6 +54,31 @@
            .btnHover:hover{
                 color: white;
             }
+            .custom-shadow {
+                box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5); /* Ajuste os valores aqui para personalizar a sombra */
+            }
+            .card-body {
+                background-color: #212529;
+                --bs-card-border-width: 0px;
+                color: white;
+
+            }
+            .card {
+                border-color: white;
+            }
+            .card-header {
+                color: white !important;
+                border-color: white;
+            }
+            .card-header:first-child {
+                background-color: #212529;
+                color: white !important;
+                border-color: white;
+            }
+            .table {
+                color: white !important;
+                border-color: white;
+            }
 
         </style>
     </head>
@@ -71,20 +96,20 @@
                 <div th:replace="/menulateral :: componente-menulateral"></div>
             </div>
             <!-- Conteúdo da barra lateral -->
-            <div class="content">
+            <div class="content" style="background-color: #495057;">
                 <div class="container mt-3 w-100">
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
+                    <div class="card custom-shadow mb-4">
+                        <div class="card-header py-3 bg-dark">
                             <h6 class="m-0 font-weight-bold text-secondary text-center">
                                 <i class='fa fa-users fa-1x text-dark pe-1'></i>
                                 Usuários
                             </h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body bg-dark">
                             <!-- MECANISMO DE BUSCA -->
-                            <div class="card border-info mb-3 w-100">
+                            <div class="card mb-3 w-100">
                                 <div class="card-header">
-                                    <i class='fa fa-users fa-1x text-dark pe-1'></i>
+                                    <i class='fa fa-users fa-1x text-warning pe-1'></i>
                                     Pesquisar usuários
                                 </div>
                                 <div class="card-body">
@@ -152,7 +177,7 @@
 
                                 <div th:if="${nenhumUsuario == true}">
                                     <div class="card shadow mb-4">
-                                        <div class="card-body">
+                                        <div class="card-body" style="background-color: #495057;">
                                             <p class="card-text pd-3 text-center">
                                                 Nenhum usuário encontrado.
                                             </p>
