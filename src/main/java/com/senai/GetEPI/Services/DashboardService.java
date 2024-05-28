@@ -161,6 +161,10 @@ public class DashboardService {
         return epiService.retornaEPIModel().size();
     }
 
+    public EpiDto retornaInformacoesEPI(Long epiId) {
+        return epiService.buscaEpiDTO(epiId);
+    }
+
     private String retonarNomeMes(Calendar mes) {
         SimpleDateFormat formatador = new SimpleDateFormat("MMMM", new Locale("pt", "BR"));
         String mesFormatado = formatador.format(mes.getTime());
