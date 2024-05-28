@@ -3,6 +3,7 @@ package com.senai.GetEPI.Services;
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.DTOs.FuncaoDto;
+import com.senai.GetEPI.DTOs.ViewEmprestimoDTO;
 import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.EpiModel;
 import com.senai.GetEPI.Models.FuncaoModel;
@@ -54,6 +55,38 @@ public class EpiService {
 
     }
 
+    public EpiDto buscaEpiDTOs(Long id){
+        EpiModel epi = epiRepository.findById(id).get();
+
+        return new EpiDto(epi,epi.getTipoEquipamento());
+    }
+
+    public String atualizarEpi(EpiDto epi) {
+        Optional<EpiModel> epiBD = epiRepository.findById(epi.getId());
+
+        EpiModel atualizar = new EpiModel();
+
+        if (!epiBD.get().getNomeEpi().equals(epi.getNomeEpi())) {
+            if (epiRepository.existsByNomeEpi(epi.getNomeEpi())) {
+                return "Já existe cadastro com estas credenciais!";
+            }
+        }
+        atualizar.setId(epi.getId());
+        atualizar.setNomeEpi(epi.getNomeEpi());
+        atualizar.setTipoEquipamento(epi.getTipoEquipamento());
+        atualizar.setQuatidadeEpi(epi.getQuatidadeEpi());
+
+
+        epiRepository.save(atualizar);
+
+        return "";
+    }
+
+    public EpiDto buscaEpiDTO(Long id){
+        EpiModel epi = epiRepository.findById(id).get();
+
+        return new EpiDto(epi);
+    }
 
 
 }

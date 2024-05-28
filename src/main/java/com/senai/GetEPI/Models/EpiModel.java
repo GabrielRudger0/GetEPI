@@ -16,25 +16,30 @@ public class EpiModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String nomeEpi;
 
     @ManyToOne
     private TipoEquipamentoModel tipoEquipamento;
 
+    private Long QuatidadeEpi;
+
     public EpiModel(){
 
     }
 
-    public EpiModel(Long id, String nomeEpi, TipoEquipamentoModel tipoEquipamento){
-        this.id = id;
-        this.nomeEpi = nomeEpi;
+    public EpiModel(Long id, String nomeEpi, TipoEquipamentoModel tipoEquipamento,Long QuatidadeEpi){
+        this.id              = id;
+        this.nomeEpi         = nomeEpi;
         this.tipoEquipamento = tipoEquipamento;
+        this.QuatidadeEpi    =  QuatidadeEpi;
     }
 
     public EpiModel(EpiDto epi, TipoEquipamentoModel tipoEquipamento){
         this.id              = epi.getId();
         this.nomeEpi         = epi.getNomeEpi();
         this.tipoEquipamento = tipoEquipamento;
+        this.QuatidadeEpi    = epi.getQuatidadeEpi();
     }
 
 }
