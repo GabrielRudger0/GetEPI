@@ -3,6 +3,7 @@ package com.senai.GetEPI.Controllers.Home;
 import com.senai.GetEPI.OutrosObjetos.DashboardEpis;
 import com.senai.GetEPI.OutrosObjetos.DashboardMesEpis;
 import com.senai.GetEPI.OutrosObjetos.DashboardMeses;
+import com.senai.GetEPI.OutrosObjetos.DashboardSemana;
 import com.senai.GetEPI.Services.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,21 +28,29 @@ public class HomeController {
         List<DashboardEpis> dashboardEpis = dashboardService.retornarRankEPIs();
         List<DashboardMeses> dashboardMeses = dashboardService.retornaSeisMesesAnteriores();
         List<DashboardMesEpis> dashboardMesEpis = dashboardService.retornarRelacaoEpiEmprestimoMes();
+        Integer quantidadeDevolucoesPendentes = dashboardService.retornaQuantidadeEmprestimosPendentes();
+        Integer quantidadeColaboradores = dashboardService.retornaQuantidadeColaboradores();
+        Integer quantidadeEPIs = dashboardService.retornaQuantidadeEPIs();
 
-//        if (dashboardEpis.isEmpty()) {
-//            dashboardEpis.add(new DashboardEpis(999l, "SEM EPI", 0));
-//            dashboardEpis.add(new DashboardEpis(9999l, "SEM EPI", 0));
-//            dashboardEpis.add(new DashboardEpis(99999l, "SEM EPI", 0));
-//        }
+        List<DashboardSemana> lista = dashboardService.retornaSemanaEmprestimoDevolucao();
+        for (DashboardSemana informacoes : lista) {
+            System.out.println(informacoes.getDiaSemana() + "    " + informacoes.getQuantidadeEmprestimo());
+        }
+
+        model.addAttribute("card_superior_1", quantidadeDevolucoesPendentes);
+        model.addAttribute("card_superior_2", quantidadeColaboradores);
+        model.addAttribute("card_superior_3", quantidadeEPIs);
+
+
         if (!dashboardEpis.isEmpty()) {
             model.addAttribute("worldwide_epi_1", dashboardEpis.get(0).getEpiDescricao());
+
             if (dashboardEpis.size() == 2) {
                 model.addAttribute("worldwide_epi_2", dashboardEpis.get(1).getEpiDescricao());
                 if (dashboardEpis.size() == 3) {
                     model.addAttribute("worldwide_epi_3", dashboardEpis.get(2).getEpiDescricao());
                 }
             }
-
         }
 
         model.addAttribute("worldwide_mes_1", dashboardMeses.get(0).getMesReferente());
@@ -60,6 +69,11 @@ public class HomeController {
             model.addAttribute("worldwide_mes5_epi1", dashboardMesEpis.get(4).getEpis().get(0).getQuantidadeEmprestimos());
             model.addAttribute("worldwide_mes6_epi1", dashboardMesEpis.get(5).getEpis().get(0).getQuantidadeEmprestimos());
             model.addAttribute("worldwide_mes7_epi1", dashboardMesEpis.get(6).getEpis().get(0).getQuantidadeEmprestimos());
+
+            model.addAttribute("card_superior_4_descricao", dashboardMesEpis.get(6).getEpis().get(0).getEpiDescricao());
+            model.addAttribute("card_superior_4", "Estoque: " + 10);
+            model.addAttribute("semEpi", false);
+
 
             if (dashboardMesEpis.get(0).getEpis().size() == 2) {
                 model.addAttribute("worldwide_mes1_epi2", dashboardMesEpis.get(0).getEpis().get(1).getQuantidadeEmprestimos());
@@ -81,6 +95,8 @@ public class HomeController {
                 }
             }
 
+        } else {
+            model.addAttribute("semEpi", true);
         }
 
         return "home";

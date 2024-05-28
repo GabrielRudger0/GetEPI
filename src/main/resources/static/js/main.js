@@ -124,16 +124,16 @@
     var myChart2 = new Chart(ctx2, {
         type: "line",
         data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+            labels: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"],
             datasets: [{
                     label: "Devoluções",
-                    data: [15, 30, 55, 45, 70, 65, 85],
+                    data: [1, 0, 0, 0, 0, 0, 0],
                     backgroundColor: "rgb(255, 213, 25, .5)",
                     fill: true
                 },
                 {
                     label: "Empréstimos",
-                    data: [99, 135, 170, 130, 190, 180, 270],
+                    data: [1, 0, 0, 0, 0, 0, 0],
                     backgroundColor: "rgb(255, 154, 0, .5)",
                     fill: true
                 }
