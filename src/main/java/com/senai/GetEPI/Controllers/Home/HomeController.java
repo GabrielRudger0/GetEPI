@@ -71,10 +71,9 @@ public class HomeController {
 
         if (!dashboardEpis.isEmpty()) {
             model.addAttribute("worldwide_epi_1", dashboardEpis.get(0).getEpiDescricao());
-
-            if (dashboardEpis.size() == 2) {
+            if (dashboardEpis.size() >= 2) {
                 model.addAttribute("worldwide_epi_2", dashboardEpis.get(1).getEpiDescricao());
-                if (dashboardEpis.size() == 3) {
+                if (dashboardEpis.size() >= 3) {
                     model.addAttribute("worldwide_epi_3", dashboardEpis.get(2).getEpiDescricao());
                 }
             }
@@ -103,7 +102,7 @@ public class HomeController {
             model.addAttribute("semEpi", false);
 
 
-            if (dashboardMesEpis.get(0).getEpis().size() == 2) {
+            if (dashboardMesEpis.get(0).getEpis().size() >= 2) {
                 model.addAttribute("worldwide_mes1_epi2", dashboardMesEpis.get(0).getEpis().get(1).getQuantidadeEmprestimos());
                 model.addAttribute("worldwide_mes2_epi2", dashboardMesEpis.get(1).getEpis().get(1).getQuantidadeEmprestimos());
                 model.addAttribute("worldwide_mes3_epi2", dashboardMesEpis.get(2).getEpis().get(1).getQuantidadeEmprestimos());
@@ -112,7 +111,7 @@ public class HomeController {
                 model.addAttribute("worldwide_mes6_epi2", dashboardMesEpis.get(5).getEpis().get(1).getQuantidadeEmprestimos());
                 model.addAttribute("worldwide_mes7_epi2", dashboardMesEpis.get(6).getEpis().get(1).getQuantidadeEmprestimos());
 
-                if (dashboardMesEpis.get(0).getEpis().size() == 3) {
+                if (dashboardMesEpis.get(0).getEpis().size() >= 3) {
                     model.addAttribute("worldwide_mes1_epi3", dashboardMesEpis.get(0).getEpis().get(2).getQuantidadeEmprestimos());
                     model.addAttribute("worldwide_mes2_epi3", dashboardMesEpis.get(1).getEpis().get(2).getQuantidadeEmprestimos());
                     model.addAttribute("worldwide_mes3_epi3", dashboardMesEpis.get(2).getEpis().get(2).getQuantidadeEmprestimos());
