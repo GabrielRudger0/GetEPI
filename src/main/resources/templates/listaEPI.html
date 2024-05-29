@@ -12,30 +12,32 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;family=Roboto:wght@500;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="http://localhost:8080/css/font-awesome.min.css">
+    <script src="http://localhost:8080/sweetalert2.all.min.js"></script>
 
     <style>
         .sidebar {
-            width: 280px;
-            background-color: #212529;
+          width: 280px;
+          background-color: #212529;
         }
 
         .sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 20px;
-            width: 100%;
-            text-align: left;
-            display: block;
+          padding: 10px 15px;
+          text-decoration: none;
+          font-size: 20px;
+          width: 100%;
+          text-align: left;
+          display: block;
         }
 
         .sidebar a:hover {
-            background-color: #dcdcdc;
-            border-radius: 10px;
+          background-color: #dcdcdc;
+          border-radius: 10px;
         }
 
         .content {
-            flex: 1;
-            padding: 20px;
+          flex: 1;
+          padding: 20px;
+          background-color: #495057;
         }
 
         .hover-img {
@@ -48,12 +50,74 @@
             box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5); /* Ajuste os valores aqui para personalizar a sombra */
         }
 
-        .dropdown-item:hover {
+       .dropdown-item:hover {
             color: black !important;
         }
-        .btnHover:hover{
-            color: white;
+       .btnHover:hover{
+            color: black;
         }
+        .custom-shadow {
+            box-shadow: 0px 0px 30px 10px rgba(0.7, 0.7, 0.7, 0.7);
+        }
+
+        .card {
+            background-color: #212529;
+            border-color: #212529;
+        }
+
+        .table {
+            color: white !important;
+            border-color: var(--bs-gray-600);
+        }
+
+        .newCard {
+            background-color: var(--bs-dark) !important;
+            border-radius: 0px 0px 0.5rem 0.5rem;
+            padding: 1.25rem;
+            flex: 1 1 auto;
+
+        }
+
+        .newCardInterno {
+            background-color: var(--bs-dark) !important;
+            border-radius: 0px 0px 0.5rem 0.5rem;
+            padding: 1.25rem;
+            flex: 1 1 auto;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-color: var(--bs-gray-600);
+            color: white !important;
+
+        }
+
+        .newCardHeader {
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 0;
+            background-image: linear-gradient(to top, #212529, #181b21);
+            color: white !important;
+            border-radius: 0.3rem 0.3rem 0rem 0px;
+        }
+
+        .newCardHeaderInterno {
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 0;
+            background-image: linear-gradient(to top, #212529, #181b21);
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            color: white !important;
+            border-color: var(--bs-gray-600);
+            border-radius: 0.3rem 0.3rem 0rem 0px;
+        }
+        .campoTexto {
+            background: var(--dark);
+            color: white;
+            border-color: var(--bs-gray-600);
+        }
+
+        .campoTexto:focus {
+            background: var(--dark);
+            color: white;
+            border-color: var(--bs-gray-600);
+        }
+
     </style>
 
 </head>
@@ -72,31 +136,31 @@
         <!-- Conteúdo da barra lateral -->
         <!-- Conteúdo da página -->
         <div class="content">
-            <div class="container mt-3">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-secondary text-center">
-                            <i class='fa fa-headphones fa-1x text-dark pe-1'></i>
+            <div class="container mt-5">
+                <div class="card custom-shadow mb-4">
+                    <div class="newCardHeader py-3">
+                        <h6 class="m-0 font-weight-bold text-white text-center">
+                            <i class='fa fa-headphones fa-1x text-warning pe-1'></i>
                             EPI's
                         </h6>
                     </div>
-                    <div class="card-body">
+                    <div class="newCard">
                         <!-- MECANISMO DE BUSCA    -->
-                        <div class="card border-info mb-3 w-100">
-                            <div class="card-header">
-                                <i class='fa fa-headphones fa-1x text-dark pe-1'></i>
+                        <div class="card mb-3 w-100">
+                            <div class="newCardHeaderInterno">
+                                <i class='fa fa-headphones fa-1x text-warning pe-1'></i>
                                 Pesquisar EPI's
                             </div>
-                            <div class="card-body">
+                            <div class="newCardInterno">
                                 <div class="d-flex pb-2">
                                     <form th:method="post" th:action="@{/listaEPI/buscar}" th:object="${buscaEPIDto}" class="d-flex">
                                         <div class="m-auto pe-2">
-                                            <button type="submit" class="btn btn-outline-secondary mr-2">
-                                                <span><i class='fa fa-search fa-1x text-bs-gray-700'></i> Pesquisar</span>
+                                            <button type="submit" class="btn btn-outline-secondary text-white mr-2">
+                                                <span><i class='fa fa-search fa-1x text-warning'></i> Pesquisar</span>
                                             </button>
                                         </div>
                                         <div style="width: 450px;">
-                                            <input type="text" id="nome" th:field="*{nomeEpi}" class="form-control form-control-lg" placeholder="Nome do EPI"/>
+                                            <input type="text" id="nome" th:field="*{nomeEpi}" class="form-control form-control-lg campoTexto" placeholder="Nome do EPI"/>
                                         </div>
                                     </form>
                                 </div>
@@ -105,16 +169,16 @@
                         <!-- MECANISMO DE BUSCA -->
 
                         <p class="card-text pd-3">
-                            <a th:href="@{~/cadastrarepi}" class="btn btn-outline-secondary">
-                                <i class='fa fa-plus text-bs-gray-700 pe-1'></i>
+                            <a th:href="@{~/cadastrarepi}" class="btn btn-outline-secondary text-white">
+                                <i class='fa fa-plus text-warning pe-1'></i>
                                 Cadastrar EPI
                             </a>
 
-                            <a th:href="@{~/visualizarquantidadeepi}" class="btn btn-outline-secondary">
-                                <i class='fa fa-plus text-bs-gray-700 pe-1'></i>
-                                Estoque EPI's
+                            <a th:href="@{~/visualizarquantidadeepi}" class="btn btn-outline-secondary text-white">
+                                <i class='fa fa-cubes text-warning pe-1'></i>
+                                Estoque
                             </a>
-                        </
+                        </p>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
@@ -157,7 +221,7 @@
 
                             <div th:if="${nenhumEpi == true}">
                                 <div class="card shadow mb-4">
-                                    <div class="card-body">
+                                    <div class="newCardInterno">
                                         <p class="card-text pd-3 text-center">
                                             Nenhum EPI encontrado.
                                         </p>
@@ -173,7 +237,6 @@
     </div>
 </div>
 
-<script src="http://localhost:8080/sweetalert2.all.min.js"></script>
 <script src="/excluir_epi.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

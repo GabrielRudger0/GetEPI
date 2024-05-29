@@ -98,7 +98,8 @@ public class HomeController {
             model.addAttribute("worldwide_mes7_epi1", dashboardMesEpis.get(6).getEpis().get(0).getQuantidadeEmprestimos());
 
             model.addAttribute("card_superior_4_descricao", dashboardMesEpis.get(6).getEpis().get(0).getEpiDescricao());
-            model.addAttribute("card_superior_4", "Estoque: " + 10);
+            Long maisUtilizadoEpiId = dashboardMesEpis.get(6).getEpis().get(0).getEpiId();
+            model.addAttribute("card_superior_4", "Estoque: " + dashboardService.retornaInformacoesEPI(maisUtilizadoEpiId).getQuatidadeEpi());
             model.addAttribute("semEpi", false);
 
 
