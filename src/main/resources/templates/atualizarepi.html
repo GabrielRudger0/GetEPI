@@ -15,48 +15,122 @@
   <script src="http://localhost:8080/sweetalert2.all.min.js"></script>
 
   <style>
-        .sidebar {
-            width: 280px;
-            background-color: #212529;
-        }
+    .sidebar {
+      width: 280px;
+      background-color: #212529;
+    }
 
-        .sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 20px;
-            width: 100%;
-            text-align: left;
-            display: block;
-        }
+    .sidebar a {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 20px;
+      width: 100%;
+      text-align: left;
+      display: block;
+    }
 
-        .sidebar a:hover {
-            background-color: #dcdcdc;
-            border-radius: 10px;
-        }
+    .sidebar a:hover {
+      background-color: #dcdcdc;
+      border-radius: 10px;
+    }
 
-        .content {
-            flex: 1;
-            padding: 20px;
-        }
+    .content {
+      flex: 1;
+      padding: 20px;
+      background-color: #495057;
+    }
 
-        .hover-img {
-            content: url('http://localhost:8080/getEpiNavbar.png'); /* imagem padrão */
-        }
-        a:hover .hover-img {
-            content: url('http://localhost:8080/getEPINavbarPreto.png'); /* outra imagem quando em hover */
-        }
-        .custom-shadow {
-            box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5); /* Ajuste os valores aqui para personalizar a sombra */
-        }
+    .hover-img {
+        content: url('http://localhost:8080/getEpiNavbar.png'); /* imagem padrão */
+    }
+    a:hover .hover-img {
+        content: url('http://localhost:8080/getEPINavbarPreto.png'); /* outra imagem quando em hover */
+    }
+    .custom-shadow {
+        box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5); /* Ajuste os valores aqui para personalizar a sombra */
+    }
 
-        .dropdown-item:hover {
-            color: black !important;
-        }
-        .btnHover:hover {
-            color: white;
-        }
-    </style>
-  <script src="sweetalert2.all.min.js"></script>
+   .dropdown-item:hover {
+        color: black !important;
+    }
+   .btnHover:hover{
+        color: white;
+    }
+    .custom-shadow {
+        box-shadow: 0px 0px 30px 10px rgba(0.7, 0.7, 0.7, 0.7);
+    }
+
+    .card {
+        background-color: #212529;
+        border-color: #212529;
+    }
+
+    .table {
+        color: white !important;
+        border-color: var(--bs-gray-600);
+    }
+
+    .newCard {
+        background-color: var(--bs-dark) !important;
+        border-radius: 0px 0px 0.5rem 0.5rem;
+        padding: 1.25rem;
+        flex: 1 1 auto;
+
+    }
+
+    .newCardInterno {
+        background-color: var(--bs-dark) !important;
+        border-radius: 0px 0px 0.5rem 0.5rem;
+        padding: 1.25rem;
+        flex: 1 1 auto;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-color: var(--bs-gray-600);
+        color: white !important;
+
+    }
+
+    .newCardHeader {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 0;
+        background-image: linear-gradient(to top, #212529, #181b21);
+        color: white !important;
+        border-radius: 0.3rem 0.3rem 0rem 0px;
+    }
+
+    .newCardHeaderInterno {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 0;
+        background-image: linear-gradient(to top, #212529, #181b21);
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        color: white !important;
+        border-color: var(--bs-gray-600);
+        border-radius: 0.3rem 0.3rem 0rem 0px;
+    }
+    .campoTexto {
+        background: var(--dark);
+        color: white;
+        border-color: var(--bs-gray-600);
+    }
+
+    .campoTextoReadOnly {
+        background: var(--bs-gray-700);
+        color: white;
+        border-color: var(--bs-gray-600);
+    }
+
+    .campoTextoReadOnly:focus {
+        background: var(--bs-gray-700);
+        color: white;
+        border-color: var(--bs-gray-600);
+    }
+
+    .campoTexto:focus {
+        background: var(--dark);
+        color: white;
+        border-color: var(--bs-gray-600);
+    }
+
+  </style>
 </head>
 <body>
 
@@ -74,24 +148,24 @@
     <!-- Conteúdo da página -->
     <div class="content">
       <div class="container mt-5">
-        <div class="card shadow mb-4">
-          <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-secondary text-center">
-              <i class='fa fa-pencil fa-1x text-dark pe-1'></i>
-              Atualização do EPI
+        <div class="card custom-shadow mb-4">
+          <div class="newCardHeader py-3">
+            <h6 class="m-0 font-weight-bold text-white text-center">
+              <i class='fa fa-pencil fa-1x text-warning pe-1'></i>
+              Atualização de EPI
             </h6>
           </div>
-          <div class="card-body">
+          <div class="newCard">
 
             <div th:if="${erro == true}" >
               <script th:inline="javascript">
-                                var message =/*[[${mensagemErro}]]*/ 'defaultanyvalue';
-                                Swal.fire({
-                                    title: message,
-                                    confirmButtonColor: "#0d6efd",
-                                    icon: "error",
-                                });
-                            </script>
+                  var message =/*[[${mensagemErro}]]*/ 'defaultanyvalue';
+                  Swal.fire({
+                      title: message,
+                      confirmButtonColor: "#0d6efd",
+                      icon: "error",
+                  });
+              </script>
             </div>
 
             <form th:method="post" th:action="@{/atualizarepi}" th:object="${epiDTO}">
@@ -101,21 +175,22 @@
                 <input type="text" id="epiId" th:field="*{id}" class="form-control form-control-lg invisible"/>
               </div>
               <div class="form-group">
-                <label for="nomeEpi">Nome do EPI</label>
-                <input type="text" id="nomeEpi" th:field="*{nomeEpi}" class="form-control form-control-lg" required/>
+                <label for="nomeEpi" class="text-white">Nome do EPI</label>
+                <input type="text" id="nomeEpi" th:field="*{nomeEpi}" class="form-control form-control-lg campoTexto" required/>
               </div>
               <div>
-              <label for="tipoEquipamento" class="form-label">Tipo do EPI</label>
-              <select class="form-select" id="tipoEquipamento" aria-label="Floating label select example" th:field="*{tipoEquipamento}">
-                <option th:each="tipoEquipamento : ${tiposEquipamento}"
+              <label for="tipoEquipamento" class="form-label text-white">Tipo do EPI</label>
+              <select class="form-select campoTexto" id="tipoEquipamento" aria-label="Floating label select example" th:field="*{tipoEquipamento}">
+                <option class="text-dark"
+                        th:each="tipoEquipamento : ${tiposEquipamento}"
                         th:value="${tipoEquipamento.id}"
                         th:text="${tipoEquipamento.descricao}">
                 </option>
               </select>
           </div>
               <div class="form-group">
-                <label for="QuatidadeEpi">Quantidade do EPI</label>
-                <input type="text" id="QuatidadeEpi" th:field="*{QuatidadeEpi}" class="form-control form-control-lg" required/>
+                <label class="text-white" for="QuatidadeEpi">Quantidade do EPI</label>
+                <input type="text" id="QuatidadeEpi" th:field="*{QuatidadeEpi}" class="form-control form-control-lg campoTexto" required/>
               </div>
 
               <div class="pt-2 mb-4">

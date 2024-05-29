@@ -4,7 +4,7 @@ document.querySelectorAll('.excluir').forEach(function(button) {
     button.addEventListener('click',
     function() {
         Swal.fire({
-          title: "Continuar com a exclusão do colaborador?",
+          title: "Continuar com a exclusão da função?",
           text: "",
           icon: "question",
           showCancelButton: true,
