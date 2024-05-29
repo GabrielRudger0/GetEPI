@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/visualizarquantidadeepi")
-public class VisualizarQuantidadeEpiController {
+public class ListaQuantidadeEpi {
 
     @Autowired
     EpiService epiService;
@@ -26,7 +26,7 @@ public class VisualizarQuantidadeEpiController {
         List<EpiDto> listaEpi = epiService.retornaListaEpiDTO();
 
         model.addAttribute("epis",epiService.obterListaEpi());
-        model.addAttribute("tipoepi", tipoEquipamentoService.obterListaTipoEquipamento());
+
         model.addAttribute("buscaEPIDto", new EpiDto());
 
         return "visualizarquantidadeepi";

@@ -1,6 +1,5 @@
 package com.senai.GetEPI.Controllers.EPI;
 
-import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.Services.EpiService;
 import com.senai.GetEPI.Services.TipoEquipamentoService;
@@ -10,8 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/atualizarepi")
-public class AtualizarEpiController {
+@RequestMapping("/atualizarquantidadeepi")
+public class AtualizarQuantidadeEpi {
+
 
     @Autowired
     EpiService epiService;
@@ -25,21 +25,21 @@ public class AtualizarEpiController {
         model.addAttribute("tiposEquipamento", tipoEquipamentoService.obterListaTipoEquipamento());
         model.addAttribute("epiDTO", epi);
 
-        return "atualizarepi";
+        return "atualizarquantidadeepi";
     }
 
     @PostMapping()
-    public String botaoSalvar(@ModelAttribute("atualizarepi") EpiDto epi, Model model) {
-        String mensagemErro = epiService.atualizarEpi(epi);
+    public String botaoSalvar(@ModelAttribute("atualizarquantidadeepi") EpiDto epi, Model model) {
+        String mensagemErro = epiService.atualizarQuantidadeEpi(epi);
 
         if (!mensagemErro.isEmpty()) {
-            model.addAttribute("tiposEquipamento", tipoEquipamentoService.obterListaTipoEquipamento());
             model.addAttribute("erro", true);
             model.addAttribute("mensagemErro", mensagemErro);
             model.addAttribute("epiDTO",epi);
-            return "atualizarepi";
+            return "atualizarquantidadeepi";
         }
-        return "redirect:/listaEPI";
+        return "redirect:/visualizarquantidadeepi";
 
     }
+
 }
