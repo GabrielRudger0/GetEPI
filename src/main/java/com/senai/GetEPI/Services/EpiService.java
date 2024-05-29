@@ -82,6 +82,22 @@ public class EpiService {
         return "";
     }
 
+    public String atualizarQuantidadeEpi(EpiDto epi) {
+        Optional<EpiModel> epiBD = epiRepository.findById(epi.getId());
+        EpiModel atualizar = new EpiModel();
+
+        atualizar.setId(epi.getId());
+        atualizar.setNomeEpi(epi.getNomeEpi());
+        atualizar.setTipoEquipamento(epi.getTipoEquipamento());
+        atualizar.setQuatidadeEpi(epi.getQuatidadeEpi());
+
+
+        epiRepository.save(atualizar);
+
+        return "";
+    }
+
+
     public EpiDto buscaEpiDTO(Long id){
         EpiModel epi = epiRepository.findById(id).get();
 
