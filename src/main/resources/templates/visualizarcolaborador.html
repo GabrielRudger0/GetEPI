@@ -165,11 +165,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="funcao">Função</label>
-                                <input type="text" id="funcao" th:field="*{funcao}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
+                                <input type="text" id="funcao" th:field="*{funcao.funcao}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
                             </div>
                             <div class="form-group">
                                 <label for="dataNascimento">Data de nascimento</label>
-                                <input type="date" id="dataNascimento" th:field="*{dataNascimento}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
+                                <input type="text" id="dataNascimento" th:field="*{dataNascimento}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
                             </div>
                             <p class="card-text pt-2">
                                 <a th:href="@{~/listaEPI}" class="btn btn-outline-primary btnHover">
