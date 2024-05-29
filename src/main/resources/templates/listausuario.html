@@ -36,6 +36,7 @@
             .content {
               flex: 1;
               padding: 20px;
+              background-color: #495057;
             }
 
             .hover-img {
@@ -52,7 +53,68 @@
                 color: black !important;
             }
            .btnHover:hover{
+                color: black;
+            }
+            .custom-shadow {
+                box-shadow: 0px 0px 30px 10px rgba(0.7, 0.7, 0.7, 0.7);
+            }
+
+            .card {
+                background-color: #212529;
+                border-color: #212529;
+            }
+
+            .table {
+                color: white !important;
+                border-color: var(--bs-gray-600);
+            }
+
+            .newCard {
+                background-color: var(--bs-dark) !important;
+                border-radius: 0px 0px 0.5rem 0.5rem;
+                padding: 1.25rem;
+                flex: 1 1 auto;
+
+            }
+
+            .newCardInterno {
+                background-color: var(--bs-dark) !important;
+                border-radius: 0px 0px 0.5rem 0.5rem;
+                padding: 1.25rem;
+                flex: 1 1 auto;
+                border: 1px solid rgba(0, 0, 0, 0.125);
+                border-color: var(--bs-gray-600);
+                color: white !important;
+
+            }
+
+            .newCardHeader {
+                padding: 0.75rem 1.25rem;
+                margin-bottom: 0;
+                background-image: linear-gradient(to top, #212529, #181b21);
+                color: white !important;
+                border-radius: 0.3rem 0.3rem 0rem 0px;
+            }
+
+            .newCardHeaderInterno {
+                padding: 0.75rem 1.25rem;
+                margin-bottom: 0;
+                background-image: linear-gradient(to top, #212529, #181b21);
+                border: 1px solid rgba(0, 0, 0, 0.125);
+                color: white !important;
+                border-color: var(--bs-gray-600);
+                border-radius: 0.3rem 0.3rem 0rem 0px;
+            }
+            .campoTexto {
+                background: var(--dark);
                 color: white;
+                border-color: var(--bs-gray-600);
+            }
+
+            .campoTexto:focus {
+                background: var(--dark);
+                color: white;
+                border-color: var(--bs-gray-600);
             }
 
         </style>
@@ -71,32 +133,32 @@
                 <div th:replace="/menulateral :: componente-menulateral"></div>
             </div>
             <!-- Conteúdo da barra lateral -->
-            <div class="content">
-                <div class="container mt-3 w-100">
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-secondary text-center">
-                                <i class='fa fa-users fa-1x text-dark pe-1'></i>
+            <div class="content" style="background-color: #495057;">
+                <div class="container mt-5 w-100">
+                    <div class="card custom-shadow mb-4" style="border-color: var(--bs-dark) !important;">
+                        <div class="newCardHeader py-3">
+                            <h6 class="m-0 font-weight-bold text-white text-center">
+                                <i class='fa fa-users fa-1x text-warning pe-1'></i>
                                 Usuários
                             </h6>
                         </div>
-                        <div class="card-body">
+                        <div class="newCard bg-dark">
                             <!-- MECANISMO DE BUSCA -->
-                            <div class="card border-info mb-3 w-100">
-                                <div class="card-header">
-                                    <i class='fa fa-users fa-1x text-dark pe-1'></i>
+                            <div class="card mb-3 w-100">
+                                <div class="newCardHeaderInterno">
+                                    <i class='fa fa-users fa-1x text-warning pe-1'></i>
                                     Pesquisar usuários
                                 </div>
-                                <div class="card-body">
+                                <div class="newCardInterno">
                                     <div class="d-flex pb-2">
                                         <form th:method="post" th:action="@{/listausuario}" th:object="${buscaUsuarioDTO}" class="d-flex">
                                             <div class="m-auto pe-2">
-                                                <button type="submit" class="btn btn-outline-secondary mr-2">
-                                                    <span><i class='fa fa-search fa-1x text-bs-gray-700'></i> Pesquisar</span>
+                                                <button type="submit" class="btn btn-outline-secondary mr-2 text-white">
+                                                    <span><i class='fa fa-search fa-1x text-warning'></i> Pesquisar</span>
                                                 </button>
                                             </div>
                                             <div style="width: 450px;">
-                                                <input type="text" id="nome" th:field="*{nome}" class="form-control form-control-lg" placeholder="Nome do usuário"/>
+                                                <input type="text" id="nome" th:field="*{nome}" class="form-control form-control-lg campoTexto" placeholder="Nome do usuário"/>
                                             </div>
                                         </form>
                                     </div>
@@ -105,8 +167,8 @@
                             <!-- MECANISMO DE BUSCA -->
 
                             <p class="card-text pd-3">
-                                <a th:href="@{~/cadastrarusuario}" class="btn btn-outline-secondary">
-                                    <i class='fa fa-user-plus text-bs-gray-700 pe-1'></i>
+                                <a th:href="@{~/cadastrarusuario}" class="btn btn-outline-secondary text-white">
+                                    <i class='fa fa-user-plus text-warning pe-1'></i>
                                     Cadastrar usuário
                                 </a>
                             </p>
@@ -152,7 +214,7 @@
 
                                 <div th:if="${nenhumUsuario == true}">
                                     <div class="card shadow mb-4">
-                                        <div class="card-body">
+                                        <div class="newCardInterno" style="background-color: #495057;">
                                             <p class="card-text pd-3 text-center">
                                                 Nenhum usuário encontrado.
                                             </p>

@@ -14,46 +14,109 @@
   <link rel="stylesheet" href="http://localhost:8080/css/font-awesome.min.css">
 
   <style>
-      .sidebar {
-        width: 280px;
+    .sidebar {
+      width: 280px;
+      background-color: #212529;
+    }
+
+    .sidebar a {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 20px;
+      width: 100%;
+      text-align: left;
+      display: block;
+    }
+
+    .sidebar a:hover {
+      background-color: #dcdcdc;
+      border-radius: 10px;
+    }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+      background-color: #495057;
+    }
+
+    .hover-img {
+        content: url('http://localhost:8080/getEpiNavbar.png'); /* imagem padrão */
+    }
+    a:hover .hover-img {
+        content: url('http://localhost:8080/getEPINavbarPreto.png'); /* outra imagem quando em hover */
+    }
+    .custom-shadow {
+        box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5); /* Ajuste os valores aqui para personalizar a sombra */
+    }
+
+   .dropdown-item:hover {
+        color: black !important;
+    }
+   .btnHover:hover{
+        color: black;
+    }
+    .custom-shadow {
+        box-shadow: 0px 0px 30px 10px rgba(0.7, 0.7, 0.7, 0.7);
+    }
+
+    .card {
         background-color: #212529;
-      }
+        border-color: #212529;
+    }
 
-      .sidebar a {
-        padding: 10px 15px;
-        text-decoration: none;
-        font-size: 20px;
-        width: 100%;
-        text-align: left;
-        display: block;
-      }
+    .table {
+        color: white !important;
+        border-color: var(--bs-gray-600);
+    }
 
-      .sidebar a:hover {
-        background-color: #dcdcdc;
-        border-radius: 10px;
-      }
+    .newCard {
+        background-color: var(--bs-dark) !important;
+        border-radius: 0px 0px 0.5rem 0.5rem;
+        padding: 1.25rem;
+        flex: 1 1 auto;
 
-      .content {
-        flex: 1;
-        padding: 20px;
-      }
+    }
 
-      .hover-img {
-          content: url('http://localhost:8080/getEpiNavbar.png'); /* imagem padrão */
-      }
-      a:hover .hover-img {
-          content: url('http://localhost:8080/getEPINavbarPreto.png'); /* outra imagem quando em hover */
-      }
-      .custom-shadow {
-          box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5); /* Ajuste os valores aqui para personalizar a sombra */
-      }
+    .newCardInterno {
+        background-color: var(--bs-dark) !important;
+        border-radius: 0px 0px 0.5rem 0.5rem;
+        padding: 1.25rem;
+        flex: 1 1 auto;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-color: var(--bs-gray-600);
+        color: white !important;
 
-     .dropdown-item:hover {
-          color: black !important;
-      }
-     .btnHover:hover{
-          color: white;
-     }
+    }
+
+    .newCardHeader {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 0;
+        background-image: linear-gradient(to top, #212529, #181b21);
+        color: white !important;
+        border-radius: 0.3rem 0.3rem 0rem 0px;
+    }
+
+    .newCardHeaderInterno {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 0;
+        background-image: linear-gradient(to top, #212529, #181b21);
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        color: white !important;
+        border-color: var(--bs-gray-600);
+        border-radius: 0.3rem 0.3rem 0rem 0px;
+    }
+    .campoTexto {
+        background: var(--dark);
+        color: white;
+        border-color: var(--bs-gray-600);
+    }
+
+    .campoTexto:focus {
+        background: var(--dark);
+        color: white;
+        border-color: var(--bs-gray-600);
+    }
+
   </style>
 
 </head>
@@ -72,31 +135,31 @@
     <!-- Conteúdo da barra lateral -->
     <!-- Conteúdo da página -->
     <div class="content">
-      <div class="container mt-3">
-        <div class="card shadow mb-4">
-          <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-secondary text-center">
-              <i class='fa fa-address-book-o fa-1x text-dark pe-1'></i>
+      <div class="container mt-5">
+        <div class="card custom-shadow mb-4">
+          <div class="newCardHeader py-3">
+            <h6 class="m-0 font-weight-bold text-white text-center">
+              <i class='fa fa-address-book-o fa-1x text-warning pe-1'></i>
               Colaboradores
             </h6>
           </div>
-          <div class="card-body">
+          <div class="newCard">
             <!-- MECANISMO DE BUSCA    -->
-            <div class="card border-info mb-3 w-100">
-              <div class="card-header">
-                <i class='fa fa-users fa-1x text-dark pe-1'></i>
+            <div class="card mb-3 w-100">
+              <div class="newCardHeaderInterno">
+                <i class='fa fa-users fa-1x text-warning pe-1'></i>
                 Pesquisar colaboradores
               </div>
-              <div class="card-body">
+              <div class="newCardInterno">
                 <div class="d-flex pb-2">
                   <form th:method="post" th:action="@{/listacolaborador/buscar}" th:object="${buscaColaboradorDTO}" class="d-flex">
                     <div class="m-auto pe-2">
-                      <button type="submit" class="btn btn-outline-secondary mr-2">
-                        <span><i class='fa fa-search fa-1x text-bs-gray-700'></i> Pesquisar</span>
+                      <button type="submit" class="btn btn-outline-secondary mr-2 text-white">
+                        <span><i class='fa fa-search fa-1x text-warning'></i> Pesquisar</span>
                       </button>
                     </div>
                     <div style="width: 450px;">
-                      <input type="text" id="nome" th:field="*{nome}" class="form-control form-control-lg" placeholder="Nome do colaborador"/>
+                      <input type="text" id="nome" th:field="*{nome}" class="form-control form-control-lg campoTexto" placeholder="Nome do colaborador"/>
                     </div>
                   </form>
                 </div>
@@ -105,8 +168,8 @@
             <!-- MECANISMO DE BUSCA -->
 
             <p class="card-text pd-3">
-              <a th:href="@{~/cadastrarcolaborador}" class="btn btn-outline-secondary">
-                <i class='fa fa-user-plus text-bs-gray-700 pe-1'></i>
+              <a th:href="@{~/cadastrarcolaborador}" class="btn btn-outline-secondary text-white">
+                <i class='fa fa-user-plus text-warning pe-1'></i>
                 Cadastrar colaborador
               </a>
             </p>
@@ -156,7 +219,7 @@
 
               <div th:if="${nenhumColaborador == true}">
                 <div class="card shadow mb-4">
-                  <div class="card-body">
+                  <div class="newCard">
                     <p class="card-text pd-3 text-center">
                       Nenhum colaborador encontrado.
                     </p>
