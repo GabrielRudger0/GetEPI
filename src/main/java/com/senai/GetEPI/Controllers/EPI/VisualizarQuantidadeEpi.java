@@ -18,7 +18,7 @@ public class VisualizarQuantidadeEpi {
     @Autowired
     EpiService epiService;
 
-    @GetMapping()
+    @GetMapping("/{id}")
     public String exibeVisualizarEmprestimo(Model model, @PathVariable Long id) {
 
         EpiDto epi = epiService.buscaEpiDTO(id);
