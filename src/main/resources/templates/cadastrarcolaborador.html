@@ -158,7 +158,7 @@
                             </script>
                         </div>
 
-                        <form th:method="post" th:action="@{/cadastrarcolaborador}" th:object="${colaboradorDto}">
+                        <form th:method="post" th:action="@{/cadastrarcolaborador}" th:object="${colaboradorDto}" class="text-white">
                             <div class="form-group">
                                 <label for="nome">Nome</label>
                                 <input type="text" id="nome" th:field="*{nome}" class="form-control form-control-lg campoTexto" required/>
@@ -170,7 +170,7 @@
                             <div class="form-group">
                                 <label for="funcao">Função</label>
                                 <select id="funcao" name="funcao" class="form-control form-control-lg campoTexto" required>
-                                    <option value="" class="text-dark">Selecione a função</option>
+                                    <option value="" class="text-dark">Selecione</option>
                                     <option th:each="funcao : ${funcoes}" th:value="${funcao.id}" th:text="${funcao.funcao}" class="text-dark">Função 1</option>
                                 </select>
                             </div>

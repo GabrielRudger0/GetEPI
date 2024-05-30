@@ -34,7 +34,13 @@ public class ListarColaboradorController {
 
         List<ColaboradorDto> listaColaborador = colaboradorService.retornaListaColaboradorDTO();
 
-        model.addAttribute("colaboradores", colaboradorService.obterListaColaboradores());
+        boolean nenhumRegistro = false;
+        if(listaColaborador.isEmpty()) {
+            nenhumRegistro = true;
+        }
+        model.addAttribute("nenhumColaborador", nenhumRegistro);
+
+        model.addAttribute("colaboradores", listaColaborador);
         model.addAttribute("funcao", funcaoService.obterListaFuncao());
         model.addAttribute("buscaColaboradorDTO", new ColaboradorDto());
 

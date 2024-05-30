@@ -29,6 +29,12 @@ public class ListaFuncaoController {
 
         List<FuncaoDto> listaFuncaoDto = funcaoService.retornaListaFuncaoDTO();
 
+        boolean nenhumRegistro = false;
+        if(listaFuncaoDto.isEmpty()) {
+            nenhumRegistro = true;
+        }
+        model.addAttribute("nenhumRegistro", nenhumRegistro);
+
         model.addAttribute("funcoes", funcaoService.retornaListaFuncaoDTO());
         model.addAttribute("buscaFuncaoDTO", new FuncaoDto());
 

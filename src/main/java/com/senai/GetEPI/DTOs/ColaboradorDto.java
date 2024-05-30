@@ -42,13 +42,14 @@ public class ColaboradorDto {
     }
 
     public ColaboradorDto(ColaboradorModel colaboradorModel) {
+        this.id = colaboradorModel.getId();
+        this.email = colaboradorModel.getEmail();
+        this.nome = colaboradorModel.getNome();
+        this.funcao = colaboradorModel.getFuncao();
+        this.dataNascimento = formatarData(colaboradorModel.getDataNascimento());
     }
 
     private String formatarData(Date data) {
-        if(data == null) {
-            return EmprestimoStatus.NAO_DEVOLVIDO.getDescricao();
-        }
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(data);
     }
