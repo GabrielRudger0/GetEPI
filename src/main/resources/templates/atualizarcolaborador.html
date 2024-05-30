@@ -167,7 +167,7 @@
                                 });
                             </script>
                         </div>
-                        <form th:method="post" th:action="@{/atualizarcolaborador}" th:object="${colaboradorDTO}" class=text-white>
+                        <form th:method="post" th:action="@{/atualizarcolaborador}" th:object="${UpdColaboradorDTO}" class=text-white>
                             <div class="form-group d-none">
                                 <label for="colaboradorId">Id</label>
                                 <input type="text" id="colaboradorId" th:field="*{id}" class="form-control form-control-lg invisible"/>
@@ -180,16 +180,10 @@
                                 <label for="email">E-mail</label>
                                 <input type="email" id="email" th:field="*{email}" class="form-control form-control-lg campoTexto" required/>
                             </div>
-                            <div class="mb-3">
-
-
+                            <div class="form-group">
                                 <label for="funcao" class="form-label">Função</label>
-                                <select class="form-select campoTexto" id="funcao" aria-label="Floating label select example" th:field="*{funcao}">
-                                    <option class="text-dark"
-                                            th:each="funcao : ${funcoes}"
-                                            th:value="${funcao.id}"
-                                            th:text="${funcao.funcao}"
-                                    </option>
+                                <select class="form-control form-control-lg campoTexto" id="funcao" aria-label="Floating label select example" th:field="*{funcao}">
+                                    <option class="text-dark"  th:each="funcao : ${funcoes}" th:value="${funcao.id}" th:text="${funcao.funcao}"></option>
                                 </select>
                             </div>
 

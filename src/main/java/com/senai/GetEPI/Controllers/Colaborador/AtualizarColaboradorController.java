@@ -2,6 +2,7 @@ package com.senai.GetEPI.Controllers.Colaborador;
 
 
 import com.senai.GetEPI.DTOs.ColaboradorDto;
+import com.senai.GetEPI.DTOs.UpdColaboradorDTO;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.FuncaoService;
@@ -10,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/atualizarcolaborador")
@@ -22,10 +27,9 @@ public class AtualizarColaboradorController {
 
     @GetMapping("/{id}")
     public String exibeAtualizaColaborador(Model model, @PathVariable Long id) {
-        ColaboradorDto colaborador = colaboradorService.buscaColaboradorDTO(id);
-        model.addAttribute("colaboradorDTO", colaborador);
+        UpdColaboradorDTO colaborador = colaboradorService.buscaColaboradorDTOupd(id);
+        model.addAttribute("UpdColaboradorDTO", colaborador);
         model.addAttribute("funcaoColaborador",colaborador.getFuncao().getId());
-        System.out.println("funcaoColaborador :"+ colaborador.getFuncao().getId());
         model.addAttribute("funcoes",  funcaoService.obterListaFuncao());
         return "atualizarcolaborador";
     }
@@ -41,6 +45,11 @@ public class AtualizarColaboradorController {
         }
         return "redirect:/listacolaboradores";
 
+    }
+
+    private Date stringToDate(String stringData) {
+
+        return new Date();
     }
 
 }

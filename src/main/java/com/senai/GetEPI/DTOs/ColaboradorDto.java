@@ -1,16 +1,19 @@
 package com.senai.GetEPI.DTOs;
 
+import com.senai.GetEPI.Dominios.EmprestimoStatus;
 import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.FuncaoModel;
 import com.senai.GetEPI.Models.UsuarioModel;
 import lombok.Data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
 public class ColaboradorDto {
 
     private Long id;
+
     private String nome;
 
     private String email;
@@ -35,9 +38,20 @@ public class ColaboradorDto {
         this.email = colaboradorModel.getEmail();
         this.nome = colaboradorModel.getNome();
         this.funcao = funcao;
-        this.dataNascimento = colaboradorModel.getDataNascimento().toString();
+        this.dataNascimento = formatarData(colaboradorModel.getDataNascimento());
     }
 
     public ColaboradorDto(ColaboradorModel colaboradorModel) {
+        this.id = colaboradorModel.getId();
+        this.email = colaboradorModel.getEmail();
+        this.nome = colaboradorModel.getNome();
+        this.funcao = colaboradorModel.getFuncao();
+        this.dataNascimento = formatarData(colaboradorModel.getDataNascimento());
     }
+
+    private String formatarData(Date data) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(data);
+    }
+
 }
