@@ -30,6 +30,12 @@ public class ListarEpiController {
 
         List<EpiDto> listaEpi = epiService.retornaListaEpiDTO();
 
+        boolean nenhumRegistro = false;
+        if(listaEpi.isEmpty()) {
+            nenhumRegistro = true;
+        }
+        model.addAttribute("nenhumRegistro", nenhumRegistro);
+
         model.addAttribute("epis",epiService.obterListaEpi());
         model.addAttribute("tipoepi", tipoEquipamentoService.obterListaTipoEquipamento());
         model.addAttribute("buscaEPIDto", new EpiDto());

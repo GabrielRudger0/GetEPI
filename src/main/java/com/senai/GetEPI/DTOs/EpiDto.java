@@ -29,7 +29,8 @@ public class EpiDto {
   public EpiDto(EpiModel epi, TipoEquipamentoModel tipoEquipamento){
     this.id               = epi.getId();
     this.nomeEpi          = epi.getNomeEpi();
-    this.tipoEquipamento = tipoEquipamento;
+    this.tipoEquipamento  = tipoEquipamento;
+    this.QuatidadeEpi     = epi.getQuatidadeEpi();
   }
 
 }

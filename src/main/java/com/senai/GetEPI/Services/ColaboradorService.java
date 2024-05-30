@@ -1,6 +1,7 @@
 package com.senai.GetEPI.Services;
 
 import com.senai.GetEPI.DTOs.ColaboradorDto;
+import com.senai.GetEPI.DTOs.UpdColaboradorDTO;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.FuncaoModel;
@@ -85,6 +86,12 @@ public class ColaboradorService {
         ColaboradorModel colaborador = colaboradorRepository.findById(id).get();
 
         return new ColaboradorDto(colaborador,colaborador.getFuncao());
+    }
+
+    public UpdColaboradorDTO buscaColaboradorDTOupd(Long id){
+        ColaboradorModel colaborador = colaboradorRepository.findById(id).get();
+
+        return new UpdColaboradorDTO(colaborador);
     }
 
     public boolean excluirColaborador(Long id){
