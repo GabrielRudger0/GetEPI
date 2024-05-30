@@ -37,6 +37,7 @@
         .content {
           flex: 1;
           padding: 20px;
+          background-color: #495057;
         }
 
         .hover-img {
@@ -52,9 +53,83 @@
        .dropdown-item:hover {
             color: black !important;
         }
-       .btnHover:hover {
-           color: white;
-       }
+       .btnHover:hover{
+            color: white;
+        }
+        .custom-shadow {
+            box-shadow: 0px 0px 30px 10px rgba(0.7, 0.7, 0.7, 0.7);
+        }
+
+        .card {
+            background-color: #212529;
+            border-color: #212529;
+        }
+
+        .table {
+            color: white !important;
+            border-color: var(--bs-gray-600);
+        }
+
+        .newCard {
+            background-color: var(--bs-dark) !important;
+            border-radius: 0px 0px 0.5rem 0.5rem;
+            padding: 1.25rem;
+            flex: 1 1 auto;
+
+        }
+
+        .newCardInterno {
+            background-color: var(--bs-dark) !important;
+            border-radius: 0px 0px 0.5rem 0.5rem;
+            padding: 1.25rem;
+            flex: 1 1 auto;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-color: var(--bs-gray-600);
+            color: white !important;
+
+        }
+
+        .newCardHeader {
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 0;
+            background-image: linear-gradient(to top, #212529, #181b21);
+            color: white !important;
+            border-radius: 0.3rem 0.3rem 0rem 0px;
+        }
+
+        .newCardHeaderInterno {
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 0;
+            background-image: linear-gradient(to top, #212529, #181b21);
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            color: white !important;
+            border-color: var(--bs-gray-600);
+            border-radius: 0.3rem 0.3rem 0rem 0px;
+        }
+        .campoTexto {
+            background: var(--dark);
+            color: white;
+            border-color: var(--bs-gray-600);
+        }
+
+        .campoTextoReadOnly {
+            background: var(--bs-gray-700);
+            color: white;
+            border-color: var(--bs-gray-600);
+        }
+
+        .campoTextoReadOnly:focus {
+            background: var(--bs-gray-700);
+            color: white;
+            border-color: var(--bs-gray-600);
+        }
+
+        .campoTexto:focus {
+            background: var(--dark);
+            color: white;
+            border-color: var(--bs-gray-600);
+        }
+
     </style>
 </head>
 <body>
@@ -73,36 +148,36 @@
         <!-- Conteúdo da barra lateral -->
         <!-- Conteúdo da página -->
         <div class="content">
-            <div class="container mt-3">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-secondary text-center">
-                            <i class='fa fa-eye fa-1x text-dark pe-1'></i>
+            <div class="container mt-5">
+                <div class="card custom-shadow mb-4">
+                    <div class="newCardHeader py-3">
+                        <h6 class="m-0 font-weight-bold text-white text-center">
+                            <i class='fa fa-eye fa-1x text-warning pe-1'></i>
                             Dados do empréstimo
                         </h6>
                     </div>
-                    <div class="card-body">
-                        <form id="form-devolucao" th:method="post" th:action="@{'/devolver/' + *{id}}" th:object="${emprestimoDTO}">
+                    <div class="newCard">
+                        <form id="form-devolucao" th:method="post" th:action="@{'/devolver/' + *{id}}" th:object="${emprestimoDTO}" class="text-white">
                             <div class="form-group">
-                                <div class="form-group">
+                                <div class="form-group d-none">
                                     <label for="idEmprestimo">Id</label>
-                                    <input type="text" id="idEmprestimo" th:field="*{id}" class="form-control form-control-lg" aria-label="Disabled input example" disabled readonly/>
+                                    <input type="text" id="idEmprestimo" th:field="*{id}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
                                 </div>
                                 <div class="form-group">
                                     <label for="colaborador">Colaborador</label>
-                                    <input type="text" id="colaborador" th:field="*{colaborador}" class="form-control form-control-lg" aria-label="Disabled input example" disabled readonly/>
+                                    <input type="text" id="colaborador" th:field="*{colaborador}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
                                 </div>
                                 <div class="form-group">
                                     <label for="epi">EPI</label>
-                                    <input type="text" id="epi" th:field="*{epi}" class="form-control form-control-lg" aria-label="Disabled input example" disabled readonly/>
+                                    <input type="text" id="epi" th:field="*{epi}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
                                 </div>
                                 <div class="form-group">
                                     <label for="emissaoData">Data do empréstimo</label>
-                                    <input type="text" id="emissaoData" th:field="*{emissaoData}" class="form-control form-control-lg" aria-label="Disabled input example" disabled readonly/>
+                                    <input type="text" id="emissaoData" th:field="*{emissaoData}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
                                 </div>
                                 <div class="form-group">
                                     <label for="devolucaoData">Data de devolução</label>
-                                    <input type="text" id="devolucaoData" th:field="*{devolucaoData}" class="form-control form-control-lg" aria-label="Disabled input example" disabled readonly/>
+                                    <input type="text" id="devolucaoData" th:field="*{devolucaoData}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
                                 </div>
                                 <div class="pt-2 mb-4">
 

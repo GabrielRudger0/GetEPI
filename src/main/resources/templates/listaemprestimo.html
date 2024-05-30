@@ -15,47 +15,110 @@
     <script src="http://localhost:8080/sweetalert2.all.min.js"></script>
 
     <style>
-        .sidebar {
-          width: 280px;
-          background-color: #212529;
-        }
+            .sidebar {
+              width: 280px;
+              background-color: #212529;
+            }
 
-        .sidebar a {
-          padding: 10px 15px;
-          text-decoration: none;
-          font-size: 20px;
-          width: 100%;
-          text-align: left;
-          display: block;
-        }
+            .sidebar a {
+              padding: 10px 15px;
+              text-decoration: none;
+              font-size: 20px;
+              width: 100%;
+              text-align: left;
+              display: block;
+            }
 
-        .sidebar a:hover {
-          background-color: #dcdcdc;
-          border-radius: 10px;
-        }
+            .sidebar a:hover {
+              background-color: #dcdcdc;
+              border-radius: 10px;
+            }
 
-        .content {
-          flex: 1;
-          padding: 20px;
-        }
+            .content {
+              flex: 1;
+              padding: 20px;
+              background-color: #495057;
+            }
 
-        .hover-img {
-            content: url('http://localhost:8080/getEpiNavbar.png'); /* imagem padrão */
-        }
-        a:hover .hover-img {
-            content: url('http://localhost:8080/getEPINavbarPreto.png'); /* outra imagem quando em hover */
-        }
-        .custom-shadow {
-            box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5); /* Ajuste os valores aqui para personalizar a sombra */
-        }
+            .hover-img {
+                content: url('http://localhost:8080/getEpiNavbar.png'); /* imagem padrão */
+            }
+            a:hover .hover-img {
+                content: url('http://localhost:8080/getEPINavbarPreto.png'); /* outra imagem quando em hover */
+            }
+            .custom-shadow {
+                box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5); /* Ajuste os valores aqui para personalizar a sombra */
+            }
 
-       .dropdown-item:hover {
-            color: black !important;
-        }
-       .btnHover:hover {
-           color: white;
-       }
-    </style>
+           .dropdown-item:hover {
+                color: black !important;
+            }
+           .btnHover:hover{
+                color: black;
+            }
+            .custom-shadow {
+                box-shadow: 0px 0px 30px 10px rgba(0.7, 0.7, 0.7, 0.7);
+            }
+
+            .card {
+                background-color: #212529;
+                border-color: #212529;
+            }
+
+            .table {
+                color: white !important;
+                border-color: var(--bs-gray-600);
+            }
+
+            .newCard {
+                background-color: var(--bs-dark) !important;
+                border-radius: 0px 0px 0.5rem 0.5rem;
+                padding: 1.25rem;
+                flex: 1 1 auto;
+
+            }
+
+            .newCardInterno {
+                background-color: var(--bs-dark) !important;
+                border-radius: 0px 0px 0.5rem 0.5rem;
+                padding: 1.25rem;
+                flex: 1 1 auto;
+                border: 1px solid rgba(0, 0, 0, 0.125);
+                border-color: var(--bs-gray-600);
+                color: white !important;
+
+            }
+
+            .newCardHeader {
+                padding: 0.75rem 1.25rem;
+                margin-bottom: 0;
+                background-image: linear-gradient(to top, #212529, #181b21);
+                color: white !important;
+                border-radius: 0.3rem 0.3rem 0rem 0px;
+            }
+
+            .newCardHeaderInterno {
+                padding: 0.75rem 1.25rem;
+                margin-bottom: 0;
+                background-image: linear-gradient(to top, #212529, #181b21);
+                border: 1px solid rgba(0, 0, 0, 0.125);
+                color: white !important;
+                border-color: var(--bs-gray-600);
+                border-radius: 0.3rem 0.3rem 0rem 0px;
+            }
+            .campoTexto {
+                background: var(--dark);
+                color: white;
+                border-color: var(--bs-gray-600);
+            }
+
+            .campoTexto:focus {
+                background: var(--dark);
+                color: white;
+                border-color: var(--bs-gray-600);
+            }
+
+        </style>
 </head>
 <body>
 
@@ -73,32 +136,32 @@
             <!-- Conteúdo da barra lateral -->
             <!-- Conteúdo da página -->
             <div class="content">
-                <div class="container mt-3">
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-secondary text-center">
-                                <i class='fa fa-handshake-o fa-1x text-dark pe-1'></i>
+                <div class="container mt-5">
+                    <div class="card custom-shadow mb-4">
+                        <div class="newCardHeader py-3">
+                            <h6 class="m-0 font-weight-bold text-white text-center">
+                                <i class='fa fa-handshake-o fa-1x text-warning pe-1'></i>
                                 Empréstimos
                             </h6>
                         </div>
-                        <div class="card-body">
+                        <div class="newCard">
 
                             <!-- MECANISMO DE BUSCA -->
-                            <div class="card border-info mb-3 w-100">
-                                <div class="card-header">
-                                    <i class='fa fa-handshake-o fa-1x text-dark pe-1'></i>
+                            <div class="card mb-3 w-100">
+                                <div class="newCardHeaderInterno">
+                                    <i class='fa fa-handshake-o fa-1x text-warning pe-1'></i>
                                     Pesquisar empréstimos
                                 </div>
-                                <div class="card-body">
+                                <div class="newCardInterno">
                                     <div class="d-flex pb-2">
                                         <form th:method="post" th:action="@{/listaemprestimo}" th:object="${buscaEmprestimoDTO}" class="d-flex">
                                             <div class="m-auto pe-2">
-                                                <button type="submit" class="btn btn-outline-secondary mr-2">
-                                                    <span><i class='fa fa-search fa-1x text-bs-gray-700'></i> Pesquisar</span>
+                                                <button type="submit" class="btn btn-outline-secondary mr-2 text-white">
+                                                    <span><i class='fa fa-search fa-1x text-warning'></i> Pesquisar</span>
                                                 </button>
                                             </div>
                                             <div style="width: 450px;">
-                                                <input type="text" id="nome" th:field="*{colaborador}" class="form-control form-control-lg" placeholder="Nome do colaborador"/>
+                                                <input type="text" id="nome" th:field="*{colaborador}" class="form-control form-control-lg campoTexto" placeholder="Nome do colaborador"/>
                                             </div>
                                         </form>
                                     </div>
@@ -109,14 +172,14 @@
                             <!-- BOTÕES SUPERIORES -->
                             <p class="card-text pd-3">
                                 <!-- BOTAO CADASTRAR -->
-                                <a th:href="@{~/cadastraremprestimo}" class="btn btn-outline-secondary">
-                                    <i class='fa fa-plus text-bs-gray-700 pe-1'></i>
+                                <a th:href="@{~/cadastraremprestimo}" class="btn btn-outline-secondary text-white">
+                                    <i class='fa fa-plus text-warning pe-1'></i>
                                     Cadastrar empréstimo
                                 </a>
                                 <!-- BOTAO CADASTRAR -->
                                 <!-- BOTAO PENDENTES -->
-                                <a th:href="@{~/listadevolucao}" class="btn btn-outline-secondary">
-                                    <i class='fa fa-history text-bs-gray-700 pe-1'></i>
+                                <a th:href="@{~/listadevolucao}" class="btn btn-outline-secondary text-white">
+                                    <i class='fa fa-history text-warning pe-1'></i>
                                     Pendentes de devolução
                                 </a>
                                 <!-- BOTAO PENDENTES -->
@@ -162,7 +225,7 @@
 
                                 <div th:if="${nenhumRegistro == true}">
                                     <div class="card shadow mb-4">
-                                        <div class="card-body">
+                                        <div class="newCardInterno">
                                             <p class="card-text pd-3 text-center">
                                                 Nenhum empréstimo encontrado.
                                             </p>
