@@ -13,6 +13,7 @@ import java.util.Date;
 public class ColaboradorDto {
 
     private Long id;
+
     private String nome;
 
     private String email;

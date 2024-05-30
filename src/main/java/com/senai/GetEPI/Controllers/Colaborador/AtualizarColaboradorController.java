@@ -11,6 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Controller
 @RequestMapping("/atualizarcolaborador")
 public class AtualizarColaboradorController {
@@ -27,6 +31,7 @@ public class AtualizarColaboradorController {
         model.addAttribute("funcaoColaborador",colaborador.getFuncao().getId());
         System.out.println("funcaoColaborador :"+ colaborador.getFuncao().getId());
         model.addAttribute("funcoes",  funcaoService.obterListaFuncao());
+        model.addAttribute("dataNascimentoColaborador", stringToDate(colaborador.getDataNascimento()));
         return "atualizarcolaborador";
     }
 
@@ -41,6 +46,20 @@ public class AtualizarColaboradorController {
         }
         return "redirect:/listacolaboradores";
 
+    }
+
+    private Date stringToDate(String stringData) {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        Date data = new Date();
+        try {
+            // Convertendo a string para Date
+            data = formato.parse(stringData);
+            System.out.println("Data em formato Date: " + data);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return data;
     }
 
 }
