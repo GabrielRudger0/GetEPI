@@ -178,26 +178,20 @@
                 <label for="nomeEpi" class="text-white">Nome do EPI</label>
                 <input type="text" id="nomeEpi" th:field="*{nomeEpi}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
               </div>
+              <div>
+                <label for="tipoEquipamento" class="form-label text-white">Tipo do EPI</label>
+                <input type="text" id="tipoEquipamento" th:field="*{tipoEquipamento.descricao}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
+              </div>
               <div class="form-group">
                 <label class="text-white" for="QuatidadeEpi">Quantidade do EPI</label>
                 <input type="text" id="QuatidadeEpi" th:field="*{QuatidadeEpi}" class="form-control form-control-lg campoTexto" required/>
-              </div>
-              <div>
-                <label for="tipoEquipamento" class="form-label text-white">Tipo do EPI</label>
-                <select class="form-select campoTextoReadOnly" id="tipoEquipamento" aria-label="Floating label select example" th:field="*{tipoEquipamento}">
-                  <option class="text-dark"
-                          th:each="tipoEquipamento : ${tiposEquipamento}"
-                          th:value="${tipoEquipamento.id}"
-                          th:text="${tipoEquipamento.descricao}">
-                  </option>
-                </select>
               </div>
 
               <div class="pt-2 mb-4">
                 <button type="submit" class="btn btn-outline-success mr-2">
                   <span class="btnHover"><i class='fa fa-check fa-1x'></i> Salvar</span>
                 </button>
-                <a th:href="@{~/visualizarquantidadeepi}" class="btn btn-outline-primary btnHover">
+                <a th:href="@{~/listaEPI}" class="btn btn-outline-primary btnHover">
                   <i class='fa fa-arrow-left fa-1x'></i>
                   Voltar
                 </a>

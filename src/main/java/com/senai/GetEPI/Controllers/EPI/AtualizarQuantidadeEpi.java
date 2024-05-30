@@ -38,7 +38,7 @@ public class AtualizarQuantidadeEpi {
             model.addAttribute("epiDTO",epi);
             return "atualizarquantidadeepi";
         }
-        return "redirect:/visualizarquantidadeepi";
+        return "redirect:/listaEPI";
 
     }
 

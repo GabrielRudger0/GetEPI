@@ -164,6 +164,10 @@
                 <label for="tipoEquipamento" class="text-white">Tipo do equipamento</label>
                 <input type="text" id="tipoEquipamento" th:field="*{tipoEquipamento.descricao}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
               </div>
+              <div class="form-group">
+                <label for="estoque" class="text-white">Visualizar</label>
+                <input type="text" id="estoque" th:field="*{QuatidadeEpi}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
+              </div>
               <p class="card-text pt-2">
                 <a th:href="@{~/listaEPI}" class="btn btn-outline-primary">
                   <i class='fa fa-arrow-left fa-1x'></i>

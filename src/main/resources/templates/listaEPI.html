@@ -54,7 +54,7 @@
             color: black !important;
         }
        .btnHover:hover{
-            color: black;
+            color: black !important;
         }
         .custom-shadow {
             box-shadow: 0px 0px 30px 10px rgba(0.7, 0.7, 0.7, 0.7);
@@ -117,6 +117,25 @@
             color: white;
             border-color: var(--bs-gray-600);
         }
+        .btn-outline-estoque {
+            --bs-btn-color: #b9ab6e;
+            --bs-btn-border-color: #b9ab6e;
+            --bs-btn-hover-color: #b9ab6e;
+            --bs-btn-hover-bg: #b9ab6e;
+            --bs-btn-hover-border-color: #b9ab6e;
+            --bs-btn-focus-shadow-rgb: 108, 117, 125;
+            --bs-btn-active-color: #fff;
+            --bs-btn-active-bg: #6c757d;
+            --bs-btn-active-border-color: #6c757d;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #6c757d;
+            --bs-btn-disabled-bg: transparent;
+            --bs-btn-disabled-border-color: #6c757d;
+            --bs-gradient: none;
+        }
+        .text-estoque {
+            color: #b9ab6e;
+        }
 
     </style>
 
@@ -173,11 +192,6 @@
                                 <i class='fa fa-plus text-warning pe-1'></i>
                                 Cadastrar EPI
                             </a>
-
-                            <a th:href="@{~/visualizarquantidadeepi}" class="btn btn-outline-secondary text-white">
-                                <i class='fa fa-cubes text-warning pe-1'></i>
-                                Estoque
-                            </a>
                         </p>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -199,7 +213,7 @@
                                     <td class="text-center">
                                         <a th:href="@{'/visualizarepi/' + ${epi.id}}" class="btn btn-outline-info btnHover">
                                             <i class='fa fa-eye pe-1'></i>
-                                            Visualizar
+                                            Estoque
                                         </a>
                                     </td>
                                     <td class="text-center">
