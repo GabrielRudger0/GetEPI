@@ -200,6 +200,7 @@
                                     <th>Id</th>
                                     <th>EPI</th>
                                     <th>Tipo do EPI</th>
+                                    <th>Estoque</th>
                                     <th style="width: 200px;"></th>
                                     <th style="width: 200px;"></th>
                                     <th style="width: 200px;"></th>
@@ -210,6 +211,7 @@
                                     <td th:text="${epi.id}"></td>
                                     <td th:text="${epi.nomeEpi}"></td>
                                     <td th:text="${epi.tipoEquipamento.descricao}"></td>
+                                    <td th:text="${epi.QuatidadeEpi}"></td>
                                     <td class="text-center">
                                         <a th:href="@{'/visualizarepi/' + ${epi.id}}" class="btn btn-outline-info btnHover">
                                             <i class='fa fa-eye pe-1'></i>
