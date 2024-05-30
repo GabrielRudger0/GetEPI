@@ -2,6 +2,7 @@ package com.senai.GetEPI.Controllers.Colaborador;
 
 
 import com.senai.GetEPI.DTOs.ColaboradorDto;
+import com.senai.GetEPI.DTOs.UpdColaboradorDTO;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.FuncaoService;
@@ -26,12 +27,10 @@ public class AtualizarColaboradorController {
 
     @GetMapping("/{id}")
     public String exibeAtualizaColaborador(Model model, @PathVariable Long id) {
-        ColaboradorDto colaborador = colaboradorService.buscaColaboradorDTO(id);
-        model.addAttribute("colaboradorDTO", colaborador);
+        UpdColaboradorDTO colaborador = colaboradorService.buscaColaboradorDTOupd(id);
+        model.addAttribute("UpdColaboradorDTO", colaborador);
         model.addAttribute("funcaoColaborador",colaborador.getFuncao().getId());
-        System.out.println("funcaoColaborador :"+ colaborador.getFuncao().getId());
         model.addAttribute("funcoes",  funcaoService.obterListaFuncao());
-        model.addAttribute("dataNascimentoColaborador", stringToDate(colaborador.getDataNascimento()));
         return "atualizarcolaborador";
     }
 
@@ -49,17 +48,8 @@ public class AtualizarColaboradorController {
     }
 
     private Date stringToDate(String stringData) {
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        Date data = new Date();
-        try {
-            // Convertendo a string para Date
-            data = formato.parse(stringData);
-            System.out.println("Data em formato Date: " + data);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
-        return data;
+        return new Date();
     }
 
 }
