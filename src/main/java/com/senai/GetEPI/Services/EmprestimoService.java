@@ -28,7 +28,7 @@ public class EmprestimoService {
     EmprestimoRepository emprestimoRepository;
 
     @Autowired
-    MovimentacaoRepository movimentacaoRepository;
+    MovimentacaoService movimentacaoService;
 
     public List<EmprestimoDTO> retornaListaEmprestimos() {
         return converterListaEmprestimo(emprestimoRepository.findAll());
@@ -58,7 +58,7 @@ public class EmprestimoService {
 
         emprestimoRepository.save(novoEmprestimo);
 
-        inserirMovimentacao(novoEmprestimo);
+        movimentacaoService.gerarMovimentacao(novoEmprestimo, -1l, TipoMovimentacao.SAIDA);
         return "";
     }
 
@@ -71,7 +71,10 @@ public class EmprestimoService {
         if (!emprestimo.isPresent()){
             return false;
         }
+        movimentacaoService.gerarMovimentacao(emprestimo.get(), 1l, TipoMovimentacao.ENTRADA);
         emprestimoRepository.delete(emprestimo.get());
+
+
         return true;
 
     }
@@ -88,6 +91,7 @@ public class EmprestimoService {
         EmprestimoModel emprestimoBD = emprestimoRepository.findById(id).get();
         emprestimoBD.setDevolucaoData(new Date());
         emprestimoRepository.save(emprestimoBD);
+        movimentacaoService.gerarMovimentacao(emprestimoBD, 1l, TipoMovimentacao.ENTRADA);
 
     }
 
@@ -112,19 +116,7 @@ public class EmprestimoService {
     }
 
 
-    private String inserirMovimentacao(EmprestimoModel emprestimo){
 
-
-        MovimentacaoModel registro = new MovimentacaoModel();
-
-        registro.setDataMovimentacao(new Date());
-        registro.setQuantidade(-1L);
-        registro.setEmprestimoModel(emprestimo);
-        registro.setTipoMovimentacao(TipoMovimentacao.SAIDA);
-        movimentacaoRepository.save(registro);
-
-        return "";
-    }
 
 
 }
