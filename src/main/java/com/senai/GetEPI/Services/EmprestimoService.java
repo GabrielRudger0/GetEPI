@@ -3,9 +3,13 @@ package com.senai.GetEPI.Services;
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.EmprestimoDTO;
 import com.senai.GetEPI.DTOs.ViewEmprestimoDTO;
+import com.senai.GetEPI.Dominios.TipoMovimentacao;
 import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.EmprestimoModel;
+import com.senai.GetEPI.Models.MovimentacaoModel;
 import com.senai.GetEPI.Repositories.EmprestimoRepository;
+import com.senai.GetEPI.Repositories.MovimentacaoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +26,9 @@ public class EmprestimoService {
 
     @Autowired
     EmprestimoRepository emprestimoRepository;
+
+    @Autowired
+    MovimentacaoRepository movimentacaoRepository;
 
     public List<EmprestimoDTO> retornaListaEmprestimos() {
         return converterListaEmprestimo(emprestimoRepository.findAll());
@@ -50,6 +57,8 @@ public class EmprestimoService {
         novoEmprestimo.setDevolucaoData(null);
 
         emprestimoRepository.save(novoEmprestimo);
+
+        inserirMovimentacao(novoEmprestimo);
         return "";
     }
 
@@ -101,5 +110,21 @@ public class EmprestimoService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(data);
     }
+
+
+    private String inserirMovimentacao(EmprestimoModel emprestimo){
+
+
+        MovimentacaoModel registro = new MovimentacaoModel();
+
+        registro.setDataMovimentacao(new Date());
+        registro.setQuantidade(-1L);
+        registro.setEmprestimoModel(emprestimo);
+        registro.setTipoMovimentacao(TipoMovimentacao.SAIDA);
+        movimentacaoRepository.save(registro);
+
+        return "";
+    }
+
 
 }
