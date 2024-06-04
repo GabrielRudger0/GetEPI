@@ -62,8 +62,8 @@ public class MovimentacaoService {
         return movimentacaoModels.stream().map(ViewMovimentacaoDto::new).collect(Collectors.toList());
     }
 
-    public void excluirMovimentacao(Long id) {
-        movimentacaoRepository.delete(movimentacaoRepository.findById(id).get());
+    public void excluirMovimentacaoPorEmprestimo(Long emprestimoId) {
+        movimentacaoRepository.deleteMovimentacaoPorEmprestimo(emprestimoId);
     }
 
 

@@ -71,9 +71,10 @@ public class EmprestimoService {
         if (!emprestimo.isPresent()){
             return false;
         }
-        movimentacaoService.gerarMovimentacao(emprestimo.get(), 1l, TipoMovimentacao.ENTRADA);
-        emprestimoRepository.delete(emprestimo.get());
 
+        movimentacaoService.excluirMovimentacaoPorEmprestimo(id);
+        emprestimoRepository.delete(emprestimo.get());
+        movimentacaoService.gerarMovimentacao(new EmprestimoModel(), 1l, TipoMovimentacao.ENTRADA);
 
         return true;
 
