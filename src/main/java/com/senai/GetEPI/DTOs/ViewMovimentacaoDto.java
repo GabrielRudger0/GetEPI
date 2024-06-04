@@ -37,6 +37,10 @@ public class ViewMovimentacaoDto {
 
     private String retornaEpiColaborador(MovimentacaoModel movimentacaoModel){
 
+        if(movimentacaoModel.getEmprestimoModel() == null) {
+            return "ENTRADA DE ESTOQUE";
+        }
+
         String colaborador = movimentacaoModel.getEmprestimoModel().getColaborador().getNome();
         String epi = movimentacaoModel.getEmprestimoModel().getEpi().getNomeEpi();
 

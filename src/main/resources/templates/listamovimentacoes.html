@@ -14,108 +14,126 @@
   <link rel="stylesheet" href="http://localhost:8080/css/font-awesome.min.css">
 
   <style>
-            .sidebar {
-              width: 280px;
+          .sidebar {
+            width: 280px;
+            background-color: #212529;
+          }
+
+          .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 20px;
+            width: 100%;
+            text-align: left;
+            display: block;
+          }
+
+          .sidebar a:hover {
+            background-color: #dcdcdc;
+            border-radius: 10px;
+          }
+
+          .content {
+            flex: 1;
+            padding: 20px;
+            background-color: #495057;
+          }
+
+          .hover-img {
+              content: url('http://localhost:8080/getEpiNavbar.png'); /* imagem padrão */
+          }
+          a:hover .hover-img {
+              content: url('http://localhost:8080/getEPINavbarPreto.png'); /* outra imagem quando em hover */
+          }
+          .custom-shadow {
+              box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5); /* Ajuste os valores aqui para personalizar a sombra */
+          }
+
+         .dropdown-item:hover {
+              color: black !important;
+          }
+         .btnHover:hover{
+              color: black;
+          }
+          .custom-shadow {
+              box-shadow: 0px 0px 30px 10px rgba(0.7, 0.7, 0.7, 0.7);
+          }
+
+          .card {
               background-color: #212529;
-            }
+              border-color: #212529;
+          }
 
-            .sidebar a {
-              padding: 10px 15px;
-              text-decoration: none;
-              font-size: 20px;
-              width: 100%;
-              text-align: left;
-              display: block;
-            }
+          .table {
+              color: white !important;
+              border-color: var(--bs-gray-600);
+          }
 
-            .sidebar a:hover {
-              background-color: #dcdcdc;
-              border-radius: 10px;
-            }
+          .newCard {
+              background-color: var(--bs-dark) !important;
+              border-radius: 0px 0px 0.5rem 0.5rem;
+              padding: 1.25rem;
+              flex: 1 1 auto;
 
-            .content {
-              flex: 1;
-              padding: 20px;
-              background-color: #495057;
-            }
+          }
 
-            .hover-img {
-                content: url('http://localhost:8080/getEpiNavbar.png'); /* imagem padrão */
-            }
-            a:hover .hover-img {
-                content: url('http://localhost:8080/getEPINavbarPreto.png'); /* outra imagem quando em hover */
-            }
-            .custom-shadow {
-                box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5); /* Ajuste os valores aqui para personalizar a sombra */
-            }
+          .newCardInterno {
+              background-color: var(--bs-dark) !important;
+              border-radius: 0px 0px 0.5rem 0.5rem;
+              padding: 1.25rem;
+              flex: 1 1 auto;
+              border: 1px solid rgba(0, 0, 0, 0.125);
+              border-color: var(--bs-gray-600);
+              color: white !important;
 
-           .dropdown-item:hover {
-                color: black !important;
-            }
-           .btnHover:hover{
-                color: black;
-            }
-            .custom-shadow {
-                box-shadow: 0px 0px 30px 10px rgba(0.7, 0.7, 0.7, 0.7);
-            }
+          }
 
-            .card {
-                background-color: #212529;
-                border-color: #212529;
-            }
+          .newCardHeader {
+              padding: 0.75rem 1.25rem;
+              margin-bottom: 0;
+              background-image: linear-gradient(to top, #212529, #181b21);
+              color: white !important;
+              border-radius: 0.3rem 0.3rem 0rem 0px;
+          }
 
-            .table {
-                color: white !important;
-                border-color: var(--bs-gray-600);
-            }
+          .newCardHeaderInterno {
+              padding: 0.75rem 1.25rem;
+              margin-bottom: 0;
+              background-image: linear-gradient(to top, #212529, #181b21);
+              border: 1px solid rgba(0, 0, 0, 0.125);
+              color: white !important;
+              border-color: var(--bs-gray-600);
+              border-radius: 0.3rem 0.3rem 0rem 0px;
+          }
+          .campoTexto {
+              background: var(--dark);
+              color: white;
+              border-color: var(--bs-gray-600);
+          }
 
-            .newCard {
-                background-color: var(--bs-dark) !important;
-                border-radius: 0px 0px 0.5rem 0.5rem;
-                padding: 1.25rem;
-                flex: 1 1 auto;
+          .campoTexto:focus {
+              background: var(--dark);
+              color: white;
+              border-color: var(--bs-gray-600);
+          }
 
-            }
+          .btnEntradaEstoque {
+            --bs-btn-color: #9f8552;
+            --bs-btn-border-color: #9f8552;
+            --bs-btn-hover-color: #000;
+            --bs-btn-hover-bg: #9f8552;
+            --bs-btn-hover-border-color: #9f8552;
+            --bs-btn-focus-shadow-rgb: 108, 117, 125;
+            --bs-btn-active-color: #fff;
+            --bs-btn-active-bg: #9f8552;
+            --bs-btn-active-border-color: #9f8552;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #9f8552;
+            --bs-btn-disabled-bg: transparent;
+            --bs-btn-disabled-border-color: #9f8552;
+            --bs-gradient: none;
+          }
 
-            .newCardInterno {
-                background-color: var(--bs-dark) !important;
-                border-radius: 0px 0px 0.5rem 0.5rem;
-                padding: 1.25rem;
-                flex: 1 1 auto;
-                border: 1px solid rgba(0, 0, 0, 0.125);
-                border-color: var(--bs-gray-600);
-                color: white !important;
-
-            }
-
-            .newCardHeader {
-                padding: 0.75rem 1.25rem;
-                margin-bottom: 0;
-                background-image: linear-gradient(to top, #212529, #181b21);
-                color: white !important;
-                border-radius: 0.3rem 0.3rem 0rem 0px;
-            }
-
-            .newCardHeaderInterno {
-                padding: 0.75rem 1.25rem;
-                margin-bottom: 0;
-                background-image: linear-gradient(to top, #212529, #181b21);
-                border: 1px solid rgba(0, 0, 0, 0.125);
-                color: white !important;
-                border-color: var(--bs-gray-600);
-                border-radius: 0.3rem 0.3rem 0rem 0px;
-            }
-            .campoTexto {
-                background: var(--dark);
-                color: white;
-                border-color: var(--bs-gray-600);
-            }
-
-            .campoTexto:focus {
-                background: var(--dark);
-                color: white;
-                border-color: var(--bs-gray-600);
-            }
 
         </style>
 </head>
@@ -138,12 +156,18 @@
         <div class="card custom-shadow mb-4" style="border-color: var(--bs-dark) !important;">
           <div class="newCardHeader py-3">
             <h6 class="m-0 font-weight-bold text-white text-center">
-              <i class='fa fa-users fa-1x text-warning pe-1'></i>
+              <i class='fa fa-exchange fa-1x text-warning pe-1'></i>
               Movimentações
             </h6>
           </div>
+          <div class="newCard">
 
-
+            <p class="card-text pd-3">
+              <a th:href="@{~/atualizarquantidadeepi}" class="btn btnEntradaEstoque colorEstoque">
+                <i class='fa fa-cubes pe-1'></i>
+                Entrada de estoque
+              </a>
+            </p>
 
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -175,15 +199,16 @@
 
               </table>
 
-              <div th:if="${nenhumUsuario == true}">
+              <div th:if="${nenhumRegistro == true}">
                 <div class="card shadow mb-4">
                   <div class="newCardInterno" style="background-color: #495057;">
                     <p class="card-text pd-3 text-center">
-                      Nenhum usuário encontrado.
+                      Nenhum registro encontrado.
                     </p>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>

@@ -22,9 +22,13 @@ public class ListaMovimentacaoController {
     public String exibirMovimentacoes(Model model){
 
     List<ViewMovimentacaoDto> movimentacoes = movimentacaoService.retornaListaEmprestimos();
+    boolean nenhumRegistro = false;
+    if(movimentacoes.isEmpty()) {
+        nenhumRegistro = true;
+    }
 
     model.addAttribute("movimentacoes", movimentacoes);
-
+    model.addAttribute("nenhumRegistro", nenhumRegistro);
 
         return "listamovimentacoes";
     }

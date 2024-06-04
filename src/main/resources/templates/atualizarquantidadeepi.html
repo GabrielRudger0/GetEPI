@@ -151,8 +151,8 @@
         <div class="card custom-shadow mb-4">
           <div class="newCardHeader py-3">
             <h6 class="m-0 font-weight-bold text-white text-center">
-              <i class='fa fa-pencil fa-1x text-warning pe-1'></i>
-              Atualização de estoque do EPI
+              <i class='fa fa-cubes fa-1x text-warning pe-1'></i>
+              Entrada de estoque
             </h6>
           </div>
           <div class="newCard">
@@ -168,30 +168,26 @@
               </script>
             </div>
 
-            <form th:method="post" th:action="@{/atualizarquantidadeepi}" th:object="${epiDTO}">
+            <form th:method="post" th:action="@{/atualizarquantidadeepi}" th:object="${gerarMovimentacaoDTO}">
 
-              <div class="form-group d-none">
-                <label for="epiId">Id</label>
-                <input type="text" id="epiId" th:field="*{id}" class="form-control form-control-lg invisible"/>
+              <div class="form-group text-white">
+                <label for="epi">EPI</label>
+                <select id="epi" name="epi" class="form-control form-control-lg campoTexto" required>
+                  <option class="text-dark" value="">Selecione o EPI</option>
+                  <option class="text-dark" th:each="epi : ${epis}" th:value="${epi.id}" th:text="${epi.nomeEpi}">EPI</option>
+                </select>
               </div>
+
               <div class="form-group">
-                <label for="nomeEpi" class="text-white">Nome do EPI</label>
-                <input type="text" id="nomeEpi" th:field="*{nomeEpi}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
-              </div>
-              <div>
-                <label for="tipoEquipamento" class="form-label text-white">Tipo do EPI</label>
-                <input type="text" id="tipoEquipamento" th:field="*{tipoEquipamento.descricao}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
-              </div>
-              <div class="form-group">
-                <label class="text-white" for="QuatidadeEpi">Quantidade do EPI</label>
-                <input type="text" id="QuatidadeEpi" th:field="*{QuatidadeEpi}" class="form-control form-control-lg campoTexto" required/>
+                <label class="text-white" for="QuatidadeEpi">Quantidade de entrada</label>
+                <input type="number" id="QuatidadeEpi" th:field="*{quantidade}" class="form-control form-control-lg campoTexto" required min="1" />
               </div>
 
               <div class="pt-2 mb-4">
                 <button type="submit" class="btn btn-outline-success mr-2">
                   <span class="btnHover"><i class='fa fa-check fa-1x'></i> Salvar</span>
                 </button>
-                <a th:href="@{~/listaEPI}" class="btn btn-outline-primary btnHover">
+                <a th:href="@{~/listamovimentacoes}" class="btn btn-outline-primary btnHover">
                   <i class='fa fa-arrow-left fa-1x'></i>
                   Voltar
                 </a>

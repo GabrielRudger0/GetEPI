@@ -1,7 +1,8 @@
 package com.senai.GetEPI.Controllers.EPI;
 
-import com.senai.GetEPI.DTOs.EpiDto;
+import com.senai.GetEPI.DTOs.GerarMovimentacaoEntradaDTO;
 import com.senai.GetEPI.Services.EpiService;
+import com.senai.GetEPI.Services.MovimentacaoService;
 import com.senai.GetEPI.Services.TipoEquipamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,28 +18,32 @@ public class AtualizarQuantidadeEpi {
     EpiService epiService;
 
     @Autowired
-    TipoEquipamentoService tipoEquipamentoService;
+    MovimentacaoService movimentacaoService;
 
-    @GetMapping("/{id}")
-    public String exibeAtualizaEpi(Model model, @PathVariable Long id) {
-        EpiDto epi = epiService.buscaEpiDTO(id);
-        model.addAttribute("tiposEquipamento", tipoEquipamentoService.obterListaTipoEquipamento());
-        model.addAttribute("epiDTO", epi);
+    @GetMapping()
+    public String exibeAtualizaEpi(Model model) {
+
+        model.addAttribute("epis", epiService.retornaListaEpiDTO());
+        model.addAttribute("gerarMovimentacaoDTO", new GerarMovimentacaoEntradaDTO());
 
         return "atualizarquantidadeepi";
     }
 
     @PostMapping()
-    public String botaoSalvar(@ModelAttribute("atualizarquantidadeepi") EpiDto epi, Model model) {
-        String mensagemErro = epiService.atualizarQuantidadeEpi(epi);
+    public String botaoSalvar(@ModelAttribute("gerarMovimentacaoDTO") GerarMovimentacaoEntradaDTO movimentacao, Model model) {
 
-        if (!mensagemErro.isEmpty()) {
-            model.addAttribute("erro", true);
-            model.addAttribute("mensagemErro", mensagemErro);
-            model.addAttribute("epiDTO",epi);
-            return "atualizarquantidadeepi";
-        }
-        return "redirect:/listaEPI";
+        System.out.println("Qtd: " + movimentacao.getQuantidade());
+        System.out.println("EPI: " + movimentacao.getEpi().getNomeEpi());
+
+        movimentacaoService.gerarMovimentacaoEntrada(movimentacao);
+
+//        if (!mensagemErro.isEmpty()) {
+//            model.addAttribute("erro", true);
+//            model.addAttribute("mensagemErro", mensagemErro);
+//            model.addAttribute("epiDTO",epi);
+//            return "atualizarquantidadeepi";
+//        }
+        return "redirect:/listamovimentacoes";
 
     }
 
