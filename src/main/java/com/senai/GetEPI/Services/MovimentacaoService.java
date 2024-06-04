@@ -1,5 +1,6 @@
 package com.senai.GetEPI.Services;
 
+import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.DTOs.GerarMovimentacaoEntradaDTO;
 import com.senai.GetEPI.DTOs.ViewMovimentacaoDto;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
@@ -18,6 +19,9 @@ public class MovimentacaoService {
 
     @Autowired
     MovimentacaoRepository movimentacaoRepository;
+
+    @Autowired
+    EpiService epiService;
 
 
     public List<ViewMovimentacaoDto> retornaListaEmprestimos() {
@@ -38,8 +42,28 @@ public class MovimentacaoService {
         return "";
     }
 
+    public String gerarMovimentacao(EmprestimoModel emprestimo,
+                                    Long quantidadeMovimentacao, TipoMovimentacao tipoMovimentacao){
+
+
+        MovimentacaoModel registro = new MovimentacaoModel();
+
+        registro.setDataMovimentacao(new Date());
+        registro.setQuantidade(quantidadeMovimentacao);
+        registro.setEmprestimoModel(emprestimo);
+        registro.setTipoMovimentacao(tipoMovimentacao);
+        movimentacaoRepository.save(registro);
+
+        epiService.alterarEstoque(quantidadeMovimentacao, new EpiDto(emprestimo.getEpi()));
+        return "";
+    }
+
     private List<ViewMovimentacaoDto> converterListaEmprestimo(List<MovimentacaoModel> movimentacaoModels) {
         return movimentacaoModels.stream().map(ViewMovimentacaoDto::new).collect(Collectors.toList());
+    }
+
+    public void excluirMovimentacaoPorEmprestimo(Long emprestimoId) {
+        movimentacaoRepository.deleteMovimentacaoPorEmprestimo(emprestimoId);
     }
 
 
