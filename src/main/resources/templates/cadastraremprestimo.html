@@ -185,7 +185,8 @@
     <script th:inline="javascript">
         var message =/*[[${mensagemErro}]]*/ 'defaultanyvalue';
             Swal.fire({
-                title: message,
+                title: "Erro ao efetuar o empréstimo",
+                text: message,
                 confirmButtonColor: "#0d6efd",
                 icon: "error",
             });

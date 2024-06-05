@@ -59,7 +59,7 @@ public class ColaboradorService {
         }
 
         ColaboradorModel colaborador = new ColaboradorModel();
-        colaborador.setNome(colaboradorDto.getNome());
+        colaborador.setNome(colaboradorDto.getNome().trim().toUpperCase());
         colaborador.setEmail(colaboradorDto.getEmail());
         colaborador.setFuncao(colaboradorDto.getFuncao());
         colaborador.setDataNascimento(dataNascimento);
@@ -115,7 +115,7 @@ public class ColaboradorService {
             }
         }
             atualizar.setId(colaborador.getId());
-            atualizar.setNome(colaborador.getNome());
+            atualizar.setNome(colaborador.getNome().trim().toUpperCase());
             atualizar.setEmail(colaborador.getEmail());
             atualizar.setFuncao(colaborador.getFuncao());
             atualizar.setDataNascimento(converteStringToDate(colaborador.getDataNascimento()));

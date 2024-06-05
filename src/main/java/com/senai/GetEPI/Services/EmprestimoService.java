@@ -1,19 +1,14 @@
 package com.senai.GetEPI.Services;
 
-import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.EmprestimoDTO;
+import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.DTOs.ViewEmprestimoDTO;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
-import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.EmprestimoModel;
-import com.senai.GetEPI.Models.MovimentacaoModel;
 import com.senai.GetEPI.Repositories.EmprestimoRepository;
-import com.senai.GetEPI.Repositories.MovimentacaoRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.View;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
@@ -58,7 +53,12 @@ public class EmprestimoService {
 
         emprestimoRepository.save(novoEmprestimo);
 
-        movimentacaoService.gerarMovimentacao(novoEmprestimo, -1l, TipoMovimentacao.SAIDA);
+        String mensagemMovimentacao = movimentacaoService.gerarMovimentacao(novoEmprestimo, -1l, TipoMovimentacao.SAIDA);
+        if (!mensagemMovimentacao.isEmpty()) {
+            return mensagemMovimentacao;
+        }
+
+
         return "";
     }
 
@@ -73,8 +73,10 @@ public class EmprestimoService {
         }
 
         movimentacaoService.excluirMovimentacaoPorEmprestimo(id);
+
         emprestimoRepository.delete(emprestimo.get());
-        movimentacaoService.gerarMovimentacao(new EmprestimoModel(), 1l, TipoMovimentacao.ENTRADA);
+
+        movimentacaoService.gerarMovimentacaoInterna(new EpiDto(emprestimo.get().getEpi()), 1l, TipoMovimentacao.ENTRADA);
 
         return true;
 

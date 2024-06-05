@@ -181,6 +181,7 @@
               <div class="form-group">
               <label for="tipoEquipamento" class="form-label text-white">Tipo do EPI</label>
                 <select class="form-control form-control-lg campoTexto" id="tipoEquipamento" aria-label="Floating label select example" th:field="*{tipoEquipamento}">
+                  <option value="" class="text-dark">Selecione o tipo de equipamento</option>
                   <option class="text-dark"
                           th:each="tipoEquipamento : ${tiposEquipamento}"
                           th:value="${tipoEquipamento.id}"
@@ -189,8 +190,8 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="text-white" for="QuatidadeEpi">Quantidade do EPI</label>
-                <input type="text" id="QuatidadeEpi" th:field="*{QuatidadeEpi}" class="form-control form-control-lg campoTexto" required/>
+                <label class="text-white" for="QuatidadeEpi">Estoque</label>
+                <input type="number" id="QuatidadeEpi" th:field="*{QuatidadeEpi}" class="form-control form-control-lg campoTexto" required min="0"/>
               </div>
 
               <div class="pt-2 mb-4">
