@@ -114,6 +114,11 @@ public class EpiService {
         epiRepository.save(new EpiModel(epi, epi.getTipoEquipamento()));
     }
 
+    public List<EpiDto> buscarEPIPorNome(EpiDto epiBuscado) {
+        List<EpiModel> colaboradoresEncontrados = epiRepository.findByNomeEpiContaining(epiBuscado.getNomeEpi());
+        return converterListaEpiDto(colaboradoresEncontrados);
+    }
+
 
 
 

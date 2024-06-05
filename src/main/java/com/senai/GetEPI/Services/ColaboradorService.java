@@ -139,4 +139,9 @@ public class ColaboradorService {
         }
     }
 
+    public List<ColaboradorDto> buscarColaboradorPorNome(ColaboradorDto colaborador) {
+        List<ColaboradorModel> colaboradoresEncontrados = colaboradorRepository.findByNomeContaining(colaborador.getNome());
+        return converterListaColaboradorDTO(colaboradoresEncontrados);
+    }
+
 }
