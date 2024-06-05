@@ -118,6 +118,17 @@ public class EpiService {
         return new EpiDto(epi);
     }
 
+    public void alterarEstoque(Long movimentacaoQuantidade, EpiDto epi) {
+
+        Long estoqueFinal = epi.getQuatidadeEpi() + movimentacaoQuantidade;
+        System.out.println("Estoque final: " + estoqueFinal);
+        epi.setQuatidadeEpi(estoqueFinal);
+
+        epiRepository.save(new EpiModel(epi, epi.getTipoEquipamento()));
+    }
+
+
+
 
     private String inserirMovimentacao(EpiDto epiDto,EpiModel epiModel){
 
