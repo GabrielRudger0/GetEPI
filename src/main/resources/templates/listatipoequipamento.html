@@ -189,8 +189,8 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="tipoEquipamento : ${tiposEquipamento}">
-                                    <th th:text="${tipoEquipamento.id}"></th>
-                                    <th th:text="${tipoEquipamento.descricao}"></th>
+                                    <td th:text="${tipoEquipamento.id}"></td>
+                                    <td th:text="${tipoEquipamento.descricao}"></td>
                                     <td class="text-center">
                                         <a th:href="@{'/atualizartipoequipamento/' + ${tipoEquipamento.id}}" class="btn btn-outline-warning btnHover">
                                             <i class='fa fa-pencil pe-1'></i>

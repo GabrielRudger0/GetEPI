@@ -28,7 +28,7 @@ public class UsuarioModel {
 
     public UsuarioModel(UsuarioDTO usuarioDTO) {
         this.id = usuarioDTO.getId();
-        this.nome = usuarioDTO.getNome();
+        this.nome = usuarioDTO.getNome().trim().toUpperCase();
         this.email = usuarioDTO.getEmail();
         this.senha = usuarioDTO.getSenha();
     }
