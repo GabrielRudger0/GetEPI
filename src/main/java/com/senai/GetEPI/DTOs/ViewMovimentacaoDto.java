@@ -46,7 +46,6 @@ public class ViewMovimentacaoDto {
     }
 
 
-
     private String retornaColaborador(MovimentacaoModel movimentacaoModel){
 
         if(movimentacaoModel.getEmprestimoModel() == null) {
