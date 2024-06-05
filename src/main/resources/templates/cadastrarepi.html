@@ -168,6 +168,7 @@
                             <div class="form-group">
                                 <label class="text-white" for="tipoEquipamento">Tipo de equipamento</label>
                                 <select id="tipoEquipamento" name="tipoEquipamento" class="form-control form-control-lg campoTexto" required>
+                                    <option value="" class="text-dark">Selecione o tipo de equipamento</option>
                                     <option class="text-dark" th:each="tipoEquipamento : ${tiposEquipamento}" th:value="${tipoEquipamento.id}" th:text="${tipoEquipamento.descricao}"></option>
                                 </select>
                             </div>

@@ -181,6 +181,7 @@
               <div class="form-group">
               <label for="tipoEquipamento" class="form-label text-white">Tipo do EPI</label>
                 <select class="form-control form-control-lg campoTexto" id="tipoEquipamento" aria-label="Floating label select example" th:field="*{tipoEquipamento}">
+                  <option value="" class="text-dark">Selecione o tipo de equipamento</option>
                   <option class="text-dark"
                           th:each="tipoEquipamento : ${tiposEquipamento}"
                           th:value="${tipoEquipamento.id}"
