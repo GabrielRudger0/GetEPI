@@ -173,8 +173,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="text-white" for="QuatidadeEpi">Quantidade do EPI</label>
-                                <input type="text" id="QuatidadeEpi" th:field="*{QuatidadeEpi}" class="form-control form-control-lg campoTexto" required/>
+                                <label class="text-white" for="QuatidadeEpi">Estoque</label>
+                                <input type="number" id="QuatidadeEpi" th:field="*{QuatidadeEpi}" class="form-control form-control-lg campoTexto" required min="0"/>
                             </div>
                             <div class="pt-2 mb-4">
                                 <button type="submit" class="btn btn-outline-success mr-2">

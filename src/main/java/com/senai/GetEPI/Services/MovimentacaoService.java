@@ -39,12 +39,18 @@ public class MovimentacaoService {
         registro.setTipoMovimentacao(TipoMovimentacao.ENTRADA);
         movimentacaoRepository.save(registro);
 
+        gerarMovimentacaoInterna(new EpiDto(movimentacao.getEpi()), movimentacao.getQuantidade(), TipoMovimentacao.ENTRADA);
+
         return "";
     }
+
 
     public String gerarMovimentacao(EmprestimoModel emprestimo,
                                     Long quantidadeMovimentacao, TipoMovimentacao tipoMovimentacao){
 
+        if(emprestimo.getEpi().getQuatidadeEpi() == 0 && tipoMovimentacao == TipoMovimentacao.SAIDA) {
+            return "Equipamento está com o estoque vazio!";
+        }
 
         MovimentacaoModel registro = new MovimentacaoModel();
 
@@ -58,9 +64,25 @@ public class MovimentacaoService {
         return "";
     }
 
+    public String gerarMovimentacaoInterna(EpiDto epi,
+                                           Long quantidadeMovimentacao, TipoMovimentacao tipoMovimentacao){
+
+        MovimentacaoModel registro = new MovimentacaoModel();
+
+        registro.setDataMovimentacao(new Date());
+        registro.setQuantidade(quantidadeMovimentacao);
+        registro.setEmprestimoModel(null);
+        registro.setTipoMovimentacao(tipoMovimentacao);
+        movimentacaoRepository.save(registro);
+
+        epiService.alterarEstoque(quantidadeMovimentacao, epi);
+        return "";
+    }
+
     private List<ViewMovimentacaoDto> converterListaEmprestimo(List<MovimentacaoModel> movimentacaoModels) {
         return movimentacaoModels.stream().map(ViewMovimentacaoDto::new).collect(Collectors.toList());
     }
+
 
     public void excluirMovimentacaoPorEmprestimo(Long emprestimoId) {
         movimentacaoRepository.deleteMovimentacaoPorEmprestimo(emprestimoId);

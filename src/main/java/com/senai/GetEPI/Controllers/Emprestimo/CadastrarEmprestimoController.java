@@ -48,6 +48,13 @@ public class CadastrarEmprestimoController {
         String mensagemErro = emprestimoService.cadastrarEmprestimo(emprestimo);
 
         if (!mensagemErro.isEmpty()) {
+            model.addAttribute("erro", true);
+            model.addAttribute("mensagemErro", mensagemErro);
+
+            List<ColaboradorModel> colaboradores = colaboradorService.obterListaColaboradores();
+            List<EpiModel> epis = epiService.retornaEPIModel();
+            model.addAttribute("colaboradores", colaboradores);
+            model.addAttribute("epis", epis);
             return "cadastraremprestimo";
         }
 
