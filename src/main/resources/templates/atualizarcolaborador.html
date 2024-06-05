@@ -183,6 +183,7 @@
                             <div class="form-group">
                                 <label for="funcao" class="form-label">Função</label>
                                 <select class="form-control form-control-lg campoTexto" id="funcao" aria-label="Floating label select example" th:field="*{funcao}">
+                                    <option value="" class="text-dark">Selecione a função</option>
                                     <option class="text-dark"  th:each="funcao : ${funcoes}" th:value="${funcao.id}" th:text="${funcao.funcao}"></option>
                                 </select>
                             </div>

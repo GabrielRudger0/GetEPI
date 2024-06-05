@@ -30,7 +30,7 @@ public class EpiModel {
 
     public EpiModel(Long id, String nomeEpi, TipoEquipamentoModel tipoEquipamento,Long QuatidadeEpi){
         this.id              = id;
-        this.nomeEpi         = nomeEpi;
+        this.nomeEpi         = nomeEpi.trim().toUpperCase();
         this.tipoEquipamento = tipoEquipamento;
         this.QuatidadeEpi    =  QuatidadeEpi;
     }

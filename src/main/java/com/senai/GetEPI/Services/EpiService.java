@@ -28,8 +28,9 @@ public class EpiService {
     }
 
     public String cadastrarEpi(EpiDto epi) {
-            epiRepository.save(new EpiModel(epi, epi.getTipoEquipamento()));
-            return "";
+        epi.setNomeEpi(epi.getNomeEpi().trim().toUpperCase());
+        epiRepository.save(new EpiModel(epi, epi.getTipoEquipamento()));
+        return "";
     }
 
     public List<EpiDto> retornaListaEpiDTO() {
@@ -72,7 +73,7 @@ public class EpiService {
             }
         }
         atualizar.setId(epi.getId());
-        atualizar.setNomeEpi(epi.getNomeEpi());
+        atualizar.setNomeEpi(epi.getNomeEpi().trim().toUpperCase());
         atualizar.setTipoEquipamento(epi.getTipoEquipamento());
         atualizar.setQuatidadeEpi(epi.getQuatidadeEpi());
 
