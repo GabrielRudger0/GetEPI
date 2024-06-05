@@ -45,6 +45,11 @@ public class EmprestimoService {
 
        // Date dataPadrao = new Date(1, 0, 1);
 
+        Optional<EmprestimoModel> existeEmprestimo = emprestimoRepository.existeEmprestimoVigente(dadosEmprestimo.getColaborador().getId(), dadosEmprestimo.getEpi().getId());
+        if(existeEmprestimo.isPresent()) {
+            return "Colaborador já possuí um empréstimo para este equipamento!";
+        }
+
         EmprestimoModel novoEmprestimo = new EmprestimoModel();
         novoEmprestimo.setColaborador(dadosEmprestimo.getColaborador());
         novoEmprestimo.setEpi(dadosEmprestimo.getEpi());

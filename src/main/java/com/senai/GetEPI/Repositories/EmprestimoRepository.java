@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EmprestimoRepository extends JpaRepository<EmprestimoModel, Long> {
@@ -26,5 +27,8 @@ public interface EmprestimoRepository extends JpaRepository<EmprestimoModel, Lon
 
     @Query(value = "SELECT COUNT(*) FROM emprestimo WHERE emprestimo_devolucao > ? AND emprestimo_devolucao < ?", nativeQuery = true)
     public Integer quantidadeDevolucaoPorDia(String dataInicio, String dataFim);
+
+    @Query(value = "SELECT * FROM emprestimo WHERE colaborador_id_colaborador = ? AND epi_id_epi = ? AND emprestimo_devolucao IS NULL LIMIT 1", nativeQuery = true)
+    public Optional<EmprestimoModel> existeEmprestimoVigente(Long colaboradorId, Long epiId);
 
 }
