@@ -22,9 +22,12 @@ public class ColaboradorDto {
 
     private String dataNascimento;
 
+    private UsuarioModel usuario;
+
     public ColaboradorDto(){
 
     }
+
     public ColaboradorDto(Long id, String email,String nome,FuncaoModel funcao,String dataNascimento){
         this.id = id;
         this.email = email;
@@ -47,6 +50,14 @@ public class ColaboradorDto {
         this.nome = colaboradorModel.getNome();
         this.funcao = colaboradorModel.getFuncao();
         this.dataNascimento = formatarData(colaboradorModel.getDataNascimento());
+    }
+
+    public ColaboradorDto(UsuarioDTO usuario) {
+        this.id = 0l;
+        this.email = usuario.getEmail();
+        this.nome = usuario.getNome();
+        //this.funcao = colaboradorModel.getFuncao();
+        //this.dataNascimento = formatarData(colaboradorModel.getDataNascimento());
     }
 
     private String formatarData(Date data) {
