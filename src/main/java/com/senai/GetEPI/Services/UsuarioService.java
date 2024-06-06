@@ -17,6 +17,9 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    @Autowired
+    ColaboradorService colaboradorService;
+
     public List<UsuarioDTO> retornaListaUsuarioDTO() {
         return converterListaUsuarioDTO(usuarioRepository.findAll());
     }
@@ -33,6 +36,7 @@ public class UsuarioService {
             return mensagemErroUsuario(usuario);
         }
         usuarioRepository.save(new UsuarioModel(usuario));
+        colaboradorService.criarColaboradorUsuario(usuario);
         return "";
 
     }

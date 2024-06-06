@@ -28,12 +28,11 @@ public class ParametroGeralService {
         parametros.setTipoFuncaoUsuario(TipoParametroGeral.FuncaoPadraoUsuario);
 
         if (parametroGeralModel.isPresent()) {
-            FuncaoDto funcao = funcaoService.retornaFuncaoModel(parametroGeralModel.get().getValor());
-            parametros.setValorFuncaoUsuario(new FuncaoModel(funcao));
+            FuncaoModel funcao = funcaoService.retornaFuncaoModel(parametroGeralModel.get().getValor());
+            parametros.setValorFuncaoUsuario(funcao);
             parametros.setTipoFuncaoUsuario(TipoParametroGeral.FuncaoPadraoUsuario);
 
         }
-
 
         return parametros;
     }
@@ -53,6 +52,21 @@ public class ParametroGeralService {
         parametroGeralRepository.save(new ParametroGeralModel(funcaoUsuario.get().getId(), TipoParametroGeral.FuncaoPadraoUsuario, parametroGeral.getValorFuncaoUsuario().getId()));
         return true;
     }
+
+    public FuncaoModel obterParametroFuncaoUsuario() {
+        Optional<ParametroGeralModel> parametro = parametroGeralRepository.findByTipoParametroGeral(TipoParametroGeral.FuncaoPadraoUsuario);
+        return funcaoService.retornaFuncaoModel(parametro.get().getValor());
+    }
+
+    public FuncaoModel criarFuncaoPadrao() {
+        FuncaoDto funcaoPadrao = new FuncaoDto();
+        funcaoPadrao.setFuncao("OPERADOR DO SISTEMA");
+        funcaoService.cadastrarFuncao(funcaoPadrao);
+
+        return funcaoService.funcaoRepository.findByFuncao(funcaoPadrao.getFuncao()).get();
+    }
+
+
 
 
 

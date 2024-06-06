@@ -104,8 +104,8 @@ public class FuncaoService {
         return converterListaFuncaoDTO(funcoesEncontradas);
     }
 
-    public FuncaoDto retornaFuncaoModel(Long id) {
-        return new FuncaoDto(funcaoRepository.findById(id).get());
+    public FuncaoModel retornaFuncaoModel(Long id) {
+        return funcaoRepository.findById(id).get();
     }
 
 
