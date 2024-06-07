@@ -1,5 +1,6 @@
 package com.senai.GetEPI.Repositories;
 
+import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.EmprestimoModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,5 +31,11 @@ public interface EmprestimoRepository extends JpaRepository<EmprestimoModel, Lon
 
     @Query(value = "SELECT * FROM emprestimo WHERE colaborador_id_colaborador = ? AND epi_id_epi = ? AND emprestimo_devolucao IS NULL LIMIT 1", nativeQuery = true)
     public Optional<EmprestimoModel> existeEmprestimoVigente(Long colaboradorId, Long epiId);
+
+    @Query(value = "SELECT * FROM emprestimo WHERE colaborador_id_colaborador = ?", nativeQuery = true)
+    public List<EmprestimoModel> findAllByColaboradorId(Long colaboradorId);
+
+    @Query(value = "SELECT * FROM emprestimo WHERE colaborador_id_colaborador = ? AND emprestimo_devolucao IS NULL", nativeQuery = true)
+    public List<EmprestimoModel> findAllDevolucoesByColaboradorId(Long colaboradorId);
 
 }

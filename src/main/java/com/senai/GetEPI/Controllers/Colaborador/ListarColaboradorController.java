@@ -56,7 +56,7 @@ public class ListarColaboradorController {
 
     @PostMapping
     public String buscarRegistros(@ModelAttribute("buscaColaboradorDTO") ColaboradorDto registroBuscado, Model model) {
-        List<ColaboradorDto> listaRegistrosEncontrados = colaboradorService.buscarColaboradorPorNome(registroBuscado);
+        List<ColaboradorDto> listaRegistrosEncontrados = colaboradorService.buscarColaboradorPorNome(registroBuscado.getNome());
 
         boolean nenhumRegistro = false;
         if(listaRegistrosEncontrados.isEmpty()) {
