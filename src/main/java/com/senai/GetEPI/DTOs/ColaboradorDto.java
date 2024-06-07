@@ -25,6 +25,7 @@ public class ColaboradorDto {
     public ColaboradorDto(){
 
     }
+
     public ColaboradorDto(Long id, String email,String nome,FuncaoModel funcao,String dataNascimento){
         this.id = id;
         this.email = email;

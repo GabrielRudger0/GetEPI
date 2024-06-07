@@ -28,23 +28,6 @@ public class MovimentacaoService {
         return converterListaEmprestimo(movimentacaoRepository.findAll());
     }
 
-    public String gerarMovimentacaoEntrada(GerarMovimentacaoEntradaDTO movimentacao){
-
-
-        MovimentacaoModel registro = new MovimentacaoModel();
-
-        registro.setDataMovimentacao(new Date());
-        registro.setQuantidade(movimentacao.getQuantidade());
-        registro.setEmprestimoModel(null);
-        registro.setTipoMovimentacao(TipoMovimentacao.ENTRADA);
-        movimentacaoRepository.save(registro);
-
-        gerarMovimentacaoInterna(new EpiDto(movimentacao.getEpi()), movimentacao.getQuantidade(), TipoMovimentacao.ENTRADA);
-
-        return "";
-    }
-
-
     public String gerarMovimentacao(EmprestimoModel emprestimo,
                                     Long quantidadeMovimentacao, TipoMovimentacao tipoMovimentacao){
 

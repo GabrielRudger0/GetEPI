@@ -22,6 +22,8 @@ public class ColaboradorService {
     @Autowired
     ColaboradorRepository colaboradorRepository;
 
+    @Autowired
+    ParametroGeralService parametroGeralService;
 
 
     public String cadastrarColaborador (ColaboradorDto colaboradorDto){
@@ -137,6 +139,15 @@ public class ColaboradorService {
             e.printStackTrace();
             return new Date();
         }
+    }
+
+    public List<ColaboradorDto> buscarColaboradorPorNome(String nome) {
+        List<ColaboradorModel> colaboradoresEncontrados = colaboradorRepository.findByNomeContaining(nome);
+        return converterListaColaboradorDTO(colaboradoresEncontrados);
+    }
+
+    public void criarColaboradorUsuario(UsuarioDTO usuario) {
+        colaboradorRepository.save(new ColaboradorModel(usuario, parametroGeralService.obterParametroFuncaoUsuario()));
     }
 
 }

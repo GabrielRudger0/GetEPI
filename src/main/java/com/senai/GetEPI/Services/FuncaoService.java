@@ -99,5 +99,14 @@ public class FuncaoService {
         return "";
     }
 
+    public List<FuncaoDto> buscarFuncaoPorDescricao(FuncaoDto funcao) {
+        List<FuncaoModel> funcoesEncontradas = funcaoRepository.findByFuncaoContaining(funcao.getFuncao());
+        return converterListaFuncaoDTO(funcoesEncontradas);
+    }
+
+    public FuncaoModel retornaFuncaoModel(Long id) {
+        return funcaoRepository.findById(id).get();
+    }
+
 
 }

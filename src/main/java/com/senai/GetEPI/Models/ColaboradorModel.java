@@ -2,6 +2,7 @@ package com.senai.GetEPI.Models;
 
 
 import com.senai.GetEPI.DTOs.ColaboradorDto;
+import com.senai.GetEPI.DTOs.UsuarioDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -29,6 +30,9 @@ public class ColaboradorModel {
 
     private Date dataNascimento;
 
+    @ManyToOne
+    private UsuarioModel usuario;
+
     public ColaboradorModel(){
 
     }
@@ -42,19 +46,28 @@ public class ColaboradorModel {
 
 
     }
-        private Date converteStringToDate(String dataString){
-            dataString += " 00:00:00.0";
-            System.out.println(dataString);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-            try {
 
-                Date data = dateFormat.parse(dataString);
-                return data;
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return new Date();
-            }
+    public ColaboradorModel(UsuarioDTO usuario, FuncaoModel parametroGeralFuncao){
+        this.nome = usuario.getNome().trim().toUpperCase();
+        this.email = usuario.getEmail();
+        this.funcao = parametroGeralFuncao;
+        this.dataNascimento = new Date();
+
+    }
+
+    private Date converteStringToDate(String dataString){
+        dataString += " 00:00:00.0";
+        System.out.println(dataString);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        try {
+
+            Date data = dateFormat.parse(dataString);
+            return data;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new Date();
         }
+    }
 
     }
 

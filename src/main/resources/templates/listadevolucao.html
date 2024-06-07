@@ -154,14 +154,14 @@
                             </div>
                             <div class="newCardInterno">
                                 <div class="d-flex pb-2">
-                                    <form th:method="post" th:action="@{/listaemprestimo}" th:object="${buscaEmprestimoDTO}" class="d-flex">
+                                    <form th:method="post" th:action="@{/listadevolucao}" th:object="${buscaDTO}" class="d-flex">
                                         <div class="m-auto pe-2">
                                             <button type="submit" class="btn btn-outline-secondary mr-2 text-white">
                                                 <span><i class='fa fa-search fa-1x text-warning'></i> Pesquisar</span>
                                             </button>
                                         </div>
                                         <div style="width: 450px;">
-                                            <input type="text" id="nome" th:field="*{colaborador}" class="form-control form-control-lg campoTexto" placeholder="Nome do colaborador"/>
+                                            <input type="text" id="nome" th:field="*{nomeColaborador}" class="form-control form-control-lg campoTexto" placeholder="Nome do colaborador"/>
                                         </div>
                                     </form>
                                 </div>

@@ -1,6 +1,9 @@
 package com.senai.GetEPI.Controllers.EPI;
 
+import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.DTOs.GerarMovimentacaoEntradaDTO;
+import com.senai.GetEPI.Dominios.TipoMovimentacao;
+import com.senai.GetEPI.Models.EpiModel;
 import com.senai.GetEPI.Services.EpiService;
 import com.senai.GetEPI.Services.MovimentacaoService;
 import com.senai.GetEPI.Services.TipoEquipamentoService;
@@ -35,7 +38,7 @@ public class AtualizarQuantidadeEpi {
         System.out.println("Qtd: " + movimentacao.getQuantidade());
         System.out.println("EPI: " + movimentacao.getEpi().getNomeEpi());
 
-        movimentacaoService.gerarMovimentacaoEntrada(movimentacao);
+        movimentacaoService.gerarMovimentacaoInterna(new EpiDto(movimentacao.getEpi()), movimentacao.getQuantidade(), TipoMovimentacao.ENTRADA);
 
 //        if (!mensagemErro.isEmpty()) {
 //            model.addAttribute("erro", true);
