@@ -4,15 +4,15 @@ import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.DTOs.FuncaoDto;
 import com.senai.GetEPI.DTOs.ViewEmprestimoDTO;
-import com.senai.GetEPI.Models.ColaboradorModel;
-import com.senai.GetEPI.Models.EpiModel;
-import com.senai.GetEPI.Models.FuncaoModel;
-import com.senai.GetEPI.Models.TipoEquipamentoModel;
+import com.senai.GetEPI.Dominios.TipoMovimentacao;
+import com.senai.GetEPI.Models.*;
 import com.senai.GetEPI.Repositories.EpiRepository;
+import com.senai.GetEPI.Repositories.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,16 +22,27 @@ public class EpiService {
 
     @Autowired
     EpiRepository epiRepository;
+    @Autowired
+    private MovimentacaoRepository movimentacaoRepository;
 
     public List<EpiModel> retornaEPIModel() {
         return epiRepository.findAll();
     }
 
     public String cadastrarEpi(EpiDto epi) {
-        epi.setNomeEpi(epi.getNomeEpi().trim().toUpperCase());
-        epiRepository.save(new EpiModel(epi, epi.getTipoEquipamento()));
-        return "";
+
+        EpiModel epiModel = new EpiModel();
+        epiModel.setNomeEpi(epi.getNomeEpi().trim().toUpperCase());
+        epiModel.setTipoEquipamento(epi.getTipoEquipamento());
+        epiModel.setQuatidadeEpi(epi.getQuatidadeEpi());
+
+        epiRepository.save(epiModel);
+
+        inserirMovimentacao(epi,epiModel);
+            return "";
     }
+
+
 
     public List<EpiDto> retornaListaEpiDTO() {
         return converterListaEpiDto(epiRepository.findAll());
@@ -79,6 +90,7 @@ public class EpiService {
 
 
         epiRepository.save(atualizar);
+        inserirMovimentacao(epi,atualizar);
 
         return "";
     }
@@ -121,5 +133,21 @@ public class EpiService {
 
 
 
+
+    private String inserirMovimentacao(EpiDto epiDto,EpiModel epiModel){
+
+
+        MovimentacaoModel registro = new MovimentacaoModel();
+
+        registro.setDataMovimentacao(new Date());
+        registro.setQuantidade(epiDto.getQuatidadeEpi());
+        registro.setEmprestimoModel(null);
+        registro.setTipoMovimentacao(TipoMovimentacao.ENTRADA);
+        movimentacaoRepository.save(registro);
+
+        return "";
+    }
+
+    
 
 }

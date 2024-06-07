@@ -177,7 +177,8 @@
                   <th>Data da movimentação</th>
                   <th>Tipo de movimentação</th>
                   <th>Quantidade</th>
-                  <th>Colaborador/EPI</th>
+                  <th>Colaborador</th>
+                  <th>EPI</th>
                   <th style="width: 200px;"></th>
                 </tr>
                 </thead>
@@ -187,13 +188,15 @@
                   <td th:text="${movimentacao.dataMovimentacao}"></td>
                   <td th:text="${movimentacao.tipoMovimentacao}"></td>
                   <td th:text="${movimentacao.quantidade}"></td>
-                  <td th:text="${movimentacao.colaboradorEpi}"></td>
+                  <td th:text="${movimentacao.colaborador}"></td>
+                  <td th:text="${movimentacao.EPI}"></td>
                   <td class="text-center">
                     <a th:href="@{'/visualizarMovimentacao/' + ${movimentacao.id}}" class="btn btn-outline-info btnHover">
                       <i class='fa fa-eye pe-1'></i>
                       Visualizar
                     </a>
                   </td>
+
                 </tr>
                 </tbody>
 
