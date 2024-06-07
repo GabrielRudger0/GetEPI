@@ -40,25 +40,23 @@ public class GenesisGetEPI {
 
 
 
-        System.out.println(logPrefixo + "Verificando parâmetro de função padrão...");
-        System.out.println(ANSI_RED);
+        System.out.println(logPrefixo + "Verificando parâmetro geral '" + TipoParametroGeral.FuncaoPadraoUsuario.getDescricao() + "'");
+        System.out.print(ANSI_YELLOW);
         FuncaoModel parametroFuncaoUsuario = parametroGeralService.obterParametroFuncaoUsuario();
         if (parametroFuncaoUsuario == null) {
-            System.out.println(logPrefixo + "Função padrão não encontrada, criado uma...");
-            System.out.println(ANSI_RED);
+            System.out.println(logPrefixo + "'" + TipoParametroGeral.FuncaoPadraoUsuario.getDescricao() + "' não encontrado. Gerando registro...");
+            System.out.print(ANSI_YELLOW);
             FuncaoModel funcaoCriada = parametroGeralService.criarFuncaoPadrao();
-            System.out.println(ANSI_RESET);
-            System.out.println(logPrefixo + "Função" + " " + "criado.");
-
+            System.out.print(ANSI_RESET);
+            System.out.println(logPrefixo + "Gerando registro de parâmetro geral para '" + TipoParametroGeral.FuncaoPadraoUsuario.getDescricao() + "'");
+            System.out.print(ANSI_YELLOW);
             parametroGeralService.salvarParametros(new ParametroGeralDTO(0l, TipoParametroGeral.FuncaoPadraoUsuario, funcaoCriada));
-
+            System.out.print(ANSI_RESET);
         } else {
-            System.out.println(ANSI_RESET);
-            System.out.println(logPrefixo + "Função padrão já existe.");
+            System.out.print(ANSI_RESET);
+            System.out.println(logPrefixo + "'" + TipoParametroGeral.FuncaoPadraoUsuario.getDescricao() + "' já existe.");
         }
-
         System.out.println(logPrefixo + "★ GenesisGetEPI finalizado ★");
-
 
     }
 }

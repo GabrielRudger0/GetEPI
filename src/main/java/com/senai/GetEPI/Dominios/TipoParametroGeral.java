@@ -2,7 +2,7 @@ package com.senai.GetEPI.Dominios;
 
 public enum TipoParametroGeral {
 
-    FuncaoPadraoUsuario("FUNCAOUSUARIO"),
+    FuncaoPadraoUsuario("FUNÇÃO PADRÃO"),
     fucaoteste("TESTE");
 
 

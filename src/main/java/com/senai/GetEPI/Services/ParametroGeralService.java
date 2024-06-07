@@ -55,7 +55,12 @@ public class ParametroGeralService {
 
     public FuncaoModel obterParametroFuncaoUsuario() {
         Optional<ParametroGeralModel> parametro = parametroGeralRepository.findByTipoParametroGeral(TipoParametroGeral.FuncaoPadraoUsuario);
-        return funcaoService.retornaFuncaoModel(parametro.get().getValor());
+
+        if(parametro.isPresent()) {
+            return funcaoService.retornaFuncaoModel(parametro.get().getValor());
+        }
+
+        return null;
     }
 
     public FuncaoModel criarFuncaoPadrao() {
