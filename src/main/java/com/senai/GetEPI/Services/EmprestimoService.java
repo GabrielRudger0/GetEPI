@@ -60,6 +60,7 @@ public class EmprestimoService {
 
         String mensagemMovimentacao = movimentacaoService.gerarMovimentacao(novoEmprestimo, -1l, TipoMovimentacao.SAIDA);
         if (!mensagemMovimentacao.isEmpty()) {
+            emprestimoRepository.delete(novoEmprestimo);
             return mensagemMovimentacao;
         }
 
