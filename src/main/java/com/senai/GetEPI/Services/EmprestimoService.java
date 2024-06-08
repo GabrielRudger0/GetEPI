@@ -1,19 +1,18 @@
 package com.senai.GetEPI.Services;
 
+import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.EmprestimoDTO;
 import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.DTOs.ViewEmprestimoDTO;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
+import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.EmprestimoModel;
 import com.senai.GetEPI.Repositories.EmprestimoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +23,9 @@ public class EmprestimoService {
 
     @Autowired
     MovimentacaoService movimentacaoService;
+
+    @Autowired
+    ColaboradorService colaboradorService;
 
     public List<EmprestimoDTO> retornaListaEmprestimos() {
         return converterListaEmprestimo(emprestimoRepository.findAll());
@@ -45,6 +47,11 @@ public class EmprestimoService {
 
        // Date dataPadrao = new Date(1, 0, 1);
 
+        Optional<EmprestimoModel> existeEmprestimo = emprestimoRepository.existeEmprestimoVigente(dadosEmprestimo.getColaborador().getId(), dadosEmprestimo.getEpi().getId());
+        if(existeEmprestimo.isPresent()) {
+            return "Colaborador já possuí um empréstimo para este equipamento!";
+        }
+
         EmprestimoModel novoEmprestimo = new EmprestimoModel();
         novoEmprestimo.setColaborador(dadosEmprestimo.getColaborador());
         novoEmprestimo.setEpi(dadosEmprestimo.getEpi());
@@ -55,6 +62,7 @@ public class EmprestimoService {
 
         String mensagemMovimentacao = movimentacaoService.gerarMovimentacao(novoEmprestimo, -1l, TipoMovimentacao.SAIDA);
         if (!mensagemMovimentacao.isEmpty()) {
+            emprestimoRepository.delete(novoEmprestimo);
             return mensagemMovimentacao;
         }
 
@@ -118,8 +126,34 @@ public class EmprestimoService {
         return sdf.format(data);
     }
 
+    public List<ViewEmprestimoDTO> buscarEmprestimoPorColaborador(String nomeBuscado) {
+        List<ColaboradorDto> colaboradoresComONomeDigitado = colaboradorService.buscarColaboradorPorNome(nomeBuscado);
 
+        List<EmprestimoModel> emprestimosEncontrados = new ArrayList<>();
+        for(ColaboradorDto colaborador : colaboradoresComONomeDigitado) {
 
+            List<EmprestimoModel> emprestimosDesteColaborador = emprestimoRepository.findAllByColaboradorId(colaborador.getId());
+            emprestimosEncontrados.addAll(emprestimosDesteColaborador);
+        }
 
+        System.out.println(emprestimosEncontrados.size());
+
+        return converterListaEmprestimoView(emprestimosEncontrados);
+    }
+
+    public List<ViewEmprestimoDTO> buscarPendentesDevolucaoPorColaborador(String nomeBuscado) {
+        List<ColaboradorDto> colaboradoresComONomeDigitado = colaboradorService.buscarColaboradorPorNome(nomeBuscado);
+
+        List<EmprestimoModel> emprestimosEncontrados = new ArrayList<>();
+        for(ColaboradorDto colaborador : colaboradoresComONomeDigitado) {
+
+            List<EmprestimoModel> emprestimosDesteColaborador = emprestimoRepository.findAllDevolucoesByColaboradorId(colaborador.getId());
+            emprestimosEncontrados.addAll(emprestimosDesteColaborador);
+        }
+
+        System.out.println(emprestimosEncontrados.size());
+
+        return converterListaEmprestimoView(emprestimosEncontrados);
+    }
 
 }

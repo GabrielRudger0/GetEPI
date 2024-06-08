@@ -17,6 +17,9 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    @Autowired
+    ColaboradorService colaboradorService;
+
     public List<UsuarioDTO> retornaListaUsuarioDTO() {
         return converterListaUsuarioDTO(usuarioRepository.findAll());
     }
@@ -33,6 +36,7 @@ public class UsuarioService {
             return mensagemErroUsuario(usuario);
         }
         usuarioRepository.save(new UsuarioModel(usuario));
+        colaboradorService.criarColaboradorUsuario(usuario);
         return "";
 
     }
@@ -50,13 +54,16 @@ public class UsuarioService {
         return "";
     }
 
-    public boolean excluirUsuario(Long id){
-        Optional<UsuarioModel> optionalUsuario = usuarioRepository.findById(id);
-        if (!optionalUsuario.isPresent()){
-            return false;
+    public String excluirUsuario(Long id){
+        try {
+            Optional<UsuarioModel> optionalUsuario = usuarioRepository.findById(id);
+            usuarioRepository.delete(optionalUsuario.get());
+
+            return "";
+
+        }catch (Exception e) {
+            return e.toString();
         }
-        usuarioRepository.delete(optionalUsuario.get());
-        return true;
 
     }
 
