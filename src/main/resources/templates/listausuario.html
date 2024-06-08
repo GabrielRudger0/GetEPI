@@ -118,6 +118,10 @@
                 border-color: var(--bs-gray-600);
             }
 
+            .swal2-icon {
+                border: 0px !important;
+            }
+
         </style>
     </head>
     <body>
@@ -232,11 +236,14 @@
 
     <div th:if="${erro == true}" >
         <script th:inline="javascript">
-            var message =/*[[${mensagemErro}]]*/ 'defaultanyvalue';
+            var tituloMensagemErro =/*[[${tituloMensagemErro}]]*/ 'defaultanyvalue';
+            var stacktraceMensagem =/*[[${stacktraceMensagem}]]*/ 'defaultanyvalue';
                 Swal.fire({
-                    title: message,
+                    title: tituloMensagemErro,
+                    text: stacktraceMensagem,
                     confirmButtonColor: "#0d6efd",
-                    icon: "error",
+                    iconHtml: '<i class="fas fa-exclamation-circle" style="color: #dc3545; font-size: 5rem;"></i>'
+
                 });
         </script>
     </div>

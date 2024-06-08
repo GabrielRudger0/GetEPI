@@ -29,23 +29,36 @@ public class ListarUsuarioController {
 
     @GetMapping
     public String exibeListaUsuario(Model model, HttpServletRequest request) {
-        List<UsuarioDTO> listaUsuario = usuarioService.retornaListaUsuarioDTO();
+        try {
 
-        ErroGetEPI erro = apocalipseGetEPI.retornarErro(request);
-        if (erro.getExibeErro()) {
+            List<UsuarioDTO> listaUsuario = usuarioService.retornaListaUsuarioDTO();
+
+            ErroGetEPI erro = apocalipseGetEPI.retornarErro(request);
+            if (erro.getExibeErro()) {
+                model.addAttribute("erro", true);
+                model.addAttribute("tituloMensagemErro", erro.getMensagemErro());
+                model.addAttribute("stacktraceMensagem", erro.getStackTrace());
+            }
+
+            boolean nenhumUsuario = false;
+            if(listaUsuario.isEmpty()) {
+                nenhumUsuario = true;
+            }
+
+            model.addAttribute("usuarios", listaUsuario);
+            model.addAttribute("nenhumUsuario", nenhumUsuario);
+            model.addAttribute("buscaUsuarioDTO", new UsuarioDTO());
+            return "listausuario";
+        } catch (Exception e) {
             model.addAttribute("erro", true);
-            model.addAttribute("mensagemErro", erro.getMensagemErro());
-        }
+            model.addAttribute("tituloMensagemErro", apocalipseGetEPI.refatoraMensagem(e.getClass().getName(), e.toString()));
+            model.addAttribute("stacktraceMensagem", e.toString());
 
-        boolean nenhumUsuario = false;
-        if(listaUsuario.isEmpty()) {
-            nenhumUsuario = true;
+            model.addAttribute("usuarios", new ArrayList<UsuarioDTO>());
+            model.addAttribute("nenhumUsuario", true);
+            model.addAttribute("buscaUsuarioDTO", new UsuarioDTO());
+            return "listausuario";
         }
-
-        model.addAttribute("usuarios", listaUsuario);
-        model.addAttribute("nenhumUsuario", nenhumUsuario);
-        model.addAttribute("buscaUsuarioDTO", new UsuarioDTO());
-        return "listausuario";
     }
 
     @DeleteMapping("/{id}")
@@ -56,10 +69,7 @@ public class ListarUsuarioController {
             return ResponseEntity.ok("Usuário excluído com sucesso.");
         }
 
-        request.getSession().setAttribute("retornaErro", mensagemErro);
-        ErroGetEPI erro = apocalipseGetEPI.retornarErro(request);
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(erro.getMensagemErro());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensagemErro);
 
     }
 
@@ -71,8 +81,6 @@ public class ListarUsuarioController {
         if(listaUsuariosEncontrados.isEmpty()) {
             nenhumUsuario = true;
         }
-
-
 
         model.addAttribute("usuarios", listaUsuariosEncontrados);
         model.addAttribute("nenhumUsuario", nenhumUsuario);

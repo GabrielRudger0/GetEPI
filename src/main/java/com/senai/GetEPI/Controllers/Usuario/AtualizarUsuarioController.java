@@ -27,6 +27,7 @@ public class AtualizarUsuarioController {
         } catch (Exception e) {
             HttpSession sessao = request.getSession();
             sessao.setAttribute("retornaErro", e);
+            sessao.setAttribute("stacktrace", e);
             return "redirect:/listausuario";
         }
 
