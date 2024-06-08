@@ -48,7 +48,7 @@ public class ApocalipseGetEPI {
                 String logPrefixo = ANSI_YELLOW + dataHoraFormatada + ".MiG-29:00 " + ANSI_VERMELHO + " ERRO  SU-25 --- [GetEPI] [ApocalipseGetEPI] : ";
 
                 System.out.println(logPrefixo + stackTraceCompleta + ANSI_RESET);
-                return "Ocorreu um erro não especificado.";
+                return "Ocorreu um erro não especificado!";
         }
     }
 
