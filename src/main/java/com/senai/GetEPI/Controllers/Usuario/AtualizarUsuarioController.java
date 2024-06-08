@@ -2,6 +2,8 @@ package com.senai.GetEPI.Controllers.Usuario;
 
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Services.UsuarioService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +17,19 @@ public class AtualizarUsuarioController {
     UsuarioService usuarioService;
 
     @GetMapping("/{id}")
-    public String exibeAtualizaUsuario(Model model, @PathVariable Long id) {
-        UsuarioDTO usuario = usuarioService.retornaUsuarioDTO(id);
-        model.addAttribute("usuarioDTO", usuario);
-        return "atualizausuario";
+
+    public String exibeAtualizaUsuario(Model model, @PathVariable Long id, HttpServletRequest request) {
+        try{
+            UsuarioDTO usuario = usuarioService.retornaUsuarioDTO(id);
+            model.addAttribute("usuarioDTO", usuario);
+            return "atualizausuario";
+
+        } catch (Exception e) {
+            HttpSession sessao = request.getSession();
+            sessao.setAttribute("retornaErro", e);
+            return "redirect:/listausuario";
+        }
+
     }
 
     @PostMapping()
