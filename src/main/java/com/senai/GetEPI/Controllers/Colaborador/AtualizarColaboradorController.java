@@ -7,6 +7,8 @@ import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.FuncaoService;
 import com.senai.GetEPI.Services.UsuarioService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,34 +24,48 @@ public class AtualizarColaboradorController {
 
     @Autowired
     ColaboradorService colaboradorService;
+
     @Autowired
     private FuncaoService funcaoService;
 
     @GetMapping("/{id}")
-    public String exibeAtualizaColaborador(Model model, @PathVariable Long id) {
-        UpdColaboradorDTO colaborador = colaboradorService.buscaColaboradorDTOupd(id);
-        model.addAttribute("UpdColaboradorDTO", colaborador);
-        model.addAttribute("funcaoColaborador",colaborador.getFuncao().getId());
-        model.addAttribute("funcoes",  funcaoService.obterListaFuncao());
-        return "atualizarcolaborador";
+    public String exibeAtualizaColaborador(Model model, @PathVariable Long id, HttpServletRequest request) {
+        try {
+            UpdColaboradorDTO colaborador = colaboradorService.buscaColaboradorDTOupd(id);
+            model.addAttribute("UpdColaboradorDTO", colaborador);
+            model.addAttribute("funcaoColaborador",colaborador.getFuncao().getId());
+            model.addAttribute("funcoes",  funcaoService.obterListaFuncao());
+            return "atualizarcolaborador";
+
+        } catch (Exception e) {
+            HttpSession sessao = request.getSession();
+            sessao.setAttribute("retornaErro", e);
+            sessao.setAttribute("stacktrace", e);
+            return "redirect:/listacolaboradores";
+        }
+
     }
 
     @PostMapping()
-    public String botaoSalvar(@ModelAttribute("colaboradorDTO") ColaboradorDto colaborador, Model model) {
-        String mensagemErro = colaboradorService.atualizaColaborador(colaborador);
+    public String botaoSalvar(@ModelAttribute("colaboradorDTO") ColaboradorDto colaborador, Model model, HttpServletRequest request) {
 
-        if (!mensagemErro.isEmpty()) {
-            model.addAttribute("erro", true);
-            model.addAttribute("mensagemErro", mensagemErro);
-            return "atualizarcolaborador";
+        try {
+            String mensagemErro = colaboradorService.atualizaColaborador(colaborador);
+
+            if (!mensagemErro.isEmpty()) {
+                model.addAttribute("erro", true);
+                model.addAttribute("mensagemErro", mensagemErro);
+                return "atualizarcolaborador";
+            }
+            return "redirect:/listacolaboradores";
+
+        } catch (Exception e) {
+            HttpSession sessao = request.getSession();
+            sessao.setAttribute("retornaErro", e);
+            sessao.setAttribute("stacktrace", e);
+            return "redirect:/listacolaboradores";
         }
-        return "redirect:/listacolaboradores";
 
-    }
-
-    private Date stringToDate(String stringData) {
-
-        return new Date();
     }
 
 }

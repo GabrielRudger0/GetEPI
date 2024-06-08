@@ -62,7 +62,7 @@ public class ListarUsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> excluirUsuario(@PathVariable Long id, HttpServletRequest request, Model model){
+    public ResponseEntity<String> excluirUsuario(@PathVariable Long id){
 
         String mensagemErro = usuarioService.excluirUsuario(id);
         if (mensagemErro.isEmpty()){
@@ -75,16 +75,27 @@ public class ListarUsuarioController {
 
     @PostMapping
     public String buscarUsuario(@ModelAttribute("buscaUsuarioDTO") UsuarioDTO usuarioBuscado, Model model) {
-        List<UsuarioDTO> listaUsuariosEncontrados = usuarioService.buscarUsuarioPorNome(usuarioBuscado);
+        try {
+            List<UsuarioDTO> listaUsuariosEncontrados = usuarioService.buscarUsuarioPorNome(usuarioBuscado);
+            boolean nenhumUsuario = false;
+            if(listaUsuariosEncontrados.isEmpty()) {
+                nenhumUsuario = true;
+            }
 
-        boolean nenhumUsuario = false;
-        if(listaUsuariosEncontrados.isEmpty()) {
-            nenhumUsuario = true;
+            model.addAttribute("usuarios", listaUsuariosEncontrados);
+            model.addAttribute("nenhumUsuario", nenhumUsuario);
+            return "listausuario";
+
+        } catch (Exception e) {
+            model.addAttribute("erro", true);
+            model.addAttribute("tituloMensagemErro", apocalipseGetEPI.refatoraMensagem(e.getClass().getName(), e.toString()));
+            model.addAttribute("stacktraceMensagem", e.toString());
+
+            model.addAttribute("usuarios", new ArrayList<UsuarioDTO>());
+            model.addAttribute("nenhumUsuario", true);
+            model.addAttribute("buscaUsuarioDTO", new UsuarioDTO());
+            return "listausuario";
         }
-
-        model.addAttribute("usuarios", listaUsuariosEncontrados);
-        model.addAttribute("nenhumUsuario", nenhumUsuario);
-        return "listausuario";
     }
 
 }

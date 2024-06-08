@@ -4,6 +4,7 @@ import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.FuncaoDto;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.OutrosObjetos.ApocalipseGetEPI;
+import com.senai.GetEPI.OutrosObjetos.ErroGetEPI;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.FuncaoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,6 +36,14 @@ public class ListarColaboradorController {
     public String exibirListaColaboradores(Model model, HttpServletRequest request, ColaboradorDto colaboladorDto) {
 
         try {
+
+            ErroGetEPI erro = apocalipseGetEPI.retornarErro(request);
+            if (erro.getExibeErro()) {
+                model.addAttribute("erro", true);
+                model.addAttribute("tituloMensagemErro", erro.getMensagemErro());
+                model.addAttribute("stacktraceMensagem", erro.getStackTrace());
+            }
+
             List<ColaboradorDto> listaColaborador = colaboradorService.retornaListaColaboradorDTO();
 
             boolean nenhumRegistro = false;
@@ -49,14 +58,14 @@ public class ListarColaboradorController {
 
 
         } catch (Exception e) {
-            model.addAttribute("erro", true);
+            model.addAttribute("erroInterno", true);
             model.addAttribute("tituloMensagemErro", apocalipseGetEPI.refatoraMensagem(e.getClass().getName(), e.toString()));
             model.addAttribute("stacktraceMensagem", e.toString());
 
             model.addAttribute("colaboradores", new ArrayList<ColaboradorDto>());
             model.addAttribute("funcao", new ArrayList<FuncaoDto>());
             model.addAttribute("buscaColaboradorDTO", new ColaboradorDto());
-
+            model.addAttribute("nenhumColaborador", true);
 
         }
         return "listacolaborador";
@@ -65,27 +74,40 @@ public class ListarColaboradorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> excluirColaborador(@PathVariable Long id){
 
-        boolean sucesso = colaboradorService.excluirColaborador(id);
-        if (sucesso){
+        String mensagemErro = colaboradorService.excluirColaborador(id);
+        if (mensagemErro.isEmpty()){
             return ResponseEntity.ok("Colaborador excluído com sucesso.");
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir colaborador.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensagemErro);
     }
 
     @PostMapping
     public String buscarRegistros(@ModelAttribute("buscaColaboradorDTO") ColaboradorDto registroBuscado, Model model) {
-        List<ColaboradorDto> listaRegistrosEncontrados = colaboradorService.buscarColaboradorPorNome(registroBuscado.getNome());
+        try {
+            List<ColaboradorDto> listaRegistrosEncontrados = colaboradorService.buscarColaboradorPorNome(registroBuscado.getNome());
 
-        boolean nenhumRegistro = false;
-        if(listaRegistrosEncontrados.isEmpty()) {
-            nenhumRegistro = true;
+            boolean nenhumRegistro = false;
+            if(listaRegistrosEncontrados.isEmpty()) {
+                nenhumRegistro = true;
+            }
+
+            model.addAttribute("colaboradores", listaRegistrosEncontrados);
+            model.addAttribute("nenhumColaborador", nenhumRegistro);
+
+        }catch (Exception e) {
+            model.addAttribute("erro", true);
+            model.addAttribute("tituloMensagemErro", apocalipseGetEPI.refatoraMensagem(e.getClass().getName(), e.toString()));
+            model.addAttribute("stacktraceMensagem", e.toString());
+
+            model.addAttribute("colaboradores", new ArrayList<ColaboradorDto>());
+            model.addAttribute("funcao", new ArrayList<FuncaoDto>());
+            model.addAttribute("buscaColaboradorDTO", new ColaboradorDto());
+            model.addAttribute("nenhumColaborador", true);
+
+
         }
-
-        model.addAttribute("colaboradores", listaRegistrosEncontrados);
-        model.addAttribute("nenhumColaborador", nenhumRegistro);
         return "listacolaborador";
     }
 
-
-    }
+}
 
