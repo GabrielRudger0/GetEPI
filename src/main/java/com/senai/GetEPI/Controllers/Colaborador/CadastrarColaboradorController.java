@@ -1,8 +1,11 @@
 package com.senai.GetEPI.Controllers.Colaborador;
 
 import com.senai.GetEPI.DTOs.ColaboradorDto;
+import com.senai.GetEPI.OutrosObjetos.ApocalipseGetEPI;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.FuncaoService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,29 +22,53 @@ public class CadastrarColaboradorController {
     ColaboradorService colaboradorService;
     @Autowired
     private FuncaoService funcaoService;
+    @Autowired
+    ApocalipseGetEPI apocalipseGetEPI;
 
     @GetMapping()
-    public String cadastrarColaborador(Model model){
+    public String cadastrarColaborador(Model model, HttpServletRequest request){
 
-        ColaboradorDto colaboradorDto = new ColaboradorDto();
+        try {
+            ColaboradorDto colaboradorDto = new ColaboradorDto();
 
-        model.addAttribute("colaboradorDto",colaboradorDto);
-        model.addAttribute("funcoes", funcaoService.obterListaFuncao());
+            model.addAttribute("colaboradorDto",colaboradorDto);
+            model.addAttribute("funcoes", funcaoService.obterListaFuncao());
+
+        }catch (Exception e) {
+            HttpSession sessao = request.getSession();
+            sessao.setAttribute("retornaErro", e);
+            sessao.setAttribute("stacktrace", e);
+            return "redirect:/listacolaboradores";
+        }
+
         return "cadastrarcolaborador";
+
     }
 
     @PostMapping()
     public String enviarDadosColaborador(@ModelAttribute("colaboradorDto")ColaboradorDto colaboradorDto,Model model){
+        try {
+            String mensagemErro = colaboradorService.cadastrarColaborador(colaboradorDto);
+            if (!mensagemErro.isEmpty()) {
+                model.addAttribute("erro", true);
+                model.addAttribute("mensagemErro", mensagemErro);
+                model.addAttribute("funcoes", funcaoService.obterListaFuncao());
 
-        String mensagemErro = colaboradorService.cadastrarColaborador(colaboradorDto);
-        if (!mensagemErro.isEmpty()) {
+                return "cadastrarcolaborador";
+            }
+
+            return "redirect:/listacolaboradores";
+
+        } catch (Exception e) {
             model.addAttribute("erro", true);
-            model.addAttribute("mensagemErro", mensagemErro);
+            model.addAttribute("tituloMensagemErro", apocalipseGetEPI.refatoraMensagem(e.getClass().getName(), e.toString()));
+            model.addAttribute("stacktraceMensagem", e.toString());
+
             model.addAttribute("funcoes", funcaoService.obterListaFuncao());
 
             return "cadastrarcolaborador";
+
         }
 
-        return "redirect:/listacolaboradores";
     }
 }

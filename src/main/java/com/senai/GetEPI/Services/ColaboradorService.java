@@ -7,6 +7,7 @@ import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.FuncaoModel;
 import com.senai.GetEPI.Models.UsuarioModel;
 import com.senai.GetEPI.Repositories.ColaboradorRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,13 +97,16 @@ public class ColaboradorService {
         return new UpdColaboradorDTO(colaborador);
     }
 
-    public boolean excluirColaborador(Long id){
-        Optional<ColaboradorModel> optionalColaborador = colaboradorRepository.findById(id);
-        if (!optionalColaborador.isPresent()){
-            return false;
+    public String excluirColaborador(Long id){
+        try {
+            Optional<ColaboradorModel> optionalColaborador = colaboradorRepository.findById(id);
+            colaboradorRepository.delete(optionalColaborador.get());
+
+            return "";
+
+        } catch (Exception e) {
+            return e.toString();
         }
-        colaboradorRepository.delete(optionalColaborador.get());
-        return true;
 
     }
 
@@ -116,15 +120,16 @@ public class ColaboradorService {
                 return "Já existe cadastro com estas credenciais!";
             }
         }
-            atualizar.setId(colaborador.getId());
-            atualizar.setNome(colaborador.getNome().trim().toUpperCase());
-            atualizar.setEmail(colaborador.getEmail());
-            atualizar.setFuncao(colaborador.getFuncao());
-            atualizar.setDataNascimento(converteStringToDate(colaborador.getDataNascimento()));
+        atualizar.setId(colaborador.getId());
+        atualizar.setNome(colaborador.getNome().trim().toUpperCase());
+        atualizar.setEmail(colaborador.getEmail());
+        atualizar.setFuncao(colaborador.getFuncao());
+        atualizar.setDataNascimento(converteStringToDate(colaborador.getDataNascimento()));
 
         colaboradorRepository.save(atualizar);
 
         return "";
+
     }
 
     private Date converteStringToDate(String dataString){

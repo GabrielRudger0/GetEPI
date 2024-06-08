@@ -9,11 +9,14 @@ public class ErroGetEPI {
 
     private String mensagemErro;
 
+    private String stackTrace;
+
     public ErroGetEPI() {
     }
 
-    public ErroGetEPI(Boolean exibeErro, String mensagemErro) {
+    public ErroGetEPI(Boolean exibeErro, String mensagemErro, String stackTrace) {
         this.exibeErro = exibeErro;
         this.mensagemErro = mensagemErro;
+        this.stackTrace = stackTrace;
     }
 }

@@ -42,26 +42,26 @@ document.querySelectorAll('.excluir').forEach(function(button) {
                     }, 1700);
 
                 } else {
-
                     return response.text()
                     .then(data => {
                       Swal.fire({
-                          title: data,
-                          icon: "error",
-                          showConfirmButton: true
+                          title: "Erro na exclusão do registro",
+                          text: data,
+                          confirmButtonColor: "#0d6efd",
+                          iconHtml: '<i class="fas fa-exclamation-circle" style="color: #dc3545; font-size: 5rem;"></i>'
                       });
                    });
-
                 }
             })
 
             .catch(error => {
                 // Lidar com erros de rede ou outros erros
                 Swal.fire({
-                  title: error,
-                  icon: "error",
-                  showConfirmButton: true
-               });
+                  title: "Erro crítico na exclusão do registro",
+                  text: data,
+                  confirmButtonColor: "#0d6efd",
+                  iconHtml: '<i class="fas fa-exclamation-triangle" style="color: #dc3545; font-size: 5rem;"></i>'
+                });
             });
           }
         });
