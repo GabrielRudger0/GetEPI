@@ -42,15 +42,26 @@ document.querySelectorAll('.excluir').forEach(function(button) {
                     }, 1700);
 
                 } else {
-                    // A solicitação DELETE falhou
-                    console.error('Erro ao excluir usuário.');
-                    alert('Erro ao excluir usuário');
+
+                    return response.text()
+                    .then(data => {
+                      Swal.fire({
+                          title: data,
+                          icon: "error",
+                          showConfirmButton: true
+                      });
+                   });
+
                 }
             })
+
             .catch(error => {
                 // Lidar com erros de rede ou outros erros
-                console.error('Erro de rede:', error);
-                alert('Erro de rede:' + error);
+                Swal.fire({
+                  title: error,
+                  icon: "error",
+                  showConfirmButton: true
+               });
             });
           }
         });
