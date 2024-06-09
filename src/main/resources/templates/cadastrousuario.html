@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" style="background: #495057;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -133,7 +133,7 @@
 <div class="container-fluid">
     <div class="row" style="height: 100% !important;">
         <!-- Conteúdo da barra lateral -->
-        <div class="sidebar custom-shadow bg-dark" style="height: 1000px;">
+        <div th:if="${visualizacaoInterna == true}" class="sidebar custom-shadow bg-dark" style="height: 1000px;">
             <div th:replace="/menulateral :: componente-menulateral"></div>
         </div>
         <!-- Conteúdo da barra lateral -->
@@ -176,7 +176,11 @@
                                 <button type="submit" class="btn btn-outline-success mr-2">
                                     <span class="btnHover"><i class='fa fa-check fa-1x'></i> Cadastrar</span>
                                 </button>
-                                <a th:href="@{~/listausuario}" class="btn btn-outline-primary btnHover">
+                                <a th:if="${visualizacaoInterna == true}" th:href="@{~/listausuario}" class="btn btn-outline-primary btnHover">
+                                    <i class='fa fa-arrow-left fa-1x'></i>
+                                    Voltar
+                                </a>
+                                <a th:if="${visualizacaoInterna == false}" th:href="@{~/login}" class="btn btn-outline-primary btnHover">
                                     <i class='fa fa-arrow-left fa-1x'></i>
                                     Voltar
                                 </a>

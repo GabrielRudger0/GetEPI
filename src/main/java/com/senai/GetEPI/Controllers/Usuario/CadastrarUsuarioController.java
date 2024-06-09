@@ -34,6 +34,8 @@ public class CadastrarUsuarioController {
             model.addAttribute("tituloMensagemErro", erroGetEPI.getMensagemErro());
             model.addAttribute("stacktraceMensagem", erroGetEPI.getStackTrace());
         }
+        model.addAttribute("visualizacaoInterna", visualizacaoInterna(request));
+
 
         UsuarioDTO usuario = new UsuarioDTO();
 
@@ -52,14 +54,32 @@ public class CadastrarUsuarioController {
                 model.addAttribute("erro", true);
                 model.addAttribute("tituloMensagemErro", "Erro no cadastro!");
                 model.addAttribute("stacktraceMensagem", mensagemErro);
+                model.addAttribute("visualizacaoInterna", visualizacaoInterna(request));
 
                 return "cadastrousuario";
             }
         } catch (Exception e) {
             request.getSession().setAttribute("retornaErro", e.getClass().getName());
             request.getSession().setAttribute("stacktrace", e.toString());
+            model.addAttribute("visualizacaoInterna", visualizacaoInterna(request));
+
             return "redirect:/cadastrarusuario";
         }
+
+        if (!visualizacaoInterna(request)) {
+            return "redirect:/login";
+        }
+
         return "redirect:/listausuario";
+    }
+    private boolean visualizacaoInterna(HttpServletRequest request) {
+        Object objectTelaOrigem = request.getSession().getAttribute("telaOrigem");
+        if (objectTelaOrigem != null) {
+            String telaOrigem = objectTelaOrigem.toString();
+            if (telaOrigem.equals("login")) {
+                return false;
+            }
+        }
+        return true;
     }
 }
