@@ -108,6 +108,12 @@ public class ColaboradorService {
             List<EmprestimoModel> emprestimosDoColaborador = emprestimoService.buscarEmprestimosPorColaboradorId(id);
             if (!emprestimosDoColaborador.isEmpty()) {
                 for (EmprestimoModel emprestimo : emprestimosDoColaborador) {
+                    if (emprestimo.getDevolucaoData() == null) {
+                        return "Colaborador possuí empréstimos pendentes para devolução! Conclua os empréstimos para realizar a exclusão.";
+                    }
+                }
+
+                for (EmprestimoModel emprestimo : emprestimosDoColaborador) {
                     emprestimoService.excluirEmprestimo(emprestimo.getId());
                 }
             }

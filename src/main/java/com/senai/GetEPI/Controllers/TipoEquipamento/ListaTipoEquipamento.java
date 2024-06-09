@@ -68,7 +68,7 @@ public class ListaTipoEquipamento {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> excluirTipoEquipamento(@PathVariable Long id){
 
-        String mensagemErro = tipoEquipamentoService.excluirColaborador(id+223);
+        String mensagemErro = tipoEquipamentoService.excluirColaborador(id);
         if (mensagemErro.isEmpty()){
             return ResponseEntity.ok("Tipo de equipamento excluído com sucesso.");
         }

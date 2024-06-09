@@ -74,7 +74,10 @@ public class UsuarioService {
             if (optionalUsuario.isPresent()) {
                 ColaboradorDto colaboradorVinculado = colaboradorService.buscarColaboradorPorUsuario(optionalUsuario.get());
                 if (colaboradorVinculado != null) {
-                    colaboradorService.excluirColaborador(colaboradorVinculado.getId());
+                    String msgErro = colaboradorService.excluirColaborador(colaboradorVinculado.getId());
+                    if (!msgErro.isEmpty()) {
+                        return "Usuário possuí um colaborador vinculado: " + msgErro;
+                    }
                 }
 
             }
