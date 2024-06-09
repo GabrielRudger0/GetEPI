@@ -56,7 +56,7 @@ document.querySelectorAll('.excluir').forEach(function(button) {
             .catch(error => {
                 Swal.fire({
                   title: "Erro crítico na exclusão do registro",
-                  text: data,
+                  text: error,
                   confirmButtonColor: "#0d6efd",
                   iconHtml: '<i class="fas fa-exclamation-triangle" style="color: #dc3545; font-size: 5rem;"></i>'
                 });
