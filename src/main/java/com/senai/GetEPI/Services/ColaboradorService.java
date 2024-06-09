@@ -4,9 +4,11 @@ import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.UpdColaboradorDTO;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Models.ColaboradorModel;
+import com.senai.GetEPI.Models.EmprestimoModel;
 import com.senai.GetEPI.Models.FuncaoModel;
 import com.senai.GetEPI.Models.UsuarioModel;
 import com.senai.GetEPI.Repositories.ColaboradorRepository;
+import com.senai.GetEPI.Repositories.EmprestimoRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,9 @@ public class ColaboradorService {
 
     @Autowired
     ParametroGeralService parametroGeralService;
+
+    @Autowired
+    EmprestimoService emprestimoService;
 
     public String cadastrarColaborador (ColaboradorDto colaboradorDto){
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
@@ -99,10 +104,15 @@ public class ColaboradorService {
     public String excluirColaborador(Long id){
         try {
             Optional<ColaboradorModel> optionalColaborador = colaboradorRepository.findById(id);
+
+            List<EmprestimoModel> emprestimosDoColaborador = emprestimoService.buscarEmprestimosPorColaboradorId(id);
+            if (!emprestimosDoColaborador.isEmpty()) {
+                for (EmprestimoModel emprestimo : emprestimosDoColaborador) {
+                    emprestimoService.excluirEmprestimo(emprestimo.getId());
+                }
+            }
+
             colaboradorRepository.delete(optionalColaborador.get());
-
-            //emprestimoService.excluirEmprestimo();
-
             return "";
 
         } catch (Exception e) {
