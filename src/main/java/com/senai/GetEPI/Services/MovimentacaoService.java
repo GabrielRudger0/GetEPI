@@ -10,9 +10,11 @@ import com.senai.GetEPI.Repositories.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class MovimentacaoService {
@@ -63,7 +65,10 @@ public class MovimentacaoService {
     }
 
     private List<ViewMovimentacaoDto> converterListaEmprestimo(List<MovimentacaoModel> movimentacaoModels) {
-        return movimentacaoModels.stream().map(ViewMovimentacaoDto::new).collect(Collectors.toList());
+        Stream<MovimentacaoModel> listaStream = movimentacaoModels.stream().sorted(Comparator.comparing(MovimentacaoModel::getDataMovimentacao).reversed());
+
+        //return movimentacaoModels.stream().map(ViewMovimentacaoDto::new).collect(Collectors.toList());
+        return listaStream.map(ViewMovimentacaoDto::new).collect(Collectors.toList());
     }
 
 
