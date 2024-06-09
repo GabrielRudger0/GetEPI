@@ -74,19 +74,21 @@ public class EmprestimoService {
         return new ViewEmprestimoDTO(emprestimoRepository.findById(id).get());
     }
 
-    public boolean excluirEmprestimo(Long id){
-        Optional<EmprestimoModel> emprestimo = emprestimoRepository.findById(id);
-        if (!emprestimo.isPresent()){
-            return false;
+    public String excluirEmprestimo(Long id){
+
+        try {
+            Optional<EmprestimoModel> emprestimo = emprestimoRepository.findById(id);
+
+            movimentacaoService.excluirMovimentacaoPorEmprestimo(id);
+
+            emprestimoRepository.delete(emprestimo.get());
+
+            movimentacaoService.gerarMovimentacaoInterna(new EpiDto(emprestimo.get().getEpi()), 1l, TipoMovimentacao.ENTRADA);
+
+            return "";
+        } catch (Exception e) {
+            return e.toString();
         }
-
-        movimentacaoService.excluirMovimentacaoPorEmprestimo(id);
-
-        emprestimoRepository.delete(emprestimo.get());
-
-        movimentacaoService.gerarMovimentacaoInterna(new EpiDto(emprestimo.get().getEpi()), 1l, TipoMovimentacao.ENTRADA);
-
-        return true;
 
     }
 

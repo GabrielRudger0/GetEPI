@@ -7,6 +7,7 @@ import com.senai.GetEPI.Models.EpiModel;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.EmprestimoService;
 import com.senai.GetEPI.Services.EpiService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,33 +32,47 @@ public class CadastrarEmprestimoController {
     EpiService epiService;
 
     @GetMapping()
-    public String exibeCadastrarEmprestimo(Model model) {
+    public String exibeCadastrarEmprestimo(Model model, HttpServletRequest request) {
 
-        List<ColaboradorModel> colaboradores = colaboradorService.obterListaColaboradores();
-        List<EpiModel> epis = epiService.retornaEPIModel();
+        try {
+            List<ColaboradorModel> colaboradores = colaboradorService.obterListaColaboradores();
+            List<EpiModel> epis = epiService.retornaEPIModel();
 
-        model.addAttribute("emprestimoDTO", new EmprestimoDTO());
-        model.addAttribute("colaboradores", colaboradores);
-        model.addAttribute("epis", epis);
+            model.addAttribute("emprestimoDTO", new EmprestimoDTO());
+            model.addAttribute("colaboradores", colaboradores);
+            model.addAttribute("epis", epis);
 
-        return "cadastraremprestimo";
+            return "cadastraremprestimo";
+        } catch (Exception e) {
+            request.getSession().setAttribute("retornaErro", e);
+            request.getSession().setAttribute("stacktrace", e);
+            return "redirect:/listaemprestimo";
+        }
+
     }
 
     @PostMapping()
-    public String cadastrarEmprestimo(@ModelAttribute("emprestimoDTO") EmprestimoDTO emprestimo, Model model) {
-        String mensagemErro = emprestimoService.cadastrarEmprestimo(emprestimo);
+    public String cadastrarEmprestimo(@ModelAttribute("emprestimoDTO") EmprestimoDTO emprestimo, Model model, HttpServletRequest request) {
 
-        if (!mensagemErro.isEmpty()) {
-            model.addAttribute("erro", true);
-            model.addAttribute("mensagemErro", mensagemErro);
+        try {
+            String mensagemErro = emprestimoService.cadastrarEmprestimo(emprestimo);
 
-            List<ColaboradorModel> colaboradores = colaboradorService.obterListaColaboradores();
-            List<EpiModel> epis = epiService.retornaEPIModel();
-            model.addAttribute("colaboradores", colaboradores);
-            model.addAttribute("epis", epis);
-            return "cadastraremprestimo";
+            if (!mensagemErro.isEmpty()) {
+                model.addAttribute("erro", true);
+                model.addAttribute("mensagemErro", mensagemErro);
+
+                List<ColaboradorModel> colaboradores = colaboradorService.obterListaColaboradores();
+                List<EpiModel> epis = epiService.retornaEPIModel();
+                model.addAttribute("colaboradores", colaboradores);
+                model.addAttribute("epis", epis);
+                return "cadastraremprestimo";
+            }
+
+            return "redirect:/listaemprestimo";
+        } catch (Exception e) {
+            request.getSession().setAttribute("retornaErro", e);
+            request.getSession().setAttribute("stacktrace", e);
+            return "redirect:/listaemprestimo";
         }
-
-        return "redirect:/listaemprestimo";
     }
 }
