@@ -42,15 +42,24 @@ document.querySelectorAll('.excluir').forEach(function(button) {
                     }, 1700);
 
                 } else {
-                    // A solicitação DELETE falhou
-                    console.error('Erro ao excluir função.');
-                    alert('Erro ao excluir função');
+                    return response.text()
+                    .then(data => {
+                      Swal.fire({
+                          title: "Erro na exclusão do registro",
+                          text: data,
+                          confirmButtonColor: "#0d6efd",
+                          iconHtml: '<i class="fas fa-exclamation-circle" style="color: #dc3545; font-size: 5rem;"></i>'
+                      });
+                    });
                 }
             })
             .catch(error => {
-                // Lidar com erros de rede ou outros erros
-                console.error('Erro de rede:', error);
-                alert('Erro de rede:' + error);
+                Swal.fire({
+                  title: "Erro crítico na exclusão do registro",
+                  text: data,
+                  confirmButtonColor: "#0d6efd",
+                  iconHtml: '<i class="fas fa-exclamation-triangle" style="color: #dc3545; font-size: 5rem;"></i>'
+                });
             });
           }
         });
