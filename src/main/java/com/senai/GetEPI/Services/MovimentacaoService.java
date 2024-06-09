@@ -71,6 +71,10 @@ public class MovimentacaoService {
         movimentacaoRepository.deleteMovimentacaoPorEmprestimo(emprestimoId);
     }
 
+    public ViewMovimentacaoDto buscaMovimentacaoPorId(Long id) {
+        return new ViewMovimentacaoDto(movimentacaoRepository.findById(id).get(), true);
+    }
+
 
 
 }

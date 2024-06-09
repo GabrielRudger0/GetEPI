@@ -13,9 +13,6 @@ import java.util.Date;
 @Data
 public class ViewMovimentacaoDto {
 
-
-     EpiRepository epiRepository;
-
     private Long id;
 
     private String dataMovimentacao;
@@ -29,7 +26,6 @@ public class ViewMovimentacaoDto {
     private String EPI;
 
 
-
     public ViewMovimentacaoDto(){
 
     }
@@ -38,6 +34,17 @@ public class ViewMovimentacaoDto {
 
         this.id = movimentacao.getId();
         this.dataMovimentacao = formatarData(movimentacao.getDataMovimentacao());
+        this.quantidade = movimentacao.getQuantidade();
+        this.colaborador = retornaColaborador(movimentacao);
+        this.EPI = retornaEpi(movimentacao);
+        this.tipoMovimentacao = movimentacao.getTipoMovimentacao().getDescricao();
+
+    }
+
+    public ViewMovimentacaoDto(MovimentacaoModel movimentacao, boolean visualizar){
+
+        this.id = movimentacao.getId();
+        this.dataMovimentacao = formatarDataHora(movimentacao.getDataMovimentacao());
         this.quantidade = movimentacao.getQuantidade();
         this.colaborador = retornaColaborador(movimentacao);
         this.EPI = retornaEpi(movimentacao);
@@ -73,6 +80,15 @@ public class ViewMovimentacaoDto {
     }
 
 
+
+    private String formatarDataHora(Date data) {
+        if(data == null) {
+            return EmprestimoStatus.NAO_DEVOLVIDO.getDescricao();
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return sdf.format(data);
+    }
 
     private String formatarData(Date data) {
         if(data == null) {
