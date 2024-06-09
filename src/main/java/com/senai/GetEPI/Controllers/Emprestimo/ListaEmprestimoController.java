@@ -66,7 +66,7 @@ public class ListaEmprestimoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> excluirEmprestimo(@PathVariable Long id){
 
-        String mensagemErro = emprestimoService.excluirEmprestimo(id+212);
+        String mensagemErro = emprestimoService.excluirEmprestimo(id);
         if (mensagemErro.isEmpty()){
             return ResponseEntity.ok("Empréstimo excluído com sucesso.");
         }

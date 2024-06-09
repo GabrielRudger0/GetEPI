@@ -47,11 +47,12 @@ public class ColaboradorModel {
 
     }
 
-    public ColaboradorModel(UsuarioDTO usuario, FuncaoModel parametroGeralFuncao){
+    public ColaboradorModel(UsuarioModel usuario, FuncaoModel parametroGeralFuncao){
         this.nome = usuario.getNome().trim().toUpperCase();
         this.email = usuario.getEmail();
         this.funcao = parametroGeralFuncao;
         this.dataNascimento = new Date();
+        this.usuario = usuario;
 
     }
 
