@@ -2,10 +2,12 @@ package com.senai.GetEPI.Services;
 
 import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.DTOs.GerarMovimentacaoEntradaDTO;
+import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.DTOs.ViewMovimentacaoDto;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
 import com.senai.GetEPI.Models.EmprestimoModel;
 import com.senai.GetEPI.Models.MovimentacaoModel;
+import com.senai.GetEPI.Models.UsuarioModel;
 import com.senai.GetEPI.Repositories.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,6 +73,12 @@ public class MovimentacaoService {
         movimentacaoRepository.deleteMovimentacaoPorEmprestimo(emprestimoId);
     }
 
+    public ViewMovimentacaoDto retornaMovimentacao(Long id) {
+        MovimentacaoModel movimentacao = movimentacaoRepository.findById(id).get();
+
+        return new ViewMovimentacaoDto(movimentacao);
+
+    }
 
 
 }
