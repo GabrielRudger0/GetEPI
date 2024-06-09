@@ -117,6 +117,9 @@
                 color: white;
                 border-color: var(--bs-gray-600);
             }
+            .swal2-icon {
+                border: 0px !important;
+            }
 
         </style>
 </head>
@@ -231,18 +234,20 @@
 </div>
 <!-- MODELO DE LISTAGEM (COM SOMENTE O HTML) -->
 
-<!-- Mensagem de erro
-<div th:if="${erro == true}">
+<div th:if="${erro == true}" >
     <script th:inline="javascript">
-        var message =/*[[${mensagemErro}]]*/ 'defaultanyvalue';
+        var tituloMensagemErro =/*[[${tituloMensagemErro}]]*/ 'defaultanyvalue';
+        var stacktraceMensagem =/*[[${stacktraceMensagem}]]*/ 'defaultanyvalue';
             Swal.fire({
-                title: message,
+                title: tituloMensagemErro,
+                text: stacktraceMensagem,
                 confirmButtonColor: "#0d6efd",
-                icon: "error",
+                iconHtml: '<i class="fas fa-exclamation-circle" style="color: #dc3545; font-size: 5rem;"></i>'
+
             });
     </script>
 </div>
-Mensagem de erro -->
+
 
 <script src="/excluir_emprestimo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -58,7 +58,7 @@ public class ListarColaboradorController {
 
 
         } catch (Exception e) {
-            model.addAttribute("erroInterno", true);
+            model.addAttribute("erro", true);
             model.addAttribute("tituloMensagemErro", apocalipseGetEPI.refatoraMensagem(e.getClass().getName(), e.toString()));
             model.addAttribute("stacktraceMensagem", e.toString());
 

@@ -38,9 +38,8 @@ public class AtualizarColaboradorController {
             return "atualizarcolaborador";
 
         } catch (Exception e) {
-            HttpSession sessao = request.getSession();
-            sessao.setAttribute("retornaErro", e);
-            sessao.setAttribute("stacktrace", e);
+            request.getSession().setAttribute("retornaErro", e);
+            request.getSession().setAttribute("stacktrace", e);
             return "redirect:/listacolaboradores";
         }
 
@@ -60,9 +59,8 @@ public class AtualizarColaboradorController {
             return "redirect:/listacolaboradores";
 
         } catch (Exception e) {
-            HttpSession sessao = request.getSession();
-            sessao.setAttribute("retornaErro", e);
-            sessao.setAttribute("stacktrace", e);
+            request.getSession().setAttribute("retornaErro", e);
+            request.getSession().setAttribute("stacktrace", e);
             return "redirect:/listacolaboradores";
         }
 

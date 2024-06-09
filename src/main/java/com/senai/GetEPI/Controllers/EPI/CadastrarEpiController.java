@@ -3,6 +3,7 @@ package com.senai.GetEPI.Controllers.EPI;
 import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.Services.EpiService;
 import com.senai.GetEPI.Services.TipoEquipamentoService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,30 +23,43 @@ public class CadastrarEpiController {
     private TipoEquipamentoService tipoEquipamentoService;
 
     @GetMapping()
-    public String cadastrarEpi(Model model){
+    public String cadastrarEpi(Model model, HttpServletRequest request){
 
-        EpiDto epiDto = new EpiDto();
+        try {
+            EpiDto epiDto = new EpiDto();
 
-        model.addAttribute("epiDto", epiDto);
-        model.addAttribute("tiposEquipamento", tipoEquipamentoService.obterListaTipoEquipamento());
+            model.addAttribute("epiDto", epiDto);
+            model.addAttribute("tiposEquipamento", tipoEquipamentoService.obterListaTipoEquipamento());
 
-        return "cadastrarepi";
+            return "cadastrarepi";
+
+        } catch (Exception e) {
+            request.getSession().setAttribute("retornaErro", e);
+            request.getSession().setAttribute("stacktrace", e);
+            return "redirect:/listaEPI";
+        }
 
     }
 
     @PostMapping
-    public String enviarDadosCadastro(@ModelAttribute("epiDto") EpiDto epiDto, Model model){
+    public String enviarDadosCadastro(@ModelAttribute("epiDto") EpiDto epiDto, Model model, HttpServletRequest request){
 
-        System.out.println("epiDto: " + epiDto.getTipoEquipamento().getId());
+        try {
+            String mensagemErro = epiService.cadastrarEpi(epiDto);
+            if (!mensagemErro.isEmpty()) {
+                model.addAttribute("erro", true);
+                model.addAttribute("mensagemErro", mensagemErro);
+                model.addAttribute("tiposEquipamento", tipoEquipamentoService.obterListaTipoEquipamento());
+                return "cadastrarepi";
+            }
+            return "redirect:/listaEPI";
 
-        String mensagemErro = epiService.cadastrarEpi(epiDto);
-        if (!mensagemErro.isEmpty()) {
-            model.addAttribute("erro", true);
-            model.addAttribute("mensagemErro", mensagemErro);
-            model.addAttribute("tiposEquipamento", tipoEquipamentoService.obterListaTipoEquipamento());
-            return "cadastrarepi";
+        } catch (Exception e) {
+            request.getSession().setAttribute("retornaErro", e);
+            request.getSession().setAttribute("stacktrace", e);
+            return "redirect:/listaEPI";
         }
 
-        return "redirect:/listaEPI";
+
     }
 }

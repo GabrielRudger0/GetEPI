@@ -7,6 +7,7 @@ import com.senai.GetEPI.Models.EpiModel;
 import com.senai.GetEPI.Services.EpiService;
 import com.senai.GetEPI.Services.MovimentacaoService;
 import com.senai.GetEPI.Services.TipoEquipamentoService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,28 +25,33 @@ public class AtualizarQuantidadeEpi {
     MovimentacaoService movimentacaoService;
 
     @GetMapping()
-    public String exibeAtualizaEpi(Model model) {
+    public String exibeAtualizaEpi(Model model, HttpServletRequest request) {
 
-        model.addAttribute("epis", epiService.retornaListaEpiDTO());
-        model.addAttribute("gerarMovimentacaoDTO", new GerarMovimentacaoEntradaDTO());
+        try {
+            model.addAttribute("epis", epiService.retornaListaEpiDTO());
+            model.addAttribute("gerarMovimentacaoDTO", new GerarMovimentacaoEntradaDTO());
 
-        return "atualizarquantidadeepi";
+            return "atualizarquantidadeepi";
+
+        } catch (Exception e) {
+            request.getSession().setAttribute("retornaErro", e);
+            request.getSession().setAttribute("stacktrace", e);
+            return "redirect:/listamovimentacoes";
+        }
+
     }
 
     @PostMapping()
-    public String botaoSalvar(@ModelAttribute("gerarMovimentacaoDTO") GerarMovimentacaoEntradaDTO movimentacao, Model model) {
+    public String botaoSalvar(@ModelAttribute("gerarMovimentacaoDTO") GerarMovimentacaoEntradaDTO movimentacao, Model model, HttpServletRequest request) {
 
-        System.out.println("Qtd: " + movimentacao.getQuantidade());
-        System.out.println("EPI: " + movimentacao.getEpi().getNomeEpi());
+        try {
+            movimentacaoService.gerarMovimentacaoInterna(new EpiDto(movimentacao.getEpi()), movimentacao.getQuantidade(), TipoMovimentacao.ENTRADA);
+        } catch (Exception e) {
+            request.getSession().setAttribute("retornaErro", e);
+            request.getSession().setAttribute("stacktrace", e);
+            return "redirect:/listamovimentacoes";
+        }
 
-        movimentacaoService.gerarMovimentacaoInterna(new EpiDto(movimentacao.getEpi()), movimentacao.getQuantidade(), TipoMovimentacao.ENTRADA);
-
-//        if (!mensagemErro.isEmpty()) {
-//            model.addAttribute("erro", true);
-//            model.addAttribute("mensagemErro", mensagemErro);
-//            model.addAttribute("epiDTO",epi);
-//            return "atualizarquantidadeepi";
-//        }
         return "redirect:/listamovimentacoes";
 
     }

@@ -57,13 +57,16 @@ public class EpiService {
         return epiRepository.findAll();
     }
 
-    public boolean excluirEpi(Long id){
-        Optional<EpiModel> optionalEpi = epiRepository.findById(id);
-        if (!optionalEpi.isPresent()){
-            return false;
+    public String excluirEpi(Long id){
+        try {
+            Optional<EpiModel> optionalEpi = epiRepository.findById(id);
+
+            epiRepository.delete(optionalEpi.get());
+            return "";
+
+        } catch (Exception e) {
+            return e.toString();
         }
-        epiRepository.delete(optionalEpi.get());
-        return true;
 
     }
 

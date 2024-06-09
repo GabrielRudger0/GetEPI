@@ -1,9 +1,15 @@
 package com.senai.GetEPI.Services;
 
+import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.LoginDTO;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.Models.UsuarioModel;
 import com.senai.GetEPI.Repositories.UsuarioRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +26,9 @@ public class UsuarioService {
     @Autowired
     ColaboradorService colaboradorService;
 
+    @Autowired
+    EntityManager entityManager;
+
     public List<UsuarioDTO> retornaListaUsuarioDTO() {
         return converterListaUsuarioDTO(usuarioRepository.findAll());
     }
@@ -35,8 +44,10 @@ public class UsuarioService {
         if (!mensagemErroUsuario(usuario).isEmpty()) {
             return mensagemErroUsuario(usuario);
         }
-        usuarioRepository.save(new UsuarioModel(usuario));
-        colaboradorService.criarColaboradorUsuario(usuario);
+        UsuarioModel usuarioNovo = new UsuarioModel(usuario);
+        usuarioRepository.save(usuarioNovo);
+
+        colaboradorService.criarColaboradorUsuario(usuarioNovo);
         return "";
 
     }
@@ -50,6 +61,8 @@ public class UsuarioService {
             }
         }
 
+
+
         usuarioRepository.save(new UsuarioModel(usuario));
         return "";
     }
@@ -57,6 +70,15 @@ public class UsuarioService {
     public String excluirUsuario(Long id){
         try {
             Optional<UsuarioModel> optionalUsuario = usuarioRepository.findById(id);
+
+            if (optionalUsuario.isPresent()) {
+                ColaboradorDto colaboradorVinculado = colaboradorService.buscarColaboradorPorUsuario(optionalUsuario.get());
+                if (colaboradorVinculado != null) {
+                    colaboradorService.excluirColaborador(colaboradorVinculado.getId());
+                }
+
+            }
+
             usuarioRepository.delete(optionalUsuario.get());
 
             return "";

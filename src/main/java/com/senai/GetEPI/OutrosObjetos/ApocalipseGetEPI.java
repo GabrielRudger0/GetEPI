@@ -25,8 +25,8 @@ public class ApocalipseGetEPI {
 
         if (retornaErro != null) {
             if (!retornaErro.toString().isEmpty()) {
-                String mensagemErro = refatoraMensagem(retornaErro.toString(), "");
                 String stackTrace = retornaStackTrace.toString();
+                String mensagemErro = refatoraMensagem(retornaErro.toString(), stackTrace);
                 return new ErroGetEPI(true, mensagemErro, stackTrace);
 
             }
@@ -41,6 +41,8 @@ public class ApocalipseGetEPI {
                 return "Registro não encontrado!";
             case "org.springframework.dao.InvalidDataAccessResourceUsageException":
                 return "Tabela não encontrada!";
+            case "org.springframework.dao.InvalidDataAccessApiUsageException":
+                return "Erro ao tentar salvar objeto sem propriedade associada persistida";
             default:
                 Date dataHoraAtual = new Date();
                 SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
