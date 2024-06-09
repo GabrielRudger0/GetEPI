@@ -81,13 +81,15 @@ public class FuncaoService {
         return new FuncaoDto(funcao);
     }
 
-    public boolean excluirFuncao(Long id){
-        Optional<FuncaoModel> optionalFuncao = funcaoRepository.findById(id);
-        if (!optionalFuncao.isPresent()){
-            return false;
+    public String excluirFuncao(Long id){
+        try {
+            Optional<FuncaoModel> optionalFuncao = funcaoRepository.findById(id);
+
+            funcaoRepository.delete(optionalFuncao.get());
+            return "";
+        } catch (Exception e) {
+            return e.toString();
         }
-        funcaoRepository.delete(optionalFuncao.get());
-        return true;
 
     }
 

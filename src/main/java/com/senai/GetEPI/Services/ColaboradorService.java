@@ -26,7 +26,6 @@ public class ColaboradorService {
     @Autowired
     ParametroGeralService parametroGeralService;
 
-
     public String cadastrarColaborador (ColaboradorDto colaboradorDto){
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
        boolean existeColaborador = colaboradorRepository.existsByEmail(colaboradorDto.getEmail());
@@ -102,6 +101,8 @@ public class ColaboradorService {
             Optional<ColaboradorModel> optionalColaborador = colaboradorRepository.findById(id);
             colaboradorRepository.delete(optionalColaborador.get());
 
+            //emprestimoService.excluirEmprestimo();
+
             return "";
 
         } catch (Exception e) {
@@ -151,7 +152,19 @@ public class ColaboradorService {
         return converterListaColaboradorDTO(colaboradoresEncontrados);
     }
 
-    public void criarColaboradorUsuario(UsuarioDTO usuario) {
+    public ColaboradorDto buscarColaboradorPorEmail(String email) {
+        return new ColaboradorDto(colaboradorRepository.findByEmail(email).get());
+    }
+
+    public ColaboradorDto buscarColaboradorPorUsuario(UsuarioModel usuario) {
+        Optional<ColaboradorModel> colaborador = colaboradorRepository.findByUsuario(usuario);
+        if (colaborador.isPresent()) {
+            return new ColaboradorDto(colaborador.get());
+        }
+        return null;
+    }
+
+    public void criarColaboradorUsuario(UsuarioModel usuario) {
         colaboradorRepository.save(new ColaboradorModel(usuario, parametroGeralService.obterParametroFuncaoUsuario()));
     }
 

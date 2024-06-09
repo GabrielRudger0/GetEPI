@@ -79,13 +79,16 @@ public class TipoEquipamentoService {
         return "";
     }
 
-    public boolean excluirColaborador(Long id) {
-        Optional<TipoEquipamentoModel> tipoEquipamentoModel = tipoEquipamentoRepository.findById(id);
-        if (!tipoEquipamentoModel.isPresent()){
-            return false;
+    public String excluirColaborador(Long id) {
+        try {
+            Optional<TipoEquipamentoModel> tipoEquipamentoModel = tipoEquipamentoRepository.findById(id);
+
+            tipoEquipamentoRepository.delete(tipoEquipamentoModel.get());
+            return "";
+        } catch (Exception e) {
+            return e.toString();
         }
-        tipoEquipamentoRepository.delete(tipoEquipamentoModel.get());
-        return true;
+
     }
 
     public List<TipoEquipamentoDTO> buscarTipoEquipamentoPorDescricao(TipoEquipamentoDTO tipoEquipamento) {

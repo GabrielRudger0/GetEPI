@@ -3,6 +3,7 @@ package com.senai.GetEPI.Controllers.Emprestimo;
 import com.senai.GetEPI.DTOs.EmprestimoDTO;
 import com.senai.GetEPI.DTOs.ViewEmprestimoDTO;
 import com.senai.GetEPI.Services.EmprestimoService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +19,18 @@ public class VisualizarEmprestimoController {
     EmprestimoService emprestimoService;
 
     @GetMapping("/{id}")
-    public String exibeVisualizarEmprestimo(Model model, @PathVariable Long id) {
+    public String exibeVisualizarEmprestimo(Model model, @PathVariable Long id, HttpServletRequest request) {
 
-        ViewEmprestimoDTO emprestimo = emprestimoService.retonarViewEmprestimoDTO(id);
+        try {
+            ViewEmprestimoDTO emprestimo = emprestimoService.retonarViewEmprestimoDTO(id);
 
-        model.addAttribute("emprestimoDTO", emprestimo);
-        return "visualizaremprestimo";
+            model.addAttribute("emprestimoDTO", emprestimo);
+            return "visualizaremprestimo";
+        } catch (Exception e) {
+            request.getSession().setAttribute("retornaErro", e);
+            request.getSession().setAttribute("stacktrace", e);
+            return "redirect:/listaemprestimo";
+        }
+
     }
 }

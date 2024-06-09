@@ -2,6 +2,7 @@ package com.senai.GetEPI.Controllers.EPI;
 
 import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.Services.EpiService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,12 +20,19 @@ public class VisualizarQuantidadeEpi {
     EpiService epiService;
 
     @GetMapping("/{id}")
-    public String exibeVisualizarEmprestimo(Model model, @PathVariable Long id) {
+    public String exibeVisualizarEmprestimo(Model model, @PathVariable Long id, HttpServletRequest request) {
+        try {
+            EpiDto epi = epiService.buscaEpiDTO(id);
+            model.addAttribute("epiDTO", epi);
+            return "listaquantidadeepi";
 
-        EpiDto epi = epiService.buscaEpiDTO(id);
+        } catch (Exception e) {
+            request.getSession().setAttribute("retornaErro", e);
+            request.getSession().setAttribute("stacktrace", e);
+            return "redirect:/listaEPI";
+        }
 
-        model.addAttribute("epiDTO", epi);
-        return "listaquantidadeepi";
+
     }
 
 }
