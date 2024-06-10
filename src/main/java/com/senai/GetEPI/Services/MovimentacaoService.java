@@ -67,8 +67,24 @@ public class MovimentacaoService {
     private List<ViewMovimentacaoDto> converterListaEmprestimo(List<MovimentacaoModel> movimentacaoModels) {
         Stream<MovimentacaoModel> listaStream = movimentacaoModels.stream().sorted(Comparator.comparing(MovimentacaoModel::getDataMovimentacao).reversed());
 
-        //return movimentacaoModels.stream().map(ViewMovimentacaoDto::new).collect(Collectors.toList());
         return listaStream.map(ViewMovimentacaoDto::new).collect(Collectors.toList());
+    }
+
+    public List<ViewMovimentacaoDto> paginarListaEmprestimo(List<ViewMovimentacaoDto> movimentacoes, int pagina) {
+        int tamanhoPagina = 7;
+        int inicio = pagina - 1;
+        inicio = inicio * tamanhoPagina;
+
+        List<ViewMovimentacaoDto> list = movimentacoes.stream().skip(inicio).limit(tamanhoPagina).collect(Collectors.toList());
+        return list;
+
+    }
+
+    public int calcularNumeroMaximoPaginas(List<ViewMovimentacaoDto> lista, int tamanhoPagina) {
+        int tamanhoLista = lista.size();
+        int numeroMaximoPaginas = (int) Math.ceil((double) tamanhoLista / tamanhoPagina);
+
+        return numeroMaximoPaginas;
     }
 
 
