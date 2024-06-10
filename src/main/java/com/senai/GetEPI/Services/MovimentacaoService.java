@@ -61,6 +61,7 @@ public class MovimentacaoService {
         registro.setQuantidade(quantidadeMovimentacao);
         registro.setEmprestimoModel(null);
         registro.setTipoMovimentacao(tipoMovimentacao);
+        registro.setOrigem(origem);
         movimentacaoRepository.save(registro);
 
         epiService.alterarEstoque(quantidadeMovimentacao, epi);

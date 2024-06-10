@@ -5,8 +5,11 @@ import com.senai.GetEPI.Dominios.OrigemMovimentacao;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
 import com.senai.GetEPI.Models.*;
 import com.senai.GetEPI.Repositories.EpiRepository;
+import com.senai.GetEPI.Repositories.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,8 +19,11 @@ public class EpiService {
 
     @Autowired
     EpiRepository epiRepository;
+    //@Autowired
+    //MovimentacaoService movimentacaoService;
+
     @Autowired
-    MovimentacaoService movimentacaoService;
+    MovimentacaoRepository movimentacaoRepository;
 
     public List<EpiModel> retornaEPIModel() {
         return epiRepository.findAll();
@@ -32,7 +38,7 @@ public class EpiService {
 
         epiRepository.save(epiModel);
 
-        movimentacaoService.gerarMovimentacaoInterna(epi, epi.getQuatidadeEpi(),
+        gerarMovimentacaoInterna(epi, epi.getQuatidadeEpi(),
                 TipoMovimentacao.ENTRADA, OrigemMovimentacao.REGISTRO_EQUIPAMENTO);
 
         return "";
@@ -97,7 +103,7 @@ public class EpiService {
             qtdMovimentacao  = Math.negateExact(epi.getQuatidadeEpi());
         }
 
-        movimentacaoService.gerarMovimentacaoInterna(epi, qtdMovimentacao, tipoMovimentacao, OrigemMovimentacao.ALTERACAO_ESTOQUE);
+        gerarMovimentacaoInterna(epi, qtdMovimentacao, tipoMovimentacao, OrigemMovimentacao.ALTERACAO_ESTOQUE);
 
         return "";
     }
@@ -135,6 +141,22 @@ public class EpiService {
     public List<EpiDto> buscarEPIPorNome(EpiDto epiBuscado) {
         List<EpiModel> colaboradoresEncontrados = epiRepository.findByNomeEpiContaining(epiBuscado.getNomeEpi());
         return converterListaEpiDto(colaboradoresEncontrados);
+    }
+
+    private String gerarMovimentacaoInterna(EpiDto epi, Long quantidadeMovimentacao,
+                                           TipoMovimentacao tipoMovimentacao, OrigemMovimentacao origem){
+
+        MovimentacaoModel registro = new MovimentacaoModel();
+
+        registro.setDataMovimentacao(new Date());
+        registro.setQuantidade(quantidadeMovimentacao);
+        registro.setEmprestimoModel(null);
+        registro.setTipoMovimentacao(tipoMovimentacao);
+        registro.setOrigem(origem);
+        movimentacaoRepository.save(registro);
+
+        alterarEstoque(quantidadeMovimentacao, epi);
+        return "";
     }
 
 }
