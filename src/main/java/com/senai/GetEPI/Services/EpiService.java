@@ -1,18 +1,12 @@
 package com.senai.GetEPI.Services;
 
-import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.EpiDto;
-import com.senai.GetEPI.DTOs.FuncaoDto;
-import com.senai.GetEPI.DTOs.ViewEmprestimoDTO;
+import com.senai.GetEPI.Dominios.OrigemMovimentacao;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
 import com.senai.GetEPI.Models.*;
 import com.senai.GetEPI.Repositories.EpiRepository;
-import com.senai.GetEPI.Repositories.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,7 +17,7 @@ public class EpiService {
     @Autowired
     EpiRepository epiRepository;
     @Autowired
-    private MovimentacaoRepository movimentacaoRepository;
+    MovimentacaoService movimentacaoService;
 
     public List<EpiModel> retornaEPIModel() {
         return epiRepository.findAll();
@@ -38,11 +32,11 @@ public class EpiService {
 
         epiRepository.save(epiModel);
 
-        inserirMovimentacao(epi,epiModel);
-            return "";
+        movimentacaoService.gerarMovimentacaoInterna(epi, epi.getQuatidadeEpi(),
+                TipoMovimentacao.ENTRADA, OrigemMovimentacao.REGISTRO_EQUIPAMENTO);
+
+        return "";
     }
-
-
 
     public List<EpiDto> retornaListaEpiDTO() {
         return converterListaEpiDto(epiRepository.findAll());
@@ -51,7 +45,6 @@ public class EpiService {
     public List<EpiDto> converterListaEpiDto(List<EpiModel> listaEpiModel) {
         return listaEpiModel.stream().map(EpiDto::new).collect(Collectors.toList());
     }
-
 
     public List<EpiModel> obterListaEpi(){
         return epiRepository.findAll();
@@ -93,7 +86,18 @@ public class EpiService {
 
 
         epiRepository.save(atualizar);
-        inserirMovimentacao(epi,atualizar);
+
+        TipoMovimentacao tipoMovimentacao;
+        Long qtdMovimentacao = 0l;
+        if(epi.getQuatidadeEpi() >= epiBD.get().getQuatidadeEpi()) {
+            tipoMovimentacao = TipoMovimentacao.ENTRADA;
+            qtdMovimentacao = epi.getQuatidadeEpi();
+        } else {
+            tipoMovimentacao = TipoMovimentacao.SAIDA;
+            qtdMovimentacao  = Math.negateExact(epi.getQuatidadeEpi());
+        }
+
+        movimentacaoService.gerarMovimentacaoInterna(epi, qtdMovimentacao, tipoMovimentacao, OrigemMovimentacao.ALTERACAO_ESTOQUE);
 
         return "";
     }
@@ -106,7 +110,6 @@ public class EpiService {
         atualizar.setNomeEpi(epi.getNomeEpi());
         atualizar.setTipoEquipamento(epi.getTipoEquipamento());
         atualizar.setQuatidadeEpi(epi.getQuatidadeEpi());
-
 
         epiRepository.save(atualizar);
 
@@ -133,24 +136,5 @@ public class EpiService {
         List<EpiModel> colaboradoresEncontrados = epiRepository.findByNomeEpiContaining(epiBuscado.getNomeEpi());
         return converterListaEpiDto(colaboradoresEncontrados);
     }
-
-
-
-
-    private String inserirMovimentacao(EpiDto epiDto,EpiModel epiModel){
-
-
-        MovimentacaoModel registro = new MovimentacaoModel();
-
-        registro.setDataMovimentacao(new Date());
-        registro.setQuantidade(epiDto.getQuatidadeEpi());
-        registro.setEmprestimoModel(null);
-        registro.setTipoMovimentacao(TipoMovimentacao.ENTRADA);
-        movimentacaoRepository.save(registro);
-
-        return "";
-    }
-
-    
 
 }

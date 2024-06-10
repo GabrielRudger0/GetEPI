@@ -4,6 +4,7 @@ import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.EmprestimoDTO;
 import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.DTOs.ViewEmprestimoDTO;
+import com.senai.GetEPI.Dominios.OrigemMovimentacao;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
 import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.EmprestimoModel;
@@ -86,7 +87,7 @@ public class EmprestimoService {
             emprestimoRepository.delete(emprestimo.get());
 
             if (emprestimo.get().getDevolucaoData() == null) {
-                movimentacaoService.gerarMovimentacaoInterna(new EpiDto(emprestimo.get().getEpi()), 1l, TipoMovimentacao.ENTRADA);
+                movimentacaoService.gerarMovimentacaoInterna(new EpiDto(emprestimo.get().getEpi()), 1l, TipoMovimentacao.ENTRADA, OrigemMovimentacao.EXCLUSAO_REGISTRO);
             }
 
             return "";

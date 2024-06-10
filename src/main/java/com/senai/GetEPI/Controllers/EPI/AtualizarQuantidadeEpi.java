@@ -2,6 +2,7 @@ package com.senai.GetEPI.Controllers.EPI;
 
 import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.DTOs.GerarMovimentacaoEntradaDTO;
+import com.senai.GetEPI.Dominios.OrigemMovimentacao;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
 import com.senai.GetEPI.Models.EpiModel;
 import com.senai.GetEPI.Services.EpiService;
@@ -45,7 +46,7 @@ public class AtualizarQuantidadeEpi {
     public String botaoSalvar(@ModelAttribute("gerarMovimentacaoDTO") GerarMovimentacaoEntradaDTO movimentacao, Model model, HttpServletRequest request) {
 
         try {
-            movimentacaoService.gerarMovimentacaoInterna(new EpiDto(movimentacao.getEpi()), movimentacao.getQuantidade(), TipoMovimentacao.ENTRADA);
+            movimentacaoService.gerarMovimentacaoInterna(new EpiDto(movimentacao.getEpi()), movimentacao.getQuantidade(), TipoMovimentacao.ENTRADA, OrigemMovimentacao.ENTRADA_ESTOQUE);
         } catch (Exception e) {
             request.getSession().setAttribute("retornaErro", e);
             request.getSession().setAttribute("stacktrace", e);

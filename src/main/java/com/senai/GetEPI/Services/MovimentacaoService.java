@@ -4,6 +4,7 @@ import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.DTOs.GerarMovimentacaoEntradaDTO;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.DTOs.ViewMovimentacaoDto;
+import com.senai.GetEPI.Dominios.OrigemMovimentacao;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
 import com.senai.GetEPI.Models.EmprestimoModel;
 import com.senai.GetEPI.Models.MovimentacaoModel;
@@ -51,8 +52,8 @@ public class MovimentacaoService {
         return "";
     }
 
-    public String gerarMovimentacaoInterna(EpiDto epi,
-                                           Long quantidadeMovimentacao, TipoMovimentacao tipoMovimentacao){
+    public String gerarMovimentacaoInterna(EpiDto epi, Long quantidadeMovimentacao,
+                                           TipoMovimentacao tipoMovimentacao, OrigemMovimentacao origem){
 
         MovimentacaoModel registro = new MovimentacaoModel();
 
