@@ -76,6 +76,7 @@ public class ListarColaboradorController {
 
         String mensagemErro = colaboradorService.excluirColaborador(id);
         if (mensagemErro.isEmpty()){
+
             return ResponseEntity.ok("Colaborador excluído com sucesso.");
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensagemErro);

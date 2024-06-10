@@ -1,10 +1,8 @@
 package com.senai.GetEPI.Controllers.Movimentacao;
 
 import com.senai.GetEPI.DTOs.UsuarioDTO;
-import com.senai.GetEPI.DTOs.ViewEmprestimoDTO;
 import com.senai.GetEPI.DTOs.ViewMovimentacaoDto;
 import com.senai.GetEPI.Services.MovimentacaoService;
-import com.senai.GetEPI.Services.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +13,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("visualizarmovimentacao")
+@RequestMapping("/visualizarmovimentacao")
 public class VisualizarMovimentacaoController {
-
 
     @Autowired
     MovimentacaoService movimentacaoService;
 
     @GetMapping("/{id}")
-    public String exibeVisualizacaoMovimentacao(Model model, @PathVariable Long id, HttpServletRequest request) {
+    public String exibeVisualizarMovimentacao(Model model, @PathVariable Long id, HttpServletRequest request) {
 
         try {
-            ViewMovimentacaoDto movimentacao = movimentacaoService.retornaMovimentacao(id);
-            model.addAttribute("ViewMovimentacaoDto", movimentacao);
+            ViewMovimentacaoDto movimentacao = movimentacaoService.buscaMovimentacaoPorId(id);
+            model.addAttribute("movimentacaoDTO", movimentacao);
+
 
             return "visualizarmovimentacao";
         } catch (Exception e) {
