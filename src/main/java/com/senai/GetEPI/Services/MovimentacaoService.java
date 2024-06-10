@@ -10,9 +10,11 @@ import com.senai.GetEPI.Repositories.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class MovimentacaoService {
@@ -63,12 +65,35 @@ public class MovimentacaoService {
     }
 
     private List<ViewMovimentacaoDto> converterListaEmprestimo(List<MovimentacaoModel> movimentacaoModels) {
-        return movimentacaoModels.stream().map(ViewMovimentacaoDto::new).collect(Collectors.toList());
+        Stream<MovimentacaoModel> listaStream = movimentacaoModels.stream().sorted(Comparator.comparing(MovimentacaoModel::getDataMovimentacao).reversed());
+
+        return listaStream.map(ViewMovimentacaoDto::new).collect(Collectors.toList());
+    }
+
+    public List<ViewMovimentacaoDto> paginarListaEmprestimo(List<ViewMovimentacaoDto> movimentacoes, int pagina) {
+        int tamanhoPagina = 7;
+        int inicio = pagina - 1;
+        inicio = inicio * tamanhoPagina;
+
+        List<ViewMovimentacaoDto> list = movimentacoes.stream().skip(inicio).limit(tamanhoPagina).collect(Collectors.toList());
+        return list;
+
+    }
+
+    public int calcularNumeroMaximoPaginas(List<ViewMovimentacaoDto> lista, int tamanhoPagina) {
+        int tamanhoLista = lista.size();
+        int numeroMaximoPaginas = (int) Math.ceil((double) tamanhoLista / tamanhoPagina);
+
+        return numeroMaximoPaginas;
     }
 
 
     public void excluirMovimentacaoPorEmprestimo(Long emprestimoId) {
         movimentacaoRepository.deleteMovimentacaoPorEmprestimo(emprestimoId);
+    }
+
+    public ViewMovimentacaoDto buscaMovimentacaoPorId(Long id) {
+        return new ViewMovimentacaoDto(movimentacaoRepository.findById(id).get(), true);
     }
 
 

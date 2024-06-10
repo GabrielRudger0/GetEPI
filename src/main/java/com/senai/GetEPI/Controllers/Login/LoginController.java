@@ -40,6 +40,7 @@ public class LoginController {
 
             LoginDTO login = new LoginDTO();
             model.addAttribute("loginDto", login);
+            request.getSession().setAttribute("telaOrigem", "login");
 
         } catch (Exception e) {
             model.addAttribute("erroInterno", true);
@@ -55,11 +56,11 @@ public class LoginController {
     }
 
     @PostMapping
-    public String efetuarLogin(@ModelAttribute("loginDto") LoginDTO login, Model model) {
+    public String efetuarLogin(@ModelAttribute("loginDto") LoginDTO login, Model model, HttpServletRequest request) {
 
         try {
             if (usuarioService.loginValido(login)) {
-
+                request.getSession().removeAttribute("telaOrigem");
                 return "redirect:/home";
             }
             model.addAttribute("erro", true);

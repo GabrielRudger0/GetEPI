@@ -7,6 +7,7 @@ import com.senai.GetEPI.DTOs.ViewEmprestimoDTO;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
 import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.EmprestimoModel;
+import com.senai.GetEPI.Repositories.ColaboradorRepository;
 import com.senai.GetEPI.Repositories.EmprestimoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,9 @@ public class EmprestimoService {
     @Autowired
     MovimentacaoService movimentacaoService;
 
+    //Adicionado para evitar "circular references" -- GR;
     @Autowired
-    ColaboradorService colaboradorService;
+    ColaboradorRepository colaboradorRepository;
 
     public List<EmprestimoDTO> retornaListaEmprestimos() {
         return converterListaEmprestimo(emprestimoRepository.findAll());
@@ -83,7 +85,9 @@ public class EmprestimoService {
 
             emprestimoRepository.delete(emprestimo.get());
 
-            movimentacaoService.gerarMovimentacaoInterna(new EpiDto(emprestimo.get().getEpi()), 1l, TipoMovimentacao.ENTRADA);
+            if (emprestimo.get().getDevolucaoData() == null) {
+                movimentacaoService.gerarMovimentacaoInterna(new EpiDto(emprestimo.get().getEpi()), 1l, TipoMovimentacao.ENTRADA);
+            }
 
             return "";
         } catch (Exception e) {
@@ -129,7 +133,11 @@ public class EmprestimoService {
     }
 
     public List<ViewEmprestimoDTO> buscarEmprestimoPorColaborador(String nomeBuscado) {
-        List<ColaboradorDto> colaboradoresComONomeDigitado = colaboradorService.buscarColaboradorPorNome(nomeBuscado);
+//        List<ColaboradorDto> colaboradoresComONomeDigitado = colaboradorService.buscarColaboradorPorNome(nomeBuscado);
+        //Refeita lógica para aceitar colaboradorRepository
+        List<ColaboradorModel> colaboradoresEncontrados = colaboradorRepository.findByNomeContaining(nomeBuscado);
+        List<ColaboradorDto> colaboradoresComONomeDigitado = converterListaColaboradorDTO(colaboradoresEncontrados);
+
 
         List<EmprestimoModel> emprestimosEncontrados = new ArrayList<>();
         for(ColaboradorDto colaborador : colaboradoresComONomeDigitado) {
@@ -138,13 +146,12 @@ public class EmprestimoService {
             emprestimosEncontrados.addAll(emprestimosDesteColaborador);
         }
 
-        System.out.println(emprestimosEncontrados.size());
-
         return converterListaEmprestimoView(emprestimosEncontrados);
     }
 
     public List<ViewEmprestimoDTO> buscarPendentesDevolucaoPorColaborador(String nomeBuscado) {
-        List<ColaboradorDto> colaboradoresComONomeDigitado = colaboradorService.buscarColaboradorPorNome(nomeBuscado);
+        List<ColaboradorModel> colaboradoresEncontrados = colaboradorRepository.findByNomeContaining(nomeBuscado);
+        List<ColaboradorDto> colaboradoresComONomeDigitado = converterListaColaboradorDTO(colaboradoresEncontrados);
 
         List<EmprestimoModel> emprestimosEncontrados = new ArrayList<>();
         for(ColaboradorDto colaborador : colaboradoresComONomeDigitado) {
@@ -153,9 +160,20 @@ public class EmprestimoService {
             emprestimosEncontrados.addAll(emprestimosDesteColaborador);
         }
 
-        System.out.println(emprestimosEncontrados.size());
-
         return converterListaEmprestimoView(emprestimosEncontrados);
+    }
+
+    public List<EmprestimoModel> buscarEmprestimosPorColaboradorId(Long colaboradorId) {
+        List<EmprestimoModel> emprestimosEncontrados = emprestimoRepository.findAllByColaboradorId(colaboradorId);
+        if (emprestimosEncontrados.isEmpty()) {
+            return new ArrayList<EmprestimoModel>();
+        }
+
+        return emprestimosEncontrados;
+    }
+
+    private List<ColaboradorDto> converterListaColaboradorDTO(List<ColaboradorModel> listaColaboradorModel) {
+        return listaColaboradorModel.stream().map(ColaboradorDto::new).collect(Collectors.toList());
     }
 
 }
