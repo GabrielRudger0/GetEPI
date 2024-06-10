@@ -26,6 +26,7 @@ public class VisualizarMovimentacaoController {
             ViewMovimentacaoDto movimentacao = movimentacaoService.buscaMovimentacaoPorId(id);
             model.addAttribute("movimentacaoDTO", movimentacao);
 
+
             return "visualizarmovimentacao";
         } catch (Exception e) {
             HttpSession sessao = request.getSession();
