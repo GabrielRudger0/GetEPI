@@ -17,6 +17,7 @@ public class ApocalipseGetEPI {
     final String ANSI_VERMELHO = "\u001B[31m";
 
     public ErroGetEPI retornarErro(HttpServletRequest request) {
+
         HttpSession sessao = request.getSession();
         Object retornaErro = sessao.getAttribute("retornaErro");
         Object retornaStackTrace = sessao.getAttribute("stacktrace");
