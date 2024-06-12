@@ -42,7 +42,7 @@ public class AtualizarEpiController {
     public String botaoSalvar(@ModelAttribute("atualizarepi") EpiDto epi, Model model, HttpServletRequest request) {
 
         try {
-            String mensagemErro = epiService.atualizarEpi(epi);
+            String mensagemErro = epiService.atualizarEpi(epi, request);
 
             if (!mensagemErro.isEmpty()) {
                 model.addAttribute("tiposEquipamento", tipoEquipamentoService.obterListaTipoEquipamento());

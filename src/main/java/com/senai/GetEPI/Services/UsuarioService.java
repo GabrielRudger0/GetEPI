@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,6 @@ public class UsuarioService {
 
     @Autowired
     ColaboradorService colaboradorService;
-
-    @Autowired
-    EntityManager entityManager;
 
     public List<UsuarioDTO> retornaListaUsuarioDTO() {
         return converterListaUsuarioDTO(usuarioRepository.findAll());
@@ -67,14 +65,14 @@ public class UsuarioService {
         return "";
     }
 
-    public String excluirUsuario(Long id){
+    public String excluirUsuario(Long id, HttpServletRequest request){
         try {
             Optional<UsuarioModel> optionalUsuario = usuarioRepository.findById(id);
 
             if (optionalUsuario.isPresent()) {
                 ColaboradorDto colaboradorVinculado = colaboradorService.buscarColaboradorPorUsuario(optionalUsuario.get());
                 if (colaboradorVinculado != null) {
-                    String msgErro = colaboradorService.excluirColaborador(colaboradorVinculado.getId());
+                    String msgErro = colaboradorService.excluirColaborador(colaboradorVinculado.getId(), request, true);
                     if (!msgErro.isEmpty()) {
                         return "Usuário possuí um colaborador vinculado: " + msgErro;
                     }

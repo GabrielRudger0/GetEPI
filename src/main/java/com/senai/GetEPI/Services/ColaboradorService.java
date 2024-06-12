@@ -9,6 +9,7 @@ import com.senai.GetEPI.Models.FuncaoModel;
 import com.senai.GetEPI.Models.UsuarioModel;
 import com.senai.GetEPI.Repositories.ColaboradorRepository;
 import com.senai.GetEPI.Repositories.EmprestimoRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,9 +102,13 @@ public class ColaboradorService {
         return new UpdColaboradorDTO(colaborador);
     }
 
-    public String excluirColaborador(Long id){
+    public String excluirColaborador(Long id, HttpServletRequest request, boolean exclusaoUsuario){
         try {
             Optional<ColaboradorModel> optionalColaborador = colaboradorRepository.findById(id);
+
+            if (optionalColaborador.get().getUsuario() != null && !exclusaoUsuario) {
+                return "Este registro de colaborador possuí um usuário vinculado. Exclua o usuário correspondente para também excluír o colaborador!";
+            }
 
             List<EmprestimoModel> emprestimosDoColaborador = emprestimoService.buscarEmprestimosPorColaboradorId(id);
             if (!emprestimosDoColaborador.isEmpty()) {
@@ -114,7 +119,7 @@ public class ColaboradorService {
                 }
 
                 for (EmprestimoModel emprestimo : emprestimosDoColaborador) {
-                    emprestimoService.excluirEmprestimo(emprestimo.getId());
+                    emprestimoService.excluirEmprestimo(emprestimo.getId(), request);
                 }
             }
 
@@ -142,6 +147,7 @@ public class ColaboradorService {
         atualizar.setEmail(colaborador.getEmail());
         atualizar.setFuncao(colaborador.getFuncao());
         atualizar.setDataNascimento(converteStringToDate(colaborador.getDataNascimento()));
+        atualizar.setUsuario(colaborador.getUsuarioVinculado());
 
         colaboradorRepository.save(atualizar);
 

@@ -62,9 +62,9 @@ public class ListarUsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> excluirUsuario(@PathVariable Long id){
+    public ResponseEntity<String> excluirUsuario(@PathVariable Long id, HttpServletRequest request){
 
-        String mensagemErro = usuarioService.excluirUsuario(id);
+        String mensagemErro = usuarioService.excluirUsuario(id,request);
         if (mensagemErro.isEmpty()){
             return ResponseEntity.ok("Usuário excluído com sucesso.");
         }

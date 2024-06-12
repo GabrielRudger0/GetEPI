@@ -5,6 +5,7 @@ import com.senai.GetEPI.DTOs.LoginDTO;
 import com.senai.GetEPI.DTOs.ParametroGeralDTO;
 import com.senai.GetEPI.OutrosObjetos.ApocalipseGetEPI;
 import com.senai.GetEPI.OutrosObjetos.ErroGetEPI;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class LoginController {
             LoginDTO login = new LoginDTO();
             model.addAttribute("loginDto", login);
             request.getSession().setAttribute("telaOrigem", "login");
+            request.getSession().removeAttribute("alocacaoEmail");
 
         } catch (Exception e) {
             model.addAttribute("erroInterno", true);
@@ -61,6 +63,7 @@ public class LoginController {
         try {
             if (usuarioService.loginValido(login)) {
                 request.getSession().removeAttribute("telaOrigem");
+                request.getSession().setAttribute("alocacaoEmail", login.getEmail());
                 return "redirect:/home";
             }
             model.addAttribute("erro", true);

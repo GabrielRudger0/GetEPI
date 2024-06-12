@@ -171,6 +171,10 @@
                                 <label for="dataNascimento">Data de nascimento</label>
                                 <input type="text" id="dataNascimento" th:field="*{dataNascimento}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
                             </div>
+                            <div class="form-group">
+                                <label for="possuiUsuarioVinculado">Possuí usuário vinculado?</label>
+                                <input type="text" id="possuiUsuarioVinculado" th:field="*{possuiUsuarioVinculado}" class="form-control form-control-lg campoTextoReadOnly" readonly/>
+                            </div>
                             <p class="card-text pt-2">
                                 <a th:href="@{~/listacolaboradores}" class="btn btn-outline-primary btnHover">
                                     <i class='fa fa-arrow-left fa-1x'></i>

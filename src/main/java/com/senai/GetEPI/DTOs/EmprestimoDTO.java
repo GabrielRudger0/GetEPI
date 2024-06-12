@@ -20,6 +20,8 @@ public class EmprestimoDTO {
 
     private Date devolucaoData;
 
+    private Boolean registroInterno;
+
     public EmprestimoDTO() {
     }
 
@@ -29,6 +31,7 @@ public class EmprestimoDTO {
         this.epi = emprestimoModel.getEpi();
         this.emissaoData = emprestimoModel.getEmissaoData();
         this.devolucaoData = emprestimoModel.getDevolucaoData();
+        this.registroInterno = emprestimoModel.getRegistroInterno();
     }
 
 }
