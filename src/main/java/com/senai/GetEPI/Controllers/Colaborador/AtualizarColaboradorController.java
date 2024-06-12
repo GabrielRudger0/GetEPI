@@ -4,6 +4,7 @@ package com.senai.GetEPI.Controllers.Colaborador;
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.UpdColaboradorDTO;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.FuncaoService;
 import com.senai.GetEPI.Services.UsuarioService;
@@ -28,9 +29,16 @@ public class AtualizarColaboradorController {
     @Autowired
     private FuncaoService funcaoService;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping("/{id}")
     public String exibeAtualizaColaborador(Model model, @PathVariable Long id, HttpServletRequest request) {
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             UpdColaboradorDTO colaborador = colaboradorService.buscaColaboradorDTOupd(id);
             model.addAttribute("UpdColaboradorDTO", colaborador);
             model.addAttribute("funcaoColaborador",colaborador.getFuncao().getId());

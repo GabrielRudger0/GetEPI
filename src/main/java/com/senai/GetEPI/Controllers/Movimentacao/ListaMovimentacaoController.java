@@ -4,6 +4,7 @@ import com.senai.GetEPI.DTOs.ViewEmprestimoDTO;
 import com.senai.GetEPI.DTOs.ViewMovimentacaoDto;
 import com.senai.GetEPI.OutrosObjetos.ApocalipseGetEPI;
 import com.senai.GetEPI.OutrosObjetos.ErroGetEPI;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.MovimentacaoService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,16 @@ public class ListaMovimentacaoController {
     @Autowired
     ApocalipseGetEPI apocalipseGetEPI;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping()
     public String exibirMovimentacoes(Model model, HttpServletRequest request){
 
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
             ErroGetEPI erro = apocalipseGetEPI.retornarErro(request);
             if (erro.getExibeErro()) {
                 model.addAttribute("erro", true);

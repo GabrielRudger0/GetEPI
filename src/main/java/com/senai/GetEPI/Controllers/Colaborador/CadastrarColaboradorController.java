@@ -2,6 +2,7 @@ package com.senai.GetEPI.Controllers.Colaborador;
 
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.OutrosObjetos.ApocalipseGetEPI;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.FuncaoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,10 +26,17 @@ public class CadastrarColaboradorController {
     @Autowired
     ApocalipseGetEPI apocalipseGetEPI;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping()
     public String cadastrarColaborador(Model model, HttpServletRequest request){
 
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             ColaboradorDto colaboradorDto = new ColaboradorDto();
 
             model.addAttribute("colaboradorDto",colaboradorDto);

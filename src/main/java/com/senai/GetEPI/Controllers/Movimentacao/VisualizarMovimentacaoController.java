@@ -2,6 +2,7 @@ package com.senai.GetEPI.Controllers.Movimentacao;
 
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.DTOs.ViewMovimentacaoDto;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.MovimentacaoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -19,10 +20,17 @@ public class VisualizarMovimentacaoController {
     @Autowired
     MovimentacaoService movimentacaoService;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping("/{id}")
     public String exibeVisualizarMovimentacao(Model model, @PathVariable Long id, HttpServletRequest request) {
 
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             ViewMovimentacaoDto movimentacao = movimentacaoService.buscaMovimentacaoPorId(id);
             model.addAttribute("movimentacaoDTO", movimentacao);
 

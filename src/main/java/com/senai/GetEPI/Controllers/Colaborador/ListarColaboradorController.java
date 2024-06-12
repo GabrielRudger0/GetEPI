@@ -5,6 +5,7 @@ import com.senai.GetEPI.DTOs.FuncaoDto;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.OutrosObjetos.ApocalipseGetEPI;
 import com.senai.GetEPI.OutrosObjetos.ErroGetEPI;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.FuncaoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,10 +33,16 @@ public class ListarColaboradorController {
     @Autowired
     ApocalipseGetEPI apocalipseGetEPI;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping()
     public String exibirListaColaboradores(Model model, HttpServletRequest request, ColaboradorDto colaboladorDto) {
 
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
 
             ErroGetEPI erro = apocalipseGetEPI.retornarErro(request);
             if (erro.getExibeErro()) {

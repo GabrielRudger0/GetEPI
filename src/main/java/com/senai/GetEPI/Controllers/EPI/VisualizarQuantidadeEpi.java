@@ -1,6 +1,7 @@
 package com.senai.GetEPI.Controllers.EPI;
 
 import com.senai.GetEPI.DTOs.EpiDto;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.EpiService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,16 @@ public class VisualizarQuantidadeEpi {
     @Autowired
     EpiService epiService;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping("/{id}")
     public String exibeVisualizarEmprestimo(Model model, @PathVariable Long id, HttpServletRequest request) {
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             EpiDto epi = epiService.buscaEpiDTO(id);
             model.addAttribute("epiDTO", epi);
             return "listaquantidadeepi";

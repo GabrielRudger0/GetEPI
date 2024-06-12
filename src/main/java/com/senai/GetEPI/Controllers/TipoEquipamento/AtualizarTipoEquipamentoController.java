@@ -1,6 +1,7 @@
 package com.senai.GetEPI.Controllers.TipoEquipamento;
 
 import com.senai.GetEPI.DTOs.TipoEquipamentoDTO;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.TipoEquipamentoService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/atualizartipoequipamento")
 public class AtualizarTipoEquipamentoController {
 
+    @Autowired
+    AlocacaoService alocacaoService;
 
     @Autowired
     TipoEquipamentoService tipoEquipamentoService;
@@ -20,6 +23,10 @@ public class AtualizarTipoEquipamentoController {
     public String exibeAtualizarTipoEquipamento(Model model, @PathVariable Long id, HttpServletRequest request) {
 
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             TipoEquipamentoDTO tipoEquipamento = tipoEquipamentoService.retonaTipoEquipamentoDTO(id);
 
             model.addAttribute("tipoEquipamentoDTO", tipoEquipamento);

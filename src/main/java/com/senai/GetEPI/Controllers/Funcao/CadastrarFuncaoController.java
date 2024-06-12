@@ -3,6 +3,7 @@ package com.senai.GetEPI.Controllers.Funcao;
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.FuncaoDto;
 import com.senai.GetEPI.OutrosObjetos.ApocalipseGetEPI;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.FuncaoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -24,9 +25,16 @@ public class CadastrarFuncaoController {
     @Autowired
     ApocalipseGetEPI apocalipseGetEPI;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping()
     public String cadastrarFucao(Model model, HttpServletRequest request){
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             FuncaoDto funcaoDto = new FuncaoDto();
             model.addAttribute("funcaoDto",funcaoDto);
         }catch (Exception e) {

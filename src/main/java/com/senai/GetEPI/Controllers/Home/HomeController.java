@@ -1,7 +1,9 @@
 package com.senai.GetEPI.Controllers.Home;
 
 import com.senai.GetEPI.OutrosObjetos.*;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.DashboardService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +25,18 @@ public class HomeController {
     @Autowired
     ApocalipseGetEPI apocalipseGetEPI;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping()
-    public String exibirHome(Model model) {
+    public String exibirHome(Model model, HttpServletRequest request) {
 
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
+
             List<DashboardEpis> dashboardEpis = dashboardService.retornarRankEPIs();
             List<DashboardMeses> dashboardMeses = dashboardService.retornaSeisMesesAnteriores();
             List<DashboardMesEpis> dashboardMesEpis = dashboardService.retornarRelacaoEpiEmprestimoMes();
