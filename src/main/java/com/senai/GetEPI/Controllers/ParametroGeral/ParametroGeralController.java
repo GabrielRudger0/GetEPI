@@ -5,6 +5,7 @@ import com.senai.GetEPI.DTOs.ParametroGeralDTO;
 import com.senai.GetEPI.DTOs.TipoEquipamentoDTO;
 import com.senai.GetEPI.OutrosObjetos.ApocalipseGetEPI;
 import com.senai.GetEPI.OutrosObjetos.ErroGetEPI;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.ParametroGeralService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,17 @@ public class ParametroGeralController {
     @Autowired
     ApocalipseGetEPI apocalipseGetEPI;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping()
     public String exibeParametroGeral(Model model, HttpServletRequest request) {
 
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             ErroGetEPI erro = apocalipseGetEPI.retornarErro(request);
             if (erro.getExibeErro()) {
                 model.addAttribute("erro", true);

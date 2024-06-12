@@ -4,6 +4,7 @@ import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.EmprestimoDTO;
 import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.EpiModel;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.EmprestimoService;
 import com.senai.GetEPI.Services.EpiService;
@@ -31,10 +32,17 @@ public class CadastrarEmprestimoController {
     @Autowired
     EpiService epiService;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping()
     public String exibeCadastrarEmprestimo(Model model, HttpServletRequest request) {
 
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             List<ColaboradorModel> colaboradores = colaboradorService.obterListaColaboradores();
             List<EpiModel> epis = epiService.retornaEPIModel();
 

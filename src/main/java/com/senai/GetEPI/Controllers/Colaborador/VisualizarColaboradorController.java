@@ -2,6 +2,7 @@ package com.senai.GetEPI.Controllers.Colaborador;
 
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,9 +21,16 @@ public class VisualizarColaboradorController {
     @Autowired
     ColaboradorService colaboradorService;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping("/{id}")
     public String exibeVisualizarUsuario(Model model, @PathVariable Long id, HttpServletRequest request) {
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             ColaboradorDto colaborador = colaboradorService.buscaColaboradorDTO(id);
             model.addAttribute("colaboradorDTO", colaborador);
 

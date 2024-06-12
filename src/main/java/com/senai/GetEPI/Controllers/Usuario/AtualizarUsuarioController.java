@@ -1,6 +1,7 @@
 package com.senai.GetEPI.Controllers.Usuario;
 
 import com.senai.GetEPI.DTOs.UsuarioDTO;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -16,10 +17,16 @@ public class AtualizarUsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
-    @GetMapping("/{id}")
+    @Autowired
+    AlocacaoService alocacaoService;
 
+    @GetMapping("/{id}")
     public String exibeAtualizaUsuario(Model model, @PathVariable Long id, HttpServletRequest request) {
         try{
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             UsuarioDTO usuario = usuarioService.retornaUsuarioDTO(id);
             model.addAttribute("usuarioDTO", usuario);
             return "atualizausuario";

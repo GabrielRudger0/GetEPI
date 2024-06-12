@@ -1,6 +1,7 @@
 package com.senai.GetEPI.Controllers.TipoEquipamento;
 
 import com.senai.GetEPI.DTOs.TipoEquipamentoDTO;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.TipoEquipamentoService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,16 @@ public class CadastrarTipoEquipamento {
     @Autowired
     TipoEquipamentoService tipoEquipamentoService;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping()
     public String exibeCadastrarTipoEquipamento(Model model, HttpServletRequest request) {
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             model.addAttribute("tipoEquipamentoDTO", new TipoEquipamentoDTO());
             return "cadastrartipoequipamento";
         } catch (Exception e) {

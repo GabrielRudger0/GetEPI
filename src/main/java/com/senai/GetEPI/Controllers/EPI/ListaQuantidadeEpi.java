@@ -1,6 +1,7 @@
 package com.senai.GetEPI.Controllers.EPI;
 
 import com.senai.GetEPI.DTOs.EpiDto;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.EpiService;
 import com.senai.GetEPI.Services.TipoEquipamentoService;
 import org.springframework.beans.factory.annotation.Autowired;

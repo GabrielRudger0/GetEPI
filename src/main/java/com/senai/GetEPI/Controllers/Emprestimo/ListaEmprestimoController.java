@@ -35,6 +35,10 @@ public class ListaEmprestimoController {
     public String exibeListaEmprestimo(Model model, HttpServletRequest request) {
 
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             ErroGetEPI erro = apocalipseGetEPI.retornarErro(request);
             if (erro.getExibeErro()) {
                 model.addAttribute("erro", true);
