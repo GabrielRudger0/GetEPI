@@ -22,6 +22,10 @@ public class ColaboradorDto {
 
     private String dataNascimento;
 
+    private String possuiUsuarioVinculado;
+
+    private UsuarioModel usuarioVinculado;
+
     public ColaboradorDto(){
 
     }
@@ -40,6 +44,7 @@ public class ColaboradorDto {
         this.nome = colaboradorModel.getNome();
         this.funcao = funcao;
         this.dataNascimento = formatarData(colaboradorModel.getDataNascimento());
+        this.possuiUsuarioVinculado = possuiUsuarioVinculado(colaboradorModel.getUsuario());
     }
 
     public ColaboradorDto(ColaboradorModel colaboradorModel) {
@@ -48,11 +53,20 @@ public class ColaboradorDto {
         this.nome = colaboradorModel.getNome();
         this.funcao = colaboradorModel.getFuncao();
         this.dataNascimento = formatarData(colaboradorModel.getDataNascimento());
+        this.usuarioVinculado = colaboradorModel.getUsuario();
     }
 
     private String formatarData(Date data) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(data);
+    }
+
+    private String possuiUsuarioVinculado(UsuarioModel usuario) {
+        if (usuario == null){
+            return "NÃO";
+        }
+        return "SIM";
+
     }
 
 }

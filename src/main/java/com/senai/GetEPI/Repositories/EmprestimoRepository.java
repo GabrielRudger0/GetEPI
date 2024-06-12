@@ -17,6 +17,10 @@ public interface EmprestimoRepository extends JpaRepository<EmprestimoModel, Lon
     @Query(value = "SELECT * FROM emprestimo WHERE emprestimo_devolucao IS NULL", nativeQuery = true)
     public List<EmprestimoModel> findAllWhereEmprestimoDevolucaoIsNull();
 
+    @Override
+    @Query(value = "SELECT * FROM emprestimo WHERE registro_interno = 0", nativeQuery = true)
+    public List<EmprestimoModel> findAll();
+
     @Query(value = "SELECT COUNT(*) FROM emprestimo WHERE epi_id_epi = ?", nativeQuery = true)
     public Integer quantidadeEmprestimoEPI(Long id);
 
@@ -37,5 +41,8 @@ public interface EmprestimoRepository extends JpaRepository<EmprestimoModel, Lon
 
     @Query(value = "SELECT * FROM emprestimo WHERE colaborador_id_colaborador = ? AND emprestimo_devolucao IS NULL", nativeQuery = true)
     public List<EmprestimoModel> findAllDevolucoesByColaboradorId(Long colaboradorId);
+
+    @Query(value = "SELECT * FROM emprestimo WHERE epi_id_epi = ?", nativeQuery = true)
+    public List<EmprestimoModel> findAllByEpiId(Long epiId);
 
 }

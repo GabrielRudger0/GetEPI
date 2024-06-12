@@ -45,7 +45,7 @@ public class CadastrarEpiController {
     public String enviarDadosCadastro(@ModelAttribute("epiDto") EpiDto epiDto, Model model, HttpServletRequest request){
 
         try {
-            String mensagemErro = epiService.cadastrarEpi(epiDto);
+            String mensagemErro = epiService.cadastrarEpi(epiDto, request);
             if (!mensagemErro.isEmpty()) {
                 model.addAttribute("erro", true);
                 model.addAttribute("mensagemErro", mensagemErro);

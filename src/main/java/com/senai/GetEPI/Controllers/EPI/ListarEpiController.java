@@ -72,9 +72,9 @@ public class ListarEpiController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> excluirEpi(@PathVariable Long id){
+    public ResponseEntity<String> excluirEpi(@PathVariable Long id, HttpServletRequest request){
 
-        String mensagemErro = epiService.excluirEpi(id);
+        String mensagemErro = epiService.excluirEpi(id, request);
         if (mensagemErro.isEmpty()){
             return ResponseEntity.ok("EPI excluído com sucesso.");
         }

@@ -43,6 +43,9 @@ public class ApocalipseGetEPI {
                 return "Tabela não encontrada!";
             case "org.springframework.dao.InvalidDataAccessApiUsageException":
                 return "Erro ao tentar salvar objeto sem propriedade associada persistida";
+            case "java.lang.NullPointerException":
+                return "Objeto retornando valor nulo!";
+
             default:
                 Date dataHoraAtual = new Date();
                 SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

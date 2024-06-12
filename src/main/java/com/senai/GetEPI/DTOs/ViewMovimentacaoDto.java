@@ -14,15 +14,11 @@ import java.util.Date;
 public class ViewMovimentacaoDto {
 
     private Long id;
-
+    private String origem;
     private String dataMovimentacao;
-
     private Long quantidade;
-
     private String tipoMovimentacao;
-
     private String colaborador;
-
     private String EPI;
 
 
@@ -33,17 +29,7 @@ public class ViewMovimentacaoDto {
     public ViewMovimentacaoDto(MovimentacaoModel movimentacao){
 
         this.id = movimentacao.getId();
-        this.dataMovimentacao = formatarData(movimentacao.getDataMovimentacao());
-        this.quantidade = movimentacao.getQuantidade();
-        this.colaborador = retornaColaborador(movimentacao);
-        this.EPI = retornaEpi(movimentacao);
-        this.tipoMovimentacao = movimentacao.getTipoMovimentacao().getDescricao();
-
-    }
-
-    public ViewMovimentacaoDto(MovimentacaoModel movimentacao, boolean visualizar){
-
-        this.id = movimentacao.getId();
+        this.origem = movimentacao.getOrigem().getDescricao();
         this.dataMovimentacao = formatarDataHora(movimentacao.getDataMovimentacao());
         this.quantidade = movimentacao.getQuantidade();
         this.colaborador = retornaColaborador(movimentacao);
@@ -69,16 +55,13 @@ public class ViewMovimentacaoDto {
 
         if(movimentacaoModel.getEmprestimoModel() == null) {
 
-
             return "EPI NÃO ENCONTRADO";
         }
-
 
         String epi = movimentacaoModel.getEmprestimoModel().getEpi().getNomeEpi();
 
         return epi;
     }
-
 
 
     private String formatarDataHora(Date data) {
