@@ -31,7 +31,7 @@ public class CadastrarUsuarioController {
     @GetMapping()
     public String exibeCadastrarUsuario(Model model, HttpServletRequest request){
 
-        if (!alocacaoService.validaSessao(request).isEmpty() && !visualizacaoInterna(request)) {
+        if (!alocacaoService.validaSessao(request).isEmpty() && visualizacaoInterna(request)) {
             return alocacaoService.validaSessao(request);
         }
 
