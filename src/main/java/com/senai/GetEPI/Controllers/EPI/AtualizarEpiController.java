@@ -2,6 +2,7 @@ package com.senai.GetEPI.Controllers.EPI;
 
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.EpiDto;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.EpiService;
 import com.senai.GetEPI.Services.TipoEquipamentoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,9 +21,16 @@ public class AtualizarEpiController {
     @Autowired
     TipoEquipamentoService tipoEquipamentoService;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping("/{id}")
     public String exibeAtualizaEpi(Model model, @PathVariable Long id, HttpServletRequest request) {
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             EpiDto epi = epiService.buscaEpiDTO(id);
             model.addAttribute("tiposEquipamento", tipoEquipamentoService.obterListaTipoEquipamento());
             model.addAttribute("epiDTO", epi);

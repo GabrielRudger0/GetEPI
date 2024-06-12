@@ -2,6 +2,7 @@ package com.senai.GetEPI.Controllers.Funcao;
 
 import com.senai.GetEPI.DTOs.ColaboradorDto;
 import com.senai.GetEPI.DTOs.FuncaoDto;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.FuncaoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -17,10 +18,17 @@ public class AtualizarFuncaoController {
     @Autowired
     FuncaoService funcaoService;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping("/{id}")
     public String exibeAtualizaFuncao(Model model, @PathVariable Long id, HttpServletRequest request) {
 
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             FuncaoDto funcao = funcaoService.buscaFuncaoDTO(id);
             model.addAttribute("funcaoDTO", funcao);
             return "atualizarfuncao";

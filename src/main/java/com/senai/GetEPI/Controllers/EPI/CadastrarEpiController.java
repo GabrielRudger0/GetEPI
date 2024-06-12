@@ -1,6 +1,7 @@
 package com.senai.GetEPI.Controllers.EPI;
 
 import com.senai.GetEPI.DTOs.EpiDto;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.EpiService;
 import com.senai.GetEPI.Services.TipoEquipamentoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,10 +23,17 @@ public class CadastrarEpiController {
     @Autowired
     private TipoEquipamentoService tipoEquipamentoService;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping()
     public String cadastrarEpi(Model model, HttpServletRequest request){
 
         try {
+            if (!alocacaoService.validaSessao(request).isEmpty()) {
+                return alocacaoService.validaSessao(request);
+            }
+
             EpiDto epiDto = new EpiDto();
 
             model.addAttribute("epiDto", epiDto);

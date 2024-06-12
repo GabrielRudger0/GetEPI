@@ -3,6 +3,7 @@ package com.senai.GetEPI.Controllers.Usuario;
 import com.senai.GetEPI.DTOs.UsuarioDTO;
 import com.senai.GetEPI.OutrosObjetos.ApocalipseGetEPI;
 import com.senai.GetEPI.OutrosObjetos.ErroGetEPI;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -24,8 +25,15 @@ public class CadastrarUsuarioController {
     @Autowired
     ApocalipseGetEPI apocalipseGetEPI;
 
+    @Autowired
+    AlocacaoService alocacaoService;
+
     @GetMapping()
     public String exibeCadastrarUsuario(Model model, HttpServletRequest request){
+
+        if (!alocacaoService.validaSessao(request).isEmpty()) {
+            return alocacaoService.validaSessao(request);
+        }
 
         ErroGetEPI erroGetEPI = apocalipseGetEPI.retornarErro(request);
 
