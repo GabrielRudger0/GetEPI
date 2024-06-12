@@ -1,8 +1,10 @@
 package com.senai.GetEPI.Controllers.Emprestimo;
 
 import com.senai.GetEPI.DTOs.*;
+import com.senai.GetEPI.Models.EmprestimoModel;
 import com.senai.GetEPI.OutrosObjetos.ApocalipseGetEPI;
 import com.senai.GetEPI.OutrosObjetos.ErroGetEPI;
+import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.EmprestimoService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class ListaEmprestimoController {
 
     @Autowired
     ApocalipseGetEPI apocalipseGetEPI;
+
+    @Autowired
+    AlocacaoService alocacaoService;
 
     @GetMapping()
     public String exibeListaEmprestimo(Model model, HttpServletRequest request) {
@@ -64,9 +69,9 @@ public class ListaEmprestimoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> excluirEmprestimo(@PathVariable Long id){
+    public ResponseEntity<String> excluirEmprestimo(@PathVariable Long id, HttpServletRequest request){
 
-        String mensagemErro = emprestimoService.excluirEmprestimo(id);
+        String mensagemErro = emprestimoService.excluirEmprestimo(id, request);
         if (mensagemErro.isEmpty()){
             return ResponseEntity.ok("Empréstimo excluído com sucesso.");
         }

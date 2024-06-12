@@ -7,8 +7,10 @@ import com.senai.GetEPI.DTOs.ViewMovimentacaoDto;
 import com.senai.GetEPI.Dominios.OrigemMovimentacao;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
 import com.senai.GetEPI.Models.EmprestimoModel;
+import com.senai.GetEPI.Models.EpiModel;
 import com.senai.GetEPI.Models.MovimentacaoModel;
 import com.senai.GetEPI.Models.UsuarioModel;
+import com.senai.GetEPI.Repositories.EpiRepository;
 import com.senai.GetEPI.Repositories.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class MovimentacaoService {
     MovimentacaoRepository movimentacaoRepository;
 
     @Autowired
-    EpiService epiService;
+    EpiRepository epiRepository;
 
 
     public List<ViewMovimentacaoDto> retornaListaEmprestimos() {
@@ -34,7 +36,7 @@ public class MovimentacaoService {
     }
 
     public String gerarMovimentacao(EmprestimoModel emprestimo,
-                                    Long quantidadeMovimentacao, TipoMovimentacao tipoMovimentacao){
+                                    Long quantidadeMovimentacao, TipoMovimentacao tipoMovimentacao, OrigemMovimentacao origemMovimentacao){
 
         if(emprestimo.getEpi().getQuatidadeEpi() == 0 && tipoMovimentacao == TipoMovimentacao.SAIDA) {
             return "Equipamento está com o estoque vazio!";
@@ -45,26 +47,30 @@ public class MovimentacaoService {
         registro.setDataMovimentacao(new Date());
         registro.setQuantidade(quantidadeMovimentacao);
         registro.setEmprestimoModel(emprestimo);
+        registro.setOrigem(origemMovimentacao);
         registro.setTipoMovimentacao(tipoMovimentacao);
         movimentacaoRepository.save(registro);
 
-        epiService.alterarEstoque(quantidadeMovimentacao, new EpiDto(emprestimo.getEpi()));
+        alterarEstoque(quantidadeMovimentacao, new EpiDto(emprestimo.getEpi()));
         return "";
     }
 
-    public String gerarMovimentacaoInterna(EpiDto epi, Long quantidadeMovimentacao,
+    public String gerarMovimentacaoInterna(EmprestimoModel emprestimoInterno, Long quantidadeMovimentacao,
                                            TipoMovimentacao tipoMovimentacao, OrigemMovimentacao origem){
 
         MovimentacaoModel registro = new MovimentacaoModel();
 
         registro.setDataMovimentacao(new Date());
         registro.setQuantidade(quantidadeMovimentacao);
-        registro.setEmprestimoModel(null);
+        registro.setEmprestimoModel(emprestimoInterno);
         registro.setTipoMovimentacao(tipoMovimentacao);
         registro.setOrigem(origem);
         movimentacaoRepository.save(registro);
 
-        epiService.alterarEstoque(quantidadeMovimentacao, epi);
+        if (origem != OrigemMovimentacao.REGISTRO_EQUIPAMENTO) {
+            alterarEstoque(quantidadeMovimentacao, new EpiDto(emprestimoInterno.getEpi()));
+        }
+
         return "";
     }
 
@@ -97,7 +103,15 @@ public class MovimentacaoService {
     }
   
     public ViewMovimentacaoDto buscaMovimentacaoPorId(Long id) {
-        return new ViewMovimentacaoDto(movimentacaoRepository.findById(id).get(), true);
+        return new ViewMovimentacaoDto(movimentacaoRepository.findById(id).get());
+    }
+
+    private void alterarEstoque(Long movimentacaoQuantidade, EpiDto epi) {
+
+        Long estoqueFinal = epi.getQuatidadeEpi() + movimentacaoQuantidade;
+        epi.setQuatidadeEpi(estoqueFinal);
+
+        epiRepository.save(new EpiModel(epi, epi.getTipoEquipamento()));
     }
 
 }

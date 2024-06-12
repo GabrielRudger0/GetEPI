@@ -28,6 +28,9 @@ public class EmprestimoModel {
     @Column(name = "emprestimoDevolucao")
     private Date devolucaoData;
 
+    @Column(name = "registroInterno")
+    private Boolean registroInterno;
+
     public EmprestimoModel() {
     }
 
@@ -37,5 +40,6 @@ public class EmprestimoModel {
         this.epi = emprestimo.getEpi();
         this.emissaoData = emprestimo.getEmissaoData();
         this.devolucaoData = emprestimo.getDevolucaoData();
+        this.registroInterno = emprestimo.getRegistroInterno();
     }
 }

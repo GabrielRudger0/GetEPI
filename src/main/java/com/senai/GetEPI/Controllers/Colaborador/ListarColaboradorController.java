@@ -72,9 +72,9 @@ public class ListarColaboradorController {
 
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> excluirColaborador(@PathVariable Long id){
+    public ResponseEntity<String> excluirColaborador(@PathVariable Long id, HttpServletRequest request){
 
-        String mensagemErro = colaboradorService.excluirColaborador(id);
+        String mensagemErro = colaboradorService.excluirColaborador(id, request, false);
         if (mensagemErro.isEmpty()){
 
             return ResponseEntity.ok("Colaborador excluído com sucesso.");

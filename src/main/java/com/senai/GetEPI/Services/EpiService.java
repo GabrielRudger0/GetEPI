@@ -3,9 +3,11 @@ package com.senai.GetEPI.Services;
 import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.Dominios.OrigemMovimentacao;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
+import com.senai.GetEPI.Dominios.TipoParametroGeral;
 import com.senai.GetEPI.Models.*;
 import com.senai.GetEPI.Repositories.EpiRepository;
 import com.senai.GetEPI.Repositories.MovimentacaoRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +21,22 @@ public class EpiService {
 
     @Autowired
     EpiRepository epiRepository;
-    //@Autowired
-    //MovimentacaoService movimentacaoService;
 
     @Autowired
     MovimentacaoRepository movimentacaoRepository;
+
+    @Autowired
+    AlocacaoService alocacaoService;
+
+    @Autowired
+    EmprestimoService emprestimoService;
+
 
     public List<EpiModel> retornaEPIModel() {
         return epiRepository.findAll();
     }
 
-    public String cadastrarEpi(EpiDto epi) {
+    public String cadastrarEpi(EpiDto epi, HttpServletRequest request) {
 
         EpiModel epiModel = new EpiModel();
         epiModel.setNomeEpi(epi.getNomeEpi().trim().toUpperCase());
@@ -38,7 +45,8 @@ public class EpiService {
 
         epiRepository.save(epiModel);
 
-        gerarMovimentacaoInterna(epi, epi.getQuatidadeEpi(),
+        EmprestimoModel emprestimoInterno = alocacaoService.gerarEmprestimoInterno(request, epiModel);
+        gerarMovimentacaoInterna(emprestimoInterno, epi.getQuatidadeEpi(),
                 TipoMovimentacao.ENTRADA, OrigemMovimentacao.REGISTRO_EQUIPAMENTO);
 
         return "";
@@ -56,9 +64,17 @@ public class EpiService {
         return epiRepository.findAll();
     }
 
-    public String excluirEpi(Long id){
+    public String excluirEpi(Long id, HttpServletRequest request){
         try {
             Optional<EpiModel> optionalEpi = epiRepository.findById(id);
+
+            List<EmprestimoModel> emprestimosComOEPI = emprestimoService.buscarEmprestimosPorEpiId(id);
+
+            if (!emprestimosComOEPI.isEmpty()) {
+                for (EmprestimoModel emprestimo : emprestimosComOEPI) {
+                    emprestimoService.excluirEmprestimo(emprestimo.getId(), request);
+                }
+            }
 
             epiRepository.delete(optionalEpi.get());
             return "";
@@ -75,7 +91,7 @@ public class EpiService {
         return new EpiDto(epi,epi.getTipoEquipamento());
     }
 
-    public String atualizarEpi(EpiDto epi) {
+    public String atualizarEpi(EpiDto epi, HttpServletRequest request) {
         Optional<EpiModel> epiBD = epiRepository.findById(epi.getId());
 
         EpiModel atualizar = new EpiModel();
@@ -85,6 +101,15 @@ public class EpiService {
                 return "Já existe cadastro com estas credenciais!";
             }
         }
+
+        TipoMovimentacao tipoMovimentacao;
+        Long qtdAlterada = epi.getQuatidadeEpi() - epiBD.get().getQuatidadeEpi();
+        if(epi.getQuatidadeEpi() >= epiBD.get().getQuatidadeEpi()) {
+            tipoMovimentacao = TipoMovimentacao.ENTRADA;
+        } else {
+            tipoMovimentacao = TipoMovimentacao.SAIDA;
+        }
+
         atualizar.setId(epi.getId());
         atualizar.setNomeEpi(epi.getNomeEpi().trim().toUpperCase());
         atualizar.setTipoEquipamento(epi.getTipoEquipamento());
@@ -92,18 +117,8 @@ public class EpiService {
 
 
         epiRepository.save(atualizar);
-
-        TipoMovimentacao tipoMovimentacao;
-        Long qtdMovimentacao = 0l;
-        if(epi.getQuatidadeEpi() >= epiBD.get().getQuatidadeEpi()) {
-            tipoMovimentacao = TipoMovimentacao.ENTRADA;
-            qtdMovimentacao = epi.getQuatidadeEpi();
-        } else {
-            tipoMovimentacao = TipoMovimentacao.SAIDA;
-            qtdMovimentacao  = Math.negateExact(epi.getQuatidadeEpi());
-        }
-
-        gerarMovimentacaoInterna(epi, qtdMovimentacao, tipoMovimentacao, OrigemMovimentacao.ALTERACAO_ESTOQUE);
+        EmprestimoModel emprestimoInterno = alocacaoService.gerarEmprestimoInterno(request,epiBD.get());
+        gerarMovimentacaoInterna(emprestimoInterno, qtdAlterada, tipoMovimentacao, OrigemMovimentacao.ALTERACAO_ESTOQUE);
 
         return "";
     }
@@ -132,7 +147,6 @@ public class EpiService {
     public void alterarEstoque(Long movimentacaoQuantidade, EpiDto epi) {
 
         Long estoqueFinal = epi.getQuatidadeEpi() + movimentacaoQuantidade;
-        System.out.println("Estoque final: " + estoqueFinal);
         epi.setQuatidadeEpi(estoqueFinal);
 
         epiRepository.save(new EpiModel(epi, epi.getTipoEquipamento()));
@@ -143,19 +157,23 @@ public class EpiService {
         return converterListaEpiDto(colaboradoresEncontrados);
     }
 
-    private String gerarMovimentacaoInterna(EpiDto epi, Long quantidadeMovimentacao,
+    private String gerarMovimentacaoInterna(EmprestimoModel emprestimoInterno, Long quantidadeMovimentacao,
                                            TipoMovimentacao tipoMovimentacao, OrigemMovimentacao origem){
 
         MovimentacaoModel registro = new MovimentacaoModel();
 
         registro.setDataMovimentacao(new Date());
         registro.setQuantidade(quantidadeMovimentacao);
-        registro.setEmprestimoModel(null);
+        registro.setEmprestimoModel(emprestimoInterno);
         registro.setTipoMovimentacao(tipoMovimentacao);
         registro.setOrigem(origem);
         movimentacaoRepository.save(registro);
 
-        alterarEstoque(quantidadeMovimentacao, epi);
+        if (origem != OrigemMovimentacao.REGISTRO_EQUIPAMENTO
+                && origem != OrigemMovimentacao.ALTERACAO_ESTOQUE) {
+            alterarEstoque(quantidadeMovimentacao, new EpiDto(emprestimoInterno.getEpi()));
+        }
+
         return "";
     }
 

@@ -38,17 +38,6 @@ public class ViewMovimentacaoDto {
 
     }
 
-    public ViewMovimentacaoDto(MovimentacaoModel movimentacao, boolean visualizar){
-
-        this.id = movimentacao.getId();
-        this.dataMovimentacao = formatarDataHora(movimentacao.getDataMovimentacao());
-        this.quantidade = movimentacao.getQuantidade();
-        this.colaborador = retornaColaborador(movimentacao);
-        this.EPI = retornaEpi(movimentacao);
-        this.tipoMovimentacao = movimentacao.getTipoMovimentacao().getDescricao();
-
-    }
-
 
     private String retornaColaborador(MovimentacaoModel movimentacaoModel){
 

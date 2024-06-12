@@ -197,7 +197,8 @@
                 <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Data da movimentação</th>
+                  <th>Origem</th>
+                  <th>Data e hora da movimentação</th>
                   <th>Tipo de movimentação</th>
                   <th>Quantidade</th>
                   <th>Colaborador</th>
@@ -208,6 +209,7 @@
                 <tbody>
                 <tr th:each="movimentacao : ${movimentacoes}">
                   <td th:text="${movimentacao.id}"></td>
+                  <td th:text="${movimentacao.origem}"></td>
                   <td th:text="${movimentacao.dataMovimentacao}"></td>
                   <td th:text="${movimentacao.tipoMovimentacao}"></td>
                   <td th:text="${movimentacao.quantidade}"></td>

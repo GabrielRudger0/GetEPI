@@ -8,8 +8,10 @@ import com.senai.GetEPI.Dominios.OrigemMovimentacao;
 import com.senai.GetEPI.Dominios.TipoMovimentacao;
 import com.senai.GetEPI.Models.ColaboradorModel;
 import com.senai.GetEPI.Models.EmprestimoModel;
+import com.senai.GetEPI.Models.MovimentacaoModel;
 import com.senai.GetEPI.Repositories.ColaboradorRepository;
 import com.senai.GetEPI.Repositories.EmprestimoRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,9 @@ public class EmprestimoService {
     //Adicionado para evitar "circular references" -- GR;
     @Autowired
     ColaboradorRepository colaboradorRepository;
+
+    @Autowired
+    AlocacaoService alocacaoService;
 
     public List<EmprestimoDTO> retornaListaEmprestimos() {
         return converterListaEmprestimo(emprestimoRepository.findAll());
@@ -60,10 +65,11 @@ public class EmprestimoService {
         novoEmprestimo.setEpi(dadosEmprestimo.getEpi());
         novoEmprestimo.setEmissaoData(new Date());
         novoEmprestimo.setDevolucaoData(null);
+        novoEmprestimo.setRegistroInterno(false);
 
         emprestimoRepository.save(novoEmprestimo);
 
-        String mensagemMovimentacao = movimentacaoService.gerarMovimentacao(novoEmprestimo, -1l, TipoMovimentacao.SAIDA);
+        String mensagemMovimentacao = movimentacaoService.gerarMovimentacao(novoEmprestimo, -1l, TipoMovimentacao.SAIDA, OrigemMovimentacao.EMPRESTIMO);
         if (!mensagemMovimentacao.isEmpty()) {
             emprestimoRepository.delete(novoEmprestimo);
             return mensagemMovimentacao;
@@ -77,7 +83,7 @@ public class EmprestimoService {
         return new ViewEmprestimoDTO(emprestimoRepository.findById(id).get());
     }
 
-    public String excluirEmprestimo(Long id){
+    public String excluirEmprestimo(Long id, HttpServletRequest request){
 
         try {
             Optional<EmprestimoModel> emprestimo = emprestimoRepository.findById(id);
@@ -87,7 +93,8 @@ public class EmprestimoService {
             emprestimoRepository.delete(emprestimo.get());
 
             if (emprestimo.get().getDevolucaoData() == null) {
-                movimentacaoService.gerarMovimentacaoInterna(new EpiDto(emprestimo.get().getEpi()), 1l, TipoMovimentacao.ENTRADA, OrigemMovimentacao.EXCLUSAO_REGISTRO);
+                EmprestimoModel emprestimoInterno = alocacaoService.gerarEmprestimoInterno(request, emprestimo.get().getEpi());
+                movimentacaoService.gerarMovimentacaoInterna(emprestimoInterno, 1l, TipoMovimentacao.ENTRADA, OrigemMovimentacao.EXCLUSAO_REGISTRO);
             }
 
             return "";
@@ -109,7 +116,7 @@ public class EmprestimoService {
         EmprestimoModel emprestimoBD = emprestimoRepository.findById(id).get();
         emprestimoBD.setDevolucaoData(new Date());
         emprestimoRepository.save(emprestimoBD);
-        movimentacaoService.gerarMovimentacao(emprestimoBD, 1l, TipoMovimentacao.ENTRADA);
+        movimentacaoService.gerarMovimentacao(emprestimoBD, 1l, TipoMovimentacao.ENTRADA, OrigemMovimentacao.DEVOLUCAO);
 
     }
 
@@ -166,6 +173,15 @@ public class EmprestimoService {
 
     public List<EmprestimoModel> buscarEmprestimosPorColaboradorId(Long colaboradorId) {
         List<EmprestimoModel> emprestimosEncontrados = emprestimoRepository.findAllByColaboradorId(colaboradorId);
+        if (emprestimosEncontrados.isEmpty()) {
+            return new ArrayList<EmprestimoModel>();
+        }
+
+        return emprestimosEncontrados;
+    }
+
+    public List<EmprestimoModel> buscarEmprestimosPorEpiId(Long epiId) {
+        List<EmprestimoModel> emprestimosEncontrados = emprestimoRepository.findAllByEpiId(epiId);
         if (emprestimosEncontrados.isEmpty()) {
             return new ArrayList<EmprestimoModel>();
         }
