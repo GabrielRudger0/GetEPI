@@ -5,6 +5,7 @@ import com.senai.GetEPI.Dominios.TipoParametroGeral;
 import com.senai.GetEPI.Models.FuncaoModel;
 import com.senai.GetEPI.Models.ParametroGeralModel;
 import com.senai.GetEPI.Services.FuncaoService;
+import com.senai.GetEPI.Services.GeradorAutomaticoRegistros;
 import com.senai.GetEPI.Services.ParametroGeralService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class GenesisGetEPI {
 
     @Autowired
     ParametroGeralService parametroGeralService;
+
+    @Autowired
+    GeradorAutomaticoRegistros geradorAutomaticoRegistros;
 
 
     @PostConstruct
@@ -57,6 +61,9 @@ public class GenesisGetEPI {
             System.out.println(logPrefixo + "'" + TipoParametroGeral.FuncaoPadraoUsuario.getDescricao() + "' já existe.");
         }
         System.out.println(logPrefixo + "★ GenesisGetEPI finalizado ★");
+
+        // SER USADO NA HORA DA APRESENTAÇÃO APENAS
+        //geradorAutomaticoRegistros.gerarRegistros();
 
     }
 }

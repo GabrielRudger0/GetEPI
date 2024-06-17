@@ -9,7 +9,9 @@ import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.ColaboradorService;
 import com.senai.GetEPI.Services.FuncaoService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -37,12 +39,14 @@ public class ListarColaboradorController {
     AlocacaoService alocacaoService;
 
     @GetMapping()
-    public String exibirListaColaboradores(Model model, HttpServletRequest request, ColaboradorDto colaboladorDto) {
+    public String exibirListaColaboradores(Model model, HttpServletRequest request, ColaboradorDto colaboladorDto, HttpServletResponse response) {
 
         try {
             if (!alocacaoService.validaSessao(request).isEmpty()) {
                 return alocacaoService.validaSessao(request);
             }
+            CacheControl nocache = CacheControl.noStore().mustRevalidate();
+            response.setHeader("Cache-Control", nocache.getHeaderValue());
 
             ErroGetEPI erro = apocalipseGetEPI.retornarErro(request);
             if (erro.getExibeErro()) {

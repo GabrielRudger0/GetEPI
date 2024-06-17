@@ -8,7 +8,9 @@ import com.senai.GetEPI.OutrosObjetos.ErroGetEPI;
 import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +31,7 @@ public class LoginController {
     ApocalipseGetEPI apocalipseGetEPI;
 
     @GetMapping
-    public String mostrarLogin(Model model, HttpServletRequest request) {
+    public String mostrarLogin(Model model, HttpServletRequest request, HttpServletResponse response) {
 
         try {
             ErroGetEPI erro = apocalipseGetEPI.retornarErro(request);
@@ -38,6 +40,9 @@ public class LoginController {
                 model.addAttribute("tituloMensagemErro", erro.getMensagemErro());
                 model.addAttribute("stacktraceMensagem", erro.getStackTrace());
             }
+
+            CacheControl nocache = CacheControl.noStore().mustRevalidate();
+            response.setHeader("Cache-Control", nocache.getHeaderValue());
 
             LoginDTO login = new LoginDTO();
             model.addAttribute("loginDto", login);
