@@ -2,9 +2,11 @@ package com.senai.GetEPI.Services;
 
 import com.senai.GetEPI.DTOs.EmprestimoDTO;
 import com.senai.GetEPI.Models.ColaboradorModel;
+import com.senai.GetEPI.Models.EmprestimoModel;
 import com.senai.GetEPI.Models.EpiModel;
 import com.senai.GetEPI.Models.FuncaoModel;
 import com.senai.GetEPI.Repositories.ColaboradorRepository;
+import com.senai.GetEPI.Repositories.EmprestimoRepository;
 import com.senai.GetEPI.Repositories.EpiRepository;
 import com.senai.GetEPI.Repositories.FuncaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +29,11 @@ public class GeradorAutomaticoRegistros {
     EpiRepository epiRepository;
 
     @Autowired
-    EmprestimoService emprestimoService;
+    EmprestimoRepository emprestimoRepository;
 
     public void gerarRegistros() {
         gerarColaboradoresAleatorios();
+        gerarEmprestimosAleatorios();
     }
 
     private void gerarColaboradoresAleatorios() {
@@ -55,6 +58,31 @@ public class GeradorAutomaticoRegistros {
 
     }
 
+    private void gerarEmprestimosAleatorios() {
+        for (int i = 0; i < 500; i++) {
+            EmprestimoDTO emprestimo = new EmprestimoDTO();
+
+            Date[] datas = retornaDataEmissaoDevolucao();
+
+            Random random = new Random();
+            Long colaboradorid = random.nextLong(13);
+            Optional<ColaboradorModel> colaborador = colaboradorRepository.findById(colaboradorid);
+            if (colaborador.isPresent()) {
+                Long epiid = random.nextLong(5);
+                Optional<EpiModel> epi = epiRepository.findById(epiid);
+                if (epi.isPresent()) {
+                    emprestimo.setColaborador(colaborador.get());
+                    emprestimo.setEpi(epi.get());
+                    emprestimo.setRegistroInterno(false);
+                    emprestimo.setEmissaoData(datas[0]);
+                    emprestimo.setDevolucaoData(datas[1]);
+                    emprestimoRepository.save(new EmprestimoModel(emprestimo));
+                }
+            }
+        }
+
+    }
+
     private Date[] retornaDataEmissaoDevolucao() {
         long dezembro2023 = new Date(123, 11, 1).getTime();
         long junho2024 = new Date(124, 5, 30).getTime();
@@ -68,7 +96,12 @@ public class GeradorAutomaticoRegistros {
         Date[] emissaoDevolucao = {new Date(), new Date()};
 
         emissaoDevolucao[0] = dataEmissao;
-        emissaoDevolucao[1] = gerarDataDevolucao(dataEmissao);
+        boolean executarDevolucao = random.nextBoolean();
+        if (executarDevolucao) {
+            emissaoDevolucao[1] = gerarDataDevolucao(dataEmissao);
+        } else {
+            emissaoDevolucao[1] = null;
+        }
         return emissaoDevolucao;
     }
 
