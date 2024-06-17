@@ -7,7 +7,9 @@ import com.senai.GetEPI.OutrosObjetos.ErroGetEPI;
 import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.MovimentacaoService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,12 +36,15 @@ public class ListaMovimentacaoController {
     AlocacaoService alocacaoService;
 
     @GetMapping()
-    public String exibirMovimentacoes(Model model, HttpServletRequest request){
+    public String exibirMovimentacoes(Model model, HttpServletRequest request, HttpServletResponse response){
 
         try {
             if (!alocacaoService.validaSessao(request).isEmpty()) {
                 return alocacaoService.validaSessao(request);
             }
+            CacheControl nocache = CacheControl.noStore().mustRevalidate();
+            response.setHeader("Cache-Control", nocache.getHeaderValue());
+
             ErroGetEPI erro = apocalipseGetEPI.retornarErro(request);
             if (erro.getExibeErro()) {
                 model.addAttribute("erro", true);

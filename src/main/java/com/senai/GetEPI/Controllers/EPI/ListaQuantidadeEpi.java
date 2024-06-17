@@ -4,6 +4,7 @@ import com.senai.GetEPI.DTOs.EpiDto;
 import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.EpiService;
 import com.senai.GetEPI.Services.TipoEquipamentoService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ public class ListaQuantidadeEpi {
     private TipoEquipamentoService tipoEquipamentoService;
 
     @GetMapping()
-    public String exibirListaQuantidadeEpi(Model model, EpiDto epiDto) {
+    public String exibirListaQuantidadeEpi(Model model, EpiDto epiDto, HttpServletResponse response) {
 
         List<EpiDto> listaEpi = epiService.retornaListaEpiDTO();
 

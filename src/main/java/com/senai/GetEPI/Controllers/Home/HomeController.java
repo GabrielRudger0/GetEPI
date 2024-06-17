@@ -4,7 +4,9 @@ import com.senai.GetEPI.OutrosObjetos.*;
 import com.senai.GetEPI.Services.AlocacaoService;
 import com.senai.GetEPI.Services.DashboardService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +29,16 @@ public class HomeController {
     AlocacaoService alocacaoService;
 
     @GetMapping()
-    public String exibirHome(Model model, HttpServletRequest request) {
+    public String exibirHome(Model model, HttpServletRequest request, HttpServletResponse response) {
 
         try {
             if (!alocacaoService.validaSessao(request).isEmpty()) {
                 return alocacaoService.validaSessao(request);
             }
+            CacheControl nocache = CacheControl.noStore().mustRevalidate();
+            response.setHeader("Cache-Control", nocache.getHeaderValue());
+
             List<DashboardEpis> dashboardEpis = dashboardService.retornarRankEPIs();
-//            List<DashboardMesEpis> dashboardMesEpis = dashboardService.retornarRelacaoEpiEmprestimoMes();
             Integer quantidadeDevolucoesPendentes = dashboardService.retornaQuantidadeEmprestimosPendentes();
             Integer quantidadeColaboradores = dashboardService.retornaQuantidadeColaboradores();
             Integer quantidadeEPIs = dashboardService.retornaQuantidadeEPIs();
