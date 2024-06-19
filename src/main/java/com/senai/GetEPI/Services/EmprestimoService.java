@@ -172,7 +172,7 @@ public class EmprestimoService {
     }
 
     public List<EmprestimoModel> buscarEmprestimosPorColaboradorId(Long colaboradorId) {
-        List<EmprestimoModel> emprestimosEncontrados = emprestimoRepository.findAllByColaboradorId(colaboradorId);
+        List<EmprestimoModel> emprestimosEncontrados = emprestimoRepository.findAllByColaboradorIdIncluirInternos(colaboradorId);
         if (emprestimosEncontrados.isEmpty()) {
             return new ArrayList<EmprestimoModel>();
         }
