@@ -106,7 +106,7 @@ public class ColaboradorService {
         try {
             Optional<ColaboradorModel> optionalColaborador = colaboradorRepository.findById(id);
 
-            if (optionalColaborador.get().getUsuario() != null && !exclusaoUsuario) {
+            if ((optionalColaborador.get().getUsuario() != null) && (!exclusaoUsuario)) {
                 return "Este registro de colaborador possuí um usuário vinculado. Exclua o usuário correspondente para também excluír o colaborador!";
             }
 
@@ -114,7 +114,7 @@ public class ColaboradorService {
             if (!emprestimosDoColaborador.isEmpty()) {
                 for (EmprestimoModel emprestimo : emprestimosDoColaborador) {
                     if (emprestimo.getDevolucaoData() == null) {
-                        return "Colaborador possuí empréstimos pendentes para devolução! Conclua os empréstimos para realizar a exclusão.";
+                        return "Colaborador possuí empréstimos PENDENTES PARA DEVOLUÇÃO! Conclua os empréstimos para realizar a exclusão.";
                     }
                 }
 
